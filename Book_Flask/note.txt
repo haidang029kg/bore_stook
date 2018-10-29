@@ -1,0 +1,3 @@
+database: mysql
+ORM : sqlalchemy
+DB API Driver : mysql connector python

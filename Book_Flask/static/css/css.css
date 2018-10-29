@@ -3,11 +3,14 @@ html, body{
   padding:0 !important;
 }
 
+#bootstrap-overrides {
+	background: url(/static/image/background/body-background.jpg);
+}
+
 #bootstrap-overrides .my-container {
 	padding: 0;
 	margin: 0;
 	width: 100%;
-	background: url(/static/image/background/body-background.jpg);
 }
 
 /* ---------------------------------------------- navigation bar */
@@ -44,42 +47,34 @@ nav.black {
 	border-radius: 10px;
 }
 
+
 /* ---------------------------------------------- background section */
-#top-background {
+#sec-background {
 	background: url(/static/image/background/books-wallpaper.jpg);
 	height: 100vh;
-	border-radius: 0 300px 25px 300px;
+	border-radius: 0 300px 25px 25px;
 	background-position: center;
 	background-size: cover;
 }
 
-/* ---------------------------------------------- search box */
-#search-box {
+
+/* ---------------------------------------------- section search box */
+#sec-search-box {
 	margin: 10px 5px 0 5px;	
-	border-radius: 0 300px 100px 0;
 	display: flex;
 	height: 130px;
-	border-style: double;
-	border-width: 5px;
-	border-color: green;
-	border-radius: 10px;
 }
 
-#search-box input {
+#sec-search-box input {
 	border-radius: 40px;
 	width: 600px;
 }
 
-#search-box form button {
+#sec-search-box form button {
 	margin-right: 5px;
 	border-radius: 5px;
 }
 
-#search-box img {
-	border-radius: 0 300px 100px 0;
-	border-width: 5px;
-	border-color: orange;
-}
 
 /* ---------------------------------------------- advance search box */
 .search-modal {
@@ -94,8 +89,7 @@ nav.black {
 .search-modal-content {
 	width: 700px;
 	height: 400px;
-	background: url(/static/image/background/search-background.jpg);
-	background-position: center;
+	background-color: white;
 	border-radius: 20px;
 	text-align: center;
 	padding: 20px;
@@ -109,71 +103,87 @@ nav.black {
 	font-size: 50px;
 }
 
+
+/* ---------------------------------------------- sectiop flash sale */
+#sec-flash-sale {
+	margin: 10px 5px 0 5px;	
+	display: flex;
+	height: 130px;
+}
+
+#sec-flash-sale div {
+	height: 200px;
+	text-align: center;
+	align-items: center;
+}
+
+
+/* ---------------------------------------------- section category */
+#sec-category {
+	margin: 10px 5px 0 5px;	
+	display: flex;
+	height: 130px;
+}
+
+#sec-category div {
+	height: 150px;
+	text-align: center;
+	align-items: center;
+}
+
+/* ---------------------------------------------- section adding recently and news */
+#sec-recently-and-news {
+	float: left;
+	display: flex;
+	margin: 10px 5px 0 5px;
+	width: 100%;
+}
+
+#sec-recently-and-news #recently {
+	width: 85%;
+	height: 800px;
+}
+
+#sec-recently-and-news #news {
+	width: 14%;
+	height: 800px;
+}
+
+#sec-recently-and-news div {
+	text-align: center;
+	align-items: center;
+}
+
+
+
+/* ---------------------------------------------- register */
+#sec-register {
+	margin-top: 10px;
+	display: flex;
+	width: 100%;
+	height: 700px;
+}
+
+#div-register {
+	width: 500px;
+}
+
+
+
+
+/*---------------------------------------------------------------------*/
 .div-center {
 	display: flex;
 	justify-content: center;
 }
 
-
-/* ---------------------------------------------- flash sale */
-
-#flash-sale {
-	margin-top: 10px;
-	width: 100%;
+.div-bg-white {
+	background-color: white;
 }
 
-#flash-sale div {
-	margin: 5px;
-	height: 200px;
+.border-green-double {
 	border-style: double;
 	border-width: 5px;
 	border-color: green;
 	border-radius: 10px;
-	text-align: center;
-	align-items: center;
-}
-
-/* ---------------------------------------------- flash sale */
-#category {
-	margin-top: 10px;
-	width: 100%;
-}
-
-#category div {
-	margin: 5px;
-	height: 150px;
-	border-style: double;
-	border-width: 5px;
-	border-color: green;
-	border-radius: 10px;
-	text-align: center;
-	align-items: center;
-}
-
-/* ---------------------------------------------- adding recently and news */
-#recently-and-news {
-	float: left;
-	display: flex;
-	width: 100%;
-	margin-top: 10px;
-}
-
-#recently-and-news #recently {
-	width: 85%;
-	height: 800px;
-}
-
-#recently-and-news #news {
-	width: 15%;
-	height: 800px;
-}
-
-#recently-and-news div {
-	margin: 5px;
-	border-style: double;
-	border-width: 5px;
-	border-color: green;
-	border-radius: 10px;
-	text-align: center;
-	align-items: center;
 }
