@@ -2,12 +2,12 @@
 {% block body %}
     {% include 'includes/_search-box.html' %}
 	{% include 'includes/_flash-sale.html' %}
-	<section id="sec-register" class="div-center">
-		<div id="div-register" class="content-section div-center div-bg-white border-green-double">
+	<section class="sec-reg-log div-center">
+		<div class="div-reg-log content-section div-center div-bg-white border-green-double">
 			<form method="POST" action="">
 				{{ form.hidden_tag() }}
 				<fieldset class="form-group">
-					<legend class="border-bottom mb-4">Join Today</legend>
+					<legend class="border-bottom mb-4">Register</legend>
 					<dir class="form-group">
 						{{ form.name.label(class="form-control-label") }}
 						{% if form.name.errors %}

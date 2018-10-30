@@ -20,19 +20,25 @@ html, body{
 	transition: .3s;
 }
 
-#my-navbar a {
-	text-transform: uppercase;
-	line-height: 50px;
-	color: white;
-	padding-left: 30px;
-	padding-right: 30px;
-	transition: .3s;
-	font-weight: bold;
-	font-family: QuickSand;
+#my-navbar li {
+	margin-left: 4px;
+	margin-right: 4px;
 }
 
-#my-navbar img {
-	border-radius: 100px;
+#my-navbar button {
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
+#my-navbar input {
+	border-radius: 40px;
+	width: 500px;
+}
+
+#my-navbar a {
+	text-transform: uppercase;
+	color: white;
+	transition: .3s;
 }
 
 #my-navbar .active {
@@ -156,15 +162,15 @@ nav.black {
 
 
 
-/* ---------------------------------------------- register */
-#sec-register {
+/* ---------------------------------------------- register login */
+.sec-reg-log {
 	margin-top: 10px;
 	display: flex;
 	width: 100%;
 	height: 700px;
 }
 
-#div-register {
+.div-reg-log {
 	width: 500px;
 }
 
@@ -186,4 +192,9 @@ nav.black {
 	border-width: 5px;
 	border-color: green;
 	border-radius: 10px;
+}
+
+.mr-lr-4 {
+	margin-left: 4px;
+	margin-right: 4px;
 }
