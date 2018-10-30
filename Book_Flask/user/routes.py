@@ -9,6 +9,8 @@ from flask_login import login_user, logout_user, current_user, login_required
 
 user = Blueprint('user', __name__)
 
+
+
 @user.route("/register", methods = ['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -27,6 +29,8 @@ def register():
         return redirect(url_for('user.login'))
     
     return render_template('register.html', title = 'Register', form = form)
+
+
 
 @user.route("/login", methods = ['GET', 'POST'])
 def login():
@@ -50,3 +54,10 @@ def login():
             flash('Login unsucessful! please check username and password', 'danger')
     
     return render_template('login.html', title = 'Log In', form = form)
+
+
+
+@user.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('main.home'))

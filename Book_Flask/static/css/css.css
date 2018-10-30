@@ -18,6 +18,7 @@ html, body{
 	position: fixed;
 	width: 100%;
 	transition: .3s;
+	height: 80px;
 }
 
 #my-navbar li {
@@ -46,11 +47,16 @@ html, body{
 	border-radius: 10px;
 }
 
+#my-navbar a:hover{
+	text-decoration: underline;
+}
+
 nav.black {
 	background-color: black;
-	opacity: 0.6;
+	
 	height: 80px;
-	border-radius: 10px;
+	border-radius: 0 0 10px 10px;
+	border-width: 10px;
 }
 
 
@@ -58,7 +64,6 @@ nav.black {
 #sec-background {
 	background: url(/static/image/background/books-wallpaper.jpg);
 	height: 100vh;
-	border-radius: 0 300px 25px 25px;
 	background-position: center;
 	background-size: cover;
 }
@@ -90,6 +95,10 @@ nav.black {
 	top: 100vh;
 	justify-content: center;
 	display: none;
+}
+
+#advance-search-close-btn{
+	float:right;
 }
 
 .search-modal-content {
@@ -173,6 +182,8 @@ nav.black {
 .div-reg-log {
 	width: 500px;
 }
+
+
 
 
 
