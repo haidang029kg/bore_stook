@@ -17,3 +17,13 @@ function advance_search() {
 function close_search() {
 	$('.search-modal')[0].style.display = 'none';
 }
+
+
+// --------------------------------------------- message popup
+function open_message() {	
+	$('.message-modal')[0].style.display = 'flex';
+}
+
+function close_message() {
+	$('.message-modal')[0].style.display = 'none';
+}

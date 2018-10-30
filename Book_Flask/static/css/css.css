@@ -97,7 +97,7 @@ nav.black {
 	display: none;
 }
 
-#advance-search-close-btn{
+.advance-search-close-btn{
 	float:right;
 }
 
@@ -116,6 +116,27 @@ nav.black {
 
 .search-modal-content .close {
 	font-size: 50px;
+}
+
+
+/* ------------------------------------------------------------ message modal */
+.message-modal {
+	width: 300px;
+	height: 200px;
+	position: absolute;
+	top: 100vh;
+	justify-content: center;
+	display: none;
+}
+
+.message-modal-content {
+	width: 300px;
+	height: 200px;
+	background-color: white;
+	border-radius: 20px;
+	text-align: center;
+	padding: 0;
+	margin: 0;
 }
 
 
@@ -208,4 +229,8 @@ nav.black {
 .mr-lr-4 {
 	margin-left: 4px;
 	margin-right: 4px;
+}
+
+.mt--5 {
+	margin-top: 40px;
 }

@@ -19,6 +19,7 @@
         {% include 'includes/_control-navbar.html' %}
         <section id="sec-background"></section>
         <div class="my-container">
+            {% include 'includes/_get-flash-message.html' %}
             {% block body %}  {% endblock %}
         </div>
     </body>

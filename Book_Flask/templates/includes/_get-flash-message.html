@@ -1,0 +1,22 @@
+<!-- message modal -->
+<div class="div-center">
+    <div class="message-modal">
+        <div  id="sss" class="message-modal-content border-green-double">      
+                <button class="btn btn btn-danger advance-search-close-btn" onclick="close_message()">x</button>
+                <div class="div-center mt--5">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <script>
+                                open_message();
+                            </script>
+                            {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+        </div>
+    </div>
+</div>
