@@ -5,7 +5,7 @@ from flask_login import LoginManager
 
 import os
 
-URI = 'mysql+mysqlconnector://' + os.environ.get('MYSQL_USER') + ':' + os.environ.get('MYSQL_PASSWORD') + '@localhost/' + os.environ.get('MYSQL_DB')
+URI = 'mysql+mysqlconnector://' + os.environ.get('MYSQL_USER') + ':' + os.environ.get('MYSQL_PASSWORD') + '@localhost/' + 'test'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
