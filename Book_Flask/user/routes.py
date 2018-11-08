@@ -2,12 +2,20 @@ from flask import Blueprint, render_template, url_for, flash, redirect, request
 
 from Book_Flask import db, bcrypt
 from Book_Flask.models import User
-from Book_Flask.user.forms import RegistrationForm, LoginForm
+from Book_Flask.user.utilities import send_token_email
+from Book_Flask.user.forms import RegistrationForm, LoginForm , RequestPasswdForm, ResetPasswdForm
 
 from flask_login import login_user, logout_user, current_user, login_required
 
 
 user = Blueprint('user', __name__)
+
+
+
+
+@user.route("/home")
+def home():
+    return render_template('home.html', title = 'Home')
 
 
 
@@ -61,3 +69,50 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
+
+
+
+@user.route("/request_passwd", methods = ['GET', 'POST'])
+def request_passwd():
+    if current_user.is_authenticated:
+        flash('you have already logged in!!!', 'info')
+        return redirect(url_for('main.home'))
+
+    form = RequestPasswdForm()
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(email = form.email.data).first()
+
+        send_token_email(user)
+
+        flash('Un email has been sent with un instruction to reset your password', 'info')
+
+        return redirect(url_for('user.login'))
+
+    return render_template('request_password.html', title = 'Password Reset Request', form = form)
+
+
+
+@user.route("/reset_passwd/<token>", methods = ['GET', 'POST'])
+def reset_passwd(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('user.home'))
+
+    user = User.verify_token(token)
+
+    if user is None:
+        flash('That is an invalid or expired token', 'warning')
+        return redirect(url_for('user.request_passwd'))
+    
+    form = ResetPasswdForm()
+
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password = hashed_password
+
+        db.session.commit()
+        flash('Your password has been updated! Login now...', 'success')
+
+        return redirect(url_for('user.login'))
+    
+    return render_template('reset_password.html', title = 'Reset Password', form = form)

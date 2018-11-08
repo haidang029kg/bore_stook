@@ -124,7 +124,7 @@ nav.black {
 	width: 300px;
 	height: 200px;
 	position: absolute;
-	top: 100vh;
+	top: 30vh;
 	justify-content: center;
 	display: none;
 }
@@ -140,7 +140,7 @@ nav.black {
 }
 
 
-/* ---------------------------------------------- sectiop flash sale */
+/* ---------------------------------------------- section flash sale */
 #sec-flash-sale {
 	margin: 10px 5px 0 5px;	
 	display: flex;
