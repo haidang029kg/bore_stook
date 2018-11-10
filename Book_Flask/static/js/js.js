@@ -9,6 +9,12 @@ $(window).on('scroll', function() {
 })
 
 
+// --------------------------------------------- scroll to container
+$('.btn-scrollauto').on('click', function(){
+	scrollTo(500);
+})
+
+
 // --------------------------------------------- advance search
 function advance_search() {	
 	$('.search-modal')[0].style.display = 'flex';

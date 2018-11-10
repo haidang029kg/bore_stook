@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, url_for, flash, redirect, request
 
 from Book_Flask import db, bcrypt
 from Book_Flask.models import User
-from Book_Flask.user.utilities import send_token_email
+from Book_Flask.user.utilities import send_token_reset, send_token_register, generate_id
 from Book_Flask.user.forms import RegistrationForm, LoginForm , RequestPasswdForm, ResetPasswdForm
 
 from flask_login import login_user, logout_user, current_user, login_required
@@ -21,22 +21,51 @@ def home():
 
 @user.route("/register", methods = ['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        flash('You have already logged in.', 'info')
+        return redirect(url_for('main.home'))
+
     form = RegistrationForm()
 
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         
-        user = User(email = form.email.data,
-                    name = form.name.data, 
-                    password = hashed_password)
-        
+        user = User(UserID = generate_id(type = 'user'),
+                    Email = form.email.data,
+                    FirstName = form.fname.data,
+                    LastName = form.lname.data,
+                    Password = hashed_password)
+
         db.session.add(user)
         db.session.commit()
-            
-        flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for('user.login'))
+        
+        send_token_register(user = user)        
+
+        flash('Un email has been sent with un instruction to complete your registration. Please check your email to continue!!!', 'info')
+        return redirect(url_for('main.home'))
     
     return render_template('register.html', title = 'Register', form = form)
+
+
+
+@user.route("/register_token/<token>", methods = ['GET', 'POST'])
+def register_token(token):
+    if current_user.is_authenticated:
+        flash('You have already logged in.', 'info')
+        return redirect(url_for('user.home'))
+
+    user = User.verify_token(token)
+
+    if user is None:
+        flash('That is an invalid or expired token', 'warning')
+
+        return redirect(url_for('user.register'))
+
+    flash('Register completely!!! Now you can login', 'info')
+    
+    form = LoginForm()
+    
+    return render_template('login.html', form = form, title = 'Home')
 
 
 

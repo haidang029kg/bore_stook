@@ -5,8 +5,10 @@ from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, E
 from Book_Flask.models import User
 
 class RegistrationForm(FlaskForm):
-    name = StringField('Name', 
-                        validators=[DataRequired(), Length(min=6, max=30)])
+    fname = StringField('First Name', 
+                        validators=[DataRequired(), Length(min=1, max=30)])
+    lname = StringField('Last Name', 
+                        validators=[DataRequired(), Length(min=1, max=30)])
     email = StringField('Email', 
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password', 
@@ -16,7 +18,7 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Sing up')
     
     def validate_email(self, email):
-        user = User.query.filter_by(email = email.data).first()
+        user = User.query.filter_by(Email = email.data).first()
         if user:
             raise ValidationError('That email is taken!')
 
