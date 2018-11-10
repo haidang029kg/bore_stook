@@ -63,9 +63,7 @@ def register_token(token):
 
     flash('Register completely!!! Now you can login', 'info')
     
-    form = LoginForm()
-    
-    return render_template('login.html', form = form, title = 'Home')
+    return render_template('home.html', title = 'Home')
 
 
 
@@ -77,9 +75,9 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = User.query.filter_by(email = form.email.data).first()
+        user = User.query.filter_by(Email = form.email.data).first()
 
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        if user and bcrypt.check_password_hash(user.Password, form.password.data):
             login_user(user, remember = form.remember.data)
 
             next_page = request.args.get('next')
@@ -110,9 +108,9 @@ def request_passwd():
     form = RequestPasswdForm()
 
     if form.validate_on_submit():
-        user = User.query.filter_by(email = form.email.data).first()
+        user = User.query.filter_by(Email = form.email.data).first()
 
-        send_token_email(user)
+        send_token_reset(user)
 
         flash('Un email has been sent with un instruction to reset your password', 'info')
 
@@ -137,7 +135,7 @@ def reset_passwd(token):
 
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user.password = hashed_password
+        user.Password = hashed_password
 
         db.session.commit()
         flash('Your password has been updated! Login now...', 'success')

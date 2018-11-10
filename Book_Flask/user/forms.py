@@ -23,6 +23,11 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('That email is taken!')
 
 
+
+
+
+
+
 class LoginForm(FlaskForm):
     email = StringField('Email',
 							validators=[DataRequired(), Email()])
@@ -40,7 +45,7 @@ class RequestPasswdForm(FlaskForm):
 
 
     def validate_email(self, email):
-        user = User.query.filter_by(email = email.data).first()
+        user = User.query.filter_by(Email = email.data).first()
 
         if user is None:
             raise ValidationError('There is no account with this email!')

@@ -9,7 +9,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 # it's very important to be executed "login_user" in routes.py (import from flask_login)
 @login_user_manager.user_loader
 def user_loader(user_id):
-    return User.query.get(int(user_id))
+    return User.query.get(str(user_id))
 
 
 
@@ -23,6 +23,13 @@ class User(db.Model, UserMixin):
     ImgUrl = db.Column(db.String(100), nullable = False, default = 'default.jpg')
     Password = db.Column(db.String(100), nullable = False)
     
+
+    # default is to return id attribute, but in this case is UserID attribute
+    # override this def, bc it's executed in user_login from flask_login     
+    def get_id(self):
+        return self.UserID
+
+        
 
     def get_token(self, expires_sec = 1800):
         s = Serializer(app.config['SECRET_KEY'], expires_sec)
@@ -38,7 +45,7 @@ class User(db.Model, UserMixin):
         except:
             return None
             
-        return user_id
+        return User.query.filter_by(UserID = user_id).first()
 
 
 
