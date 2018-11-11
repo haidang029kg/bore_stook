@@ -24,7 +24,14 @@ class RegistrationForm(FlaskForm):
 
 
 
-
+class ChangePasswdForm(FlaskForm):
+    current_password = PasswordField('Current Password',
+                                    validators=[DataRequired()])
+    password = PasswordField('New Password',
+                                    validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                    validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Change')
 
 
 

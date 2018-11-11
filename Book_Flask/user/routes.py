@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, url_for, flash, redirect, request
 from Book_Flask import db, bcrypt
 from Book_Flask.models import User
 from Book_Flask.user.utilities import send_token_reset, send_token_register, generate_id
-from Book_Flask.user.forms import RegistrationForm, LoginForm , RequestPasswdForm, ResetPasswdForm
+from Book_Flask.user.forms import RegistrationForm, LoginForm , RequestPasswdForm, ResetPasswdForm, ChangePasswdForm
 
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -143,3 +143,32 @@ def reset_passwd(token):
         return redirect(url_for('user.login'))
     
     return render_template('reset_password.html', title = 'Reset Password', form = form)
+
+
+
+@user.route("/change_password", methods = ['GET', 'POST'])
+@login_required
+def change_password():
+    form = ChangePasswdForm()
+    user = User.query.get(current_user.get_id())
+
+    if form.validate_on_submit():
+
+        if not(bcrypt.check_password_hash(user.Password, form.current_password.data)):
+            
+            flash('Current password is incorrect', 'warning')
+            logout_user()
+            
+            return redirect(url_for('user.login', form = form, title = 'Change Password'))
+        
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.Password = hashed_password
+
+        db.session.commit()
+
+        flash('Change password completely!', 'info')
+
+        login_form = LoginForm()
+        return redirect(url_for('user.login', form = login_form, title = 'Login'))
+
+    return render_template('change_password.html', title = 'Change Password', form = form)
