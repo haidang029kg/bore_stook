@@ -62,4 +62,4 @@ def save_picture(form_picture):
     i.thumbnail(output_pic_size)
     i.save(pic_path)
 
-    return pic_path
+    return new_pic_filename

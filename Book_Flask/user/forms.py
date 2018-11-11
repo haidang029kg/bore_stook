@@ -78,7 +78,7 @@ class AccountForm(FlaskForm):
                         validators=[DataRequired(), Length(min=1, max=30)])
     phone = StringField('Phone')
 
-    submit = SubmitField('Change')
+    submit = SubmitField('Update')
 
     def validate_phone(self, phone):
         if (type(int(phone.data)) != type(123)):

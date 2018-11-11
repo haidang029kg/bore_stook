@@ -200,6 +200,6 @@ def account():
         form.lname.data = current_user.LastName
         form.phone.data = current_user.Phone
     
-    image_file = url_for('static', filename = 'image/profile_user_pic/' + current_user.ImgUrl)
+    image_file = url_for('static', filename = 'image/profile_user_pic/' + str(current_user.ImgUrl))
 
     return render_template('account.html', form = form, title = 'Account', image_file = image_file)
