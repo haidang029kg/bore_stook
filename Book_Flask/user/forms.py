@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, Email
 
@@ -66,3 +67,19 @@ class ResetPasswdForm(FlaskForm):
                                 validators = [DataRequired(), EqualTo('password')])
     submit = SubmitField('Change Password')
 
+
+class AccountForm(FlaskForm):
+    picture = FileField('Update Profile Picture',
+                        validators=[FileAllowed(['jpg', 'png'])])
+
+    fname = StringField('First Name', 
+                        validators=[DataRequired(), Length(min=1, max=30)])
+    lname = StringField('Last Name', 
+                        validators=[DataRequired(), Length(min=1, max=30)])
+    phone = StringField('Phone')
+
+    submit = SubmitField('Change')
+
+    def validate_phone(self, phone):
+        if (type(int(phone.data)) != type(123)):
+            raise ValidationError('Phone number is incorrect!')

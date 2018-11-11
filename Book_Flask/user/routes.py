@@ -2,8 +2,8 @@ from flask import Blueprint, render_template, url_for, flash, redirect, request
 
 from Book_Flask import db, bcrypt
 from Book_Flask.models import User
-from Book_Flask.user.utilities import send_token_reset, send_token_register, generate_id
-from Book_Flask.user.forms import RegistrationForm, LoginForm , RequestPasswdForm, ResetPasswdForm, ChangePasswdForm
+from Book_Flask.user.utilities import *
+from Book_Flask.user.forms import *
 
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -172,3 +172,34 @@ def change_password():
         return redirect(url_for('user.login', form = login_form, title = 'Login'))
 
     return render_template('change_password.html', title = 'Change Password', form = form)
+
+
+
+@user.route("/account", methods = ['GET', 'POST'])
+@login_required
+def account():
+    form = AccountForm()
+
+    if form.validate_on_submit():
+
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.ImgUrl = picture_file
+
+        current_user.FirstName = form.fname.data
+        current_user.LastName = form.lname.data
+        current_user.Phone = form.phone.data
+
+        db.session.commit()
+        flash('Your account has been updated!', 'info')
+
+        return redirect(url_for('user.account', title = 'Account', form = form))
+
+    elif request.method == 'GET':
+        form.fname.data = current_user.FirstName
+        form.lname.data = current_user.LastName
+        form.phone.data = current_user.Phone
+    
+    image_file = url_for('static', filename = 'image/profile_user_pic/' + current_user.ImgUrl)
+
+    return render_template('account.html', form = form, title = 'Account', image_file = image_file)

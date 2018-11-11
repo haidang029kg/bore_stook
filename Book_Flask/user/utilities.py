@@ -1,7 +1,9 @@
 from flask import url_for
 from flask_mail import Message
-from Book_Flask import mail
+from Book_Flask import mail, app
 import uuid
+import secrets, os
+from PIL import Image
 
 def generate_id(type):
     id = str(uuid.uuid1())
@@ -45,3 +47,19 @@ If you did not make this request then simply ignore this email and no changes wi
 '''
 
     mail.send(msg)
+
+
+def save_picture(form_picture):
+    randome_hex = secrets.token_hex(8)
+
+    _, file_ext = os.path.splitext(form_picture.filename)
+    new_pic_filename = randome_hex + file_ext
+    pic_path = os.path.join(app.root_path, 'static/image/profile_user_pic', new_pic_filename)
+    # pic_path will be changed to the appropriate cloud store on gcloud
+
+    output_pic_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_pic_size)
+    i.save(pic_path)
+
+    return pic_path
