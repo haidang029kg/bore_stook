@@ -15,7 +15,7 @@ def user_loader(user_id):
 
 
 class User(db.Model, UserMixin):
-    UserID = db.Column(db.String(length = 16), primary_key = True)
+    UserID = db.Column(db.Integer, primary_key = True)
     FirstName = db.Column(db.String(length = 50, convert_unicode = True), nullable = False)
     LastName = db.Column(db.String(length = 50, convert_unicode = True), nullable = False)
     Phone = db.Column(db.String(15))
@@ -50,34 +50,34 @@ class User(db.Model, UserMixin):
 
 
 class Book(db.Model):
-    BookID = db.Column(db.String(length = 100), primary_key = True)
+    BookID = db.Column(db.Integer, primary_key = True)
     Title = db.Column(db.String(length = 150, convert_unicode = True), nullable = False)
     ISBN = db.Column(db.String(13), unique = True)
     Authors = db.Column(db.String(length = 250, convert_unicode = True))
     PublicationYear = db.Column(db.Integer)
     ImgUrl = db.Column(db.String(100), default = 'default_book.jpg')
-    Price = db.Column(db.Integer, default = 100000)
-    Rating = db.Column(db.Integer)
+    Price = db.Column(db.Integer, default = 100)
+    AvgRating = db.Column(db.Integer)
+    Quantity = db.Column(db.Integer, default = 0)
 
-# class Store(db.Model):
-# 	StoreID = db.Column(db.String(10), primary_key = True, nullable = False)
-# 	Phone = db.Column(db.String(20))
-# 	Address = db.Column(db.String(length = 100, convert_unicode = True))
-# 	ManagerID = db.Column(db.String(10), db.ForeignKey('user.UserID'), nullable = False)
-# class Stock(db.Model):
-# 	StoreID = db.Column(db.String(10), primary_key = True, db.ForeignKey('store.StoreID'), nullable = False)
-# 	BookID = db.Column(db.String(10), primary_key = True,db.ForeignKey('book.BookID'))
-# 	Quantity = db.Column(db.Integer, default = 0)
+
+
+#class Store(db.Model):
+#    StoreID = db.Column(db.Integer, primary_key = True)
+#    Phone = db.Column(db.String(15))
+#    Address = db.Column(db.String(length = 200, convert_unicode = True), nullable = False)
+
+
 
 
 class Orders(db.Model):
-    OrderID = db.Column(db.String(length = 16), primary_key = True)
-    UserID = db.Column(db.String(length = 16), db.ForeignKey('user.UserID'), nullable = False)
+    OrderID = db.Column(db.Integer, primary_key = True)
+    UserID = db.Column(db.Integer, db.ForeignKey('user.UserID'), nullable = False)
     Date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow())
     isDelivery = db.Column(db.Boolean, default = 0)
     TotalPrice = db.Column(db.Integer)
 
 class OrderDetails(db.Model):
-    OrderID = db.Column(db.String(length = 16), db.ForeignKey('orders.OrderID'), primary_key = True)
-    BookID = db.Column(db.String(length = 100), db.ForeignKey('book.BookID'), primary_key = True)
+    OrderID = db.Column(db.Integer, db.ForeignKey('orders.OrderID'), primary_key = True)
+    BookID = db.Column(db.Integer, db.ForeignKey('book.BookID'), primary_key = True)
     Quantity = db.Column(db.Integer, default = 1)
