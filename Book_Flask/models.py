@@ -53,12 +53,27 @@ class Book(db.Model):
     BookID = db.Column(db.Integer, primary_key = True)
     Title = db.Column(db.String(length = 150, convert_unicode = True), nullable = False)
     ISBN = db.Column(db.String(13), unique = True)
-    Authors = db.Column(db.String(length = 250, convert_unicode = True))
+    ISBN13 = db.Column(db.String(length = 100), unique = True)
+    AuthorsID = db.Column(db.String(length = 250, convert_unicode = True))
     PublicationYear = db.Column(db.Integer)
     ImgUrl = db.Column(db.String(100), default = 'default_book.jpg')
     Price = db.Column(db.Integer, default = 100)
     AvgRating = db.Column(db.Integer)
     Quantity = db.Column(db.Integer, default = 0)
+    GenreID = db.Column(db.Integer, db.ForeignKey('genre.GenreID'), nullable = False)
+
+
+class Genre(db.Model):
+    GenreID = db.Column(db.Integer, primary_key = True)
+    Name = db.Column(db.String(length = 100, convert_unicode = True), nullable = False)
+
+
+class Author(db.Model):
+    AuthorID = db.Column(db.Integer, primary_key = True)
+    Name = db.Column(db.String(length = 250, convert_unicode = True))
+
+
+
 
 
 
