@@ -51,10 +51,9 @@ class User(db.Model, UserMixin):
 
 class Book(db.Model):
     BookID = db.Column(db.Integer, primary_key = True)
-    Title = db.Column(db.String(length = 150, convert_unicode = True), nullable = False)
+    Title = db.Column(db.Text(convert_unicode = True), nullable = False)
     ISBN = db.Column(db.String(13), unique = True)
-    ISBN13 = db.Column(db.String(length = 100), unique = True)
-    AuthorsID = db.Column(db.String(length = 250, convert_unicode = True))
+    AuthorsID = db.Column(db.Text(convert_unicode = True))
     PublicationYear = db.Column(db.Integer)
     ImgUrl = db.Column(db.String(100), default = 'default_book.jpg')
     Price = db.Column(db.Integer, default = 100)
