@@ -4,7 +4,7 @@ $(window).on('scroll', function() {
 		$('#my-navbar').addClass('black');
 	}
 	else {
-		$('#my-navbar').removeClass('black')
+		$('#my-navbar').removeClass('black');
 	}
 })
 
@@ -33,3 +33,13 @@ function open_message() {
 function close_message() {
 	$('.message-modal')[0].style.display = 'none';
 }
+
+//----------------------------------------------- resitrct legth title
+$('.card-title').ready(function(){
+	$('.card-title').each(function(){
+		len = $(this).text().length;
+		if (len>50){
+			$(this).text($(this).text().substr(0, 50)+' ...');
+		}
+	})
+})

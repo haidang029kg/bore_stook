@@ -3,10 +3,6 @@ html, body{
   padding:0 !important;
 }
 
-#bootstrap-overrides {
-	background: url(/static/image/background/body-background.jpg);
-}
-
 #bootstrap-overrides .my-container {
 	padding: 0;
 	margin: 0;
@@ -148,7 +144,6 @@ nav.black {
 }
 
 #sec-flash-sale div {
-	height: 200px;
 	text-align: center;
 	align-items: center;
 }
@@ -162,34 +157,41 @@ nav.black {
 }
 
 #sec-category div {
-	height: 150px;
 	text-align: center;
 	align-items: center;
 }
 
-/* ---------------------------------------------- section adding recently and news */
-#sec-recently-and-news {
-	float: left;
-	display: flex;
+/* ---------------------------------------------- section items */
+#sec-items {
 	margin: 10px 5px 0 5px;
-	width: 100%;
+	height: 1200px;
 }
 
-#sec-recently-and-news #recently {
-	width: 85%;
-	height: 800px;
-}
-
-#sec-recently-and-news #news {
-	width: 14%;
-	height: 800px;
-}
-
-#sec-recently-and-news div {
+#sec-items div {
 	text-align: center;
 	align-items: center;
+	float: left;
+	margin: 13px;
 }
 
+#page-num {
+	width: 100%;
+	justify-content: space-around;
+    display: flex;
+    float: none;
+}
+
+.card img {
+	height: 185px;
+	border-radius: 8px;
+}
+
+.card-body a {
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	margin: 0 0 0 -25%;
+}
 
 
 /* ---------------------------------------------- register login */
@@ -203,10 +205,6 @@ nav.black {
 .div-reg-log {
 	width: 500px;
 }
-
-
-
-
 
 
 /*---------------------------------------------------------------------*/
