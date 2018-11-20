@@ -4,8 +4,14 @@ $(window).on('scroll', function() {
 		$('#my-navbar').addClass('black');
 	}
 	else {
-		$('#my-navbar').removeClass('black')
+		$('#my-navbar').removeClass('black');
 	}
+})
+
+
+// --------------------------------------------- scroll to container
+$('.btn-scrollauto').on('click', function(){
+	scrollTo(500);
 })
 
 
@@ -27,3 +33,13 @@ function open_message() {
 function close_message() {
 	$('.message-modal')[0].style.display = 'none';
 }
+
+//----------------------------------------------- resitrct legth title
+$('.card-title').ready(function(){
+	$('.card-title').each(function(){
+		len = $(this).text().length;
+		if (len>50){
+			$(this).text($(this).text().substr(0, 50)+' ...');
+		}
+	})
+})

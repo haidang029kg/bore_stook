@@ -1,0 +1,27 @@
+<section id="sec-items">
+    {% for item in items.items %}
+        <div class="card" style="width: 15rem; height: 30rem;">
+                <img class="card-img-top" src="{{ item.ImgUrl }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.Title }}</h5>
+                    <h6 class="card-text"> {{ item.Price }} $</h6>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+        </div>
+    {% endfor %}
+    <section id="page-num">
+        <div>
+            {% for page_num in items.iter_pages(left_edge = 1, right_edge = 1, left_current = 4, right_current = 4) %}
+                {% if page_num %}
+                    {% if items.page == page_num %}
+                        <a class="btn btn-info mb-2" href="{{ url_for('main.home', page = page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page = page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+</section>

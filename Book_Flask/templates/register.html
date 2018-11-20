@@ -1,6 +1,5 @@
 {% extends 'layout.html' %}
 {% block body %}
-	{% include 'includes/_flash-sale.html' %}
 	<section class="sec-reg-log div-center">
 		<div class="div-reg-log content-section div-center div-bg-white border-green-double">
 			<form method="POST" action="">
@@ -8,16 +7,29 @@
 				<fieldset class="form-group">
 					<legend class="border-bottom mb-4">Register</legend>
 					<dir class="form-group">
-						{{ form.name.label(class="form-control-label") }}
-						{% if form.name.errors %}
-							{{ form.name(class="form-control form-control-lg is-invalid") }}
+						{{ form.fname.label(class="form-control-label") }}
+						{% if form.fname.errors %}
+							{{ form.fname(class="form-control form-control-lg is-invalid") }}
 							<div class="invalid-feedback">
-								{% for error in form.name.errors  %}
+								{% for error in form.fname.errors  %}
 									<span>{{ error }}</span>
 								{% endfor%}
 							</div>
 						{% else %}
-							{{ form.name(class="form-control form-control-lg") }}
+							{{ form.fname(class="form-control form-control-lg") }}
+						{% endif %}
+					</dir>
+					<dir class="form-group">
+						{{ form.lname.label(class="form-control-label") }}
+						{% if form.lname.errors %}
+							{{ form.lname(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.lname.errors  %}
+									<span>{{ error }}</span>
+								{% endfor%}
+							</div>
+						{% else %}
+							{{ form.lname(class="form-control form-control-lg") }}
 						{% endif %}
 					</dir>
 					<dir class="form-group">
