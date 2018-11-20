@@ -25,10 +25,7 @@ def send_token_reset(user):
                     sender = 'no-reply@gmail.com',
                     recipients = [user.Email])
     
-    msg.body = f'''To reset your password, visit the following link:
-{url_for('user.reset_passwd', token = token, _external = True)}
-If you did not make this request then simply ignore this email and no changes will be made.
-'''
+    msg.body = "To reset your password, visit the following link:\n{url_for('user.reset_passwd', token = token, _external = True)}\nIf you did not make this request then simply ignore this email and no changes will be made."
 
     mail.send(msg)
 
@@ -41,10 +38,7 @@ def send_token_register(user):
                     sender = 'no-reply@gmmail.com',
                     recipients = [user.Email])
     
-    msg.body = f'''To activate your account, click the following link to complete:
-{url_for('user.register_token', token = token, _external = True)}
-If you did not make this request then simply ignore this email and no changes will be made.
-'''
+    msg.body = "To activate your account, click the following link to complete:\n{url_for('user.register_token', token = token, _external = True)}\nIf you did not make this request then simply ignore this email and no changes will be made."
 
     mail.send(msg)
 

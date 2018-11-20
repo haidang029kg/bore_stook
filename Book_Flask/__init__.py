@@ -5,12 +5,17 @@ from flask_login import LoginManager
 from flask_mail import Mail
 
 import os
-
-URI = 'mysql+pymysql://flask:Flask_123@localhost/test?unix_socket=/cloudsql/final-thesis-100496:asia-east2:borestook'
+LOCAL_URI = 'mysql+pymysql://flask:Flask_123@127.0.0.1:3306/borestook'
+LIVE_URI = 'mysql+pymysql://flask:Flask_123@localhost/test?unix_socket=/cloudsql/final-thesis-100496:asia-east2:borestook'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-app.config['SQLALCHEMY_DATABASE_URI'] = URI
+
+if os.environ.get('GAE_INSTANCE'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = LIVE_URI
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = LOCAL_URI
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
