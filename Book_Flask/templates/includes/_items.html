@@ -3,9 +3,11 @@
         <div class="card" style="width: 15rem; height: 30rem;">
                 <img class="card-img-top" src="{{ item.ImgUrl }}">
                 <div class="card-body">
-                    <h5 class="card-title">{{ item.Title }}</h5>
-                    <h6 class="card-text"> {{ item.Price }} $</h6>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h4 class="card-title">{{ item.Title }}</h4>
+                    <div>
+                        <h5 class="card-text"> {{ item.Price }} $</h5>
+                        <a href="#" class="btn btn-primary">Add To Cart</a>
+                    </div>
                 </div>
         </div>
     {% endfor %}
