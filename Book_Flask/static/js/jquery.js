@@ -45,11 +45,22 @@ $('.card-title').ready(function(){
 });
 
 
-//--------------------------------------------- hover to show accoung
+//--------------------------------------------- hover to show account
 $(document).ready(function(){
 	$('.dropdown').hover(function(){
 		$('.dropdown-content').css('display', 'block');
 	}, function(){
 		$('.dropdown-content').css('display', 'none');
 	});
+});
+
+
+//----------------------------------------------- modal extra book infor
+$(document).ready(function(){
+	for (var i = 0; i < 20; i++){
+		$('.card').eq(i).on('click', {value : i}, function(){
+			var mess = $(this).children('.card-title').text();
+			console.log(mess);
+		});
+	}
 });
