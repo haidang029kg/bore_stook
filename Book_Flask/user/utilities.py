@@ -41,9 +41,8 @@ def send_token_register(user):
                     sender = 'no-reply@gmmail.com',
                     recipients = [user.Email])
     
-    msg.body = f'''To activate your account, click the following link to complete:
+    msg.body = f'''Register completely, click link below to continue:
 {url_for('user.register_token', token = token, _external = True)}
-If you did not make this request then simply ignore this email and no changes will be made.
 '''
 
     mail.send(msg)

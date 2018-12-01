@@ -108,7 +108,7 @@ nav.black {
 	width: 800px;
 	height: 500px;
 	position: absolute;
-	top: 100vh;
+	top: 20%;
 	justify-content: center;
 	display: none;
 }
@@ -132,27 +132,6 @@ nav.black {
 
 .search-modal-content .close {
 	font-size: 50px;
-}
-
-
-/* ------------------------------------------------------------ message modal */
-.message-modal {
-	width: 300px;
-	height: 200px;
-	position: absolute;
-	top: 30vh;
-	justify-content: center;
-	display: none;
-}
-
-.message-modal-content {
-	width: 300px;
-	height: 200px;
-	background-color: white;
-	border-radius: 20px;
-	text-align: center;
-	padding: 0;
-	margin: 0;
 }
 
 
@@ -184,6 +163,10 @@ nav.black {
 /* ---------------------------------------------- section items */
 #sec-items {
 	margin: 10px 5px 0 5px;
+}
+
+#sec-items ul {
+	list-style: none;
 }
 
 #sec-items div {
@@ -233,6 +216,27 @@ nav.black {
 	bottom: 0;
 }
 
+/* -----------------------------------------------modal extra book info*/
+#ModalExtraInfo .modal-body div {
+	margin: 1%;
+	float: left;
+}
+
+.extra-img {
+	width: 45%;
+}
+
+.extra-img img {
+	width: 100%;
+	height: 100%;
+}
+
+.extra-info {
+	width: 50%;
+}
+
+
+
 /* ---------------------------------------------- register login */
 .sec-reg-log {
 	margin-top: 10px;
@@ -244,6 +248,14 @@ nav.black {
 .div-reg-log {
 	width: 500px;
 }
+
+
+
+
+
+
+
+
 
 
 /*---------------------------------------------------------------------*/

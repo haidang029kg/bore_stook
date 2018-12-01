@@ -57,7 +57,7 @@ class Book(db.Model):
     PublicationYear = db.Column(db.Integer)
     ImgUrl = db.Column(db.String(100), default = 'default_book.jpg')
     Price = db.Column(db.Integer, default = 100)
-    AvgRating = db.Column(db.Integer)
+    AvgRating = db.Column(db.Float)
     Quantity = db.Column(db.Integer, default = 0)
     GenreID = db.Column(db.Integer, db.ForeignKey('genre.GenreID'), nullable = False)
 

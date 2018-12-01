@@ -1,4 +1,4 @@
-// ---------------------------------------------- navigation bar
+// ---------------------------------------------- on scroll
 $(window).on('scroll', function() {
 	if($(window).scrollTop()) {
 		$('#my-navbar').addClass('black');
@@ -6,18 +6,16 @@ $(window).on('scroll', function() {
 	else {
 		$('#my-navbar').removeClass('black');
 	}
-});
-
-
-// --------------------------------------------- scroll to container
-$('.btn-scrollauto').on('click', function(){
-	scrollTo(500);
+	if($('.search-modal').css('display') == 'flex'){
+		$(".search-modal").stop().animate({"marginTop": ($(window).scrollTop()) + "px", "marginLeft":($(window).scrollLeft()) + "px"}, "slow" );
+	}
 });
 
 
 // --------------------------------------------- advance search
-function advance_search() {	
+function advance_search() {
 	$('.search-modal')[0].style.display = 'flex';
+	$(".search-modal").stop().css("marginTop", ($(window).scrollTop()) + "px").css("marginLeft",($(window).scrollLeft()) + "px");
 };
 
 function close_search() {
@@ -57,10 +55,47 @@ $(document).ready(function(){
 
 //----------------------------------------------- modal extra book infor
 $(document).ready(function(){
-	for (var i = 0; i < 20; i++){
+	/*for (var i = 0; i < 20; i++){
 		$('.card').eq(i).on('click', {value : i}, function(){
-			var mess = $(this).children('.card-title').text();
+			var mess = $(this).attr('data-id');
 			console.log(mess);
 		});
+	}*/
+	$('.card').on('click', function(e){
+		var clicked = $(this).attr('data-id');
+		$.ajax({
+			data : {
+				id : clicked
+			},
+			type :'POST',
+			dataType : 'json',
+			url : '/book_detail',
+			success : function(result){
+				$('#ModalExtraInfo').modal('show');
+				$('.modal-title').text(result.Title);
+				$('.extra-img img').attr('src', result.ImgUrl);
+
+				$('#tb-price').text(result.Price);
+				$('#tb-quan').text(result.Quantity);
+				$('#tb-rating').text(result.AvgRating);
+				$('#tb-ISBN').text(result.ISBN);
+				$('#tb-public').text(result.PublicationYear);
+				$('#tb-genre a').text(result.GenreName);
+				$('#tb-author').text(result.AuthorsID);
+			},
+			error : function(result){
+				$('#ModalExtraInfo').modal('show');
+				$('.modal-title').text('Unavailable');
+			}
+		});
+	});
+});
+
+//------------------------------------------ auto-scroll
+$(document).ready(function(){
+	if ($(".div-reg-log")[0]){
+	$("html, body").animate({
+	scrollTop: $(".div-reg-log").offset().top - 100
+	},2000);
 	}
 });
