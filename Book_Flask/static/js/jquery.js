@@ -7,7 +7,7 @@ $(window).on('scroll', function() {
 		$('#my-navbar').removeClass('black');
 	}
 	if($('.search-modal').css('display') == 'flex'){
-		$(".search-modal").stop().animate({"marginTop": ($(window).scrollTop()) + "px", "marginLeft":($(window).scrollLeft()) + "px"}, "slow" );
+		$(".search-modal").stop().animate({"marginTop": ($(window).scrollTop()) + "px", "marginLeft":($(window).scrollLeft()) + "px"}, 500);
 	}
 });
 
@@ -96,6 +96,6 @@ $(document).ready(function(){
 	if ($(".div-reg-log")[0]){
 	$("html, body").animate({
 	scrollTop: $(".div-reg-log").offset().top - 100
-	},2000);
+	},1000);
 	}
 });

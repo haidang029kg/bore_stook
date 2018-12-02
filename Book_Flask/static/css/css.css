@@ -15,6 +15,7 @@ html, body{
 	width: 100%;
 	transition: .3s;
 	height: 80px;
+	z-index: 2;
 }
 
 #my-navbar li {
@@ -111,6 +112,7 @@ nav.black {
 	top: 20%;
 	justify-content: center;
 	display: none;
+	z-index: 1;
 }
 
 .advance-search-close-btn{

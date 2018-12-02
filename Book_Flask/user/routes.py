@@ -57,13 +57,13 @@ def register_token(token):
 
     if user is None:
         flash('That is an invalid or expired token', 'warning')
-
         return redirect(url_for('user.register'))
 
-    flash('Register completely!!! Now you can login', 'info')
-    
-    return render_template('home.html', title = 'Home')
+    else:
+        flash('Register completely!!! Now you can login', 'info')
+        return redirect(url_for('user.login'))
 
+    return redirect(url_for('user.register'))
 
 
 @user.route("/login", methods = ['GET', 'POST'])
