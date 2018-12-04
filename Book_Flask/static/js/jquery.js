@@ -7,7 +7,7 @@ $(window).on('scroll', function() {
 		$('#my-navbar').removeClass('black');
 	}
 	if($('.search-modal').css('display') == 'flex'){
-		$(".search-modal").stop().animate({"marginTop": ($(window).scrollTop()) + "px", "marginLeft":($(window).scrollLeft()) + "px"}, 500);
+		$('.search-modal').stop().animate({'marginTop': ($(window).scrollTop()) + 'px', 'marginLeft':($(window).scrollLeft()) + 'px'}, 500);
 	}
 });
 
@@ -15,13 +15,22 @@ $(window).on('scroll', function() {
 // --------------------------------------------- advance search
 function advance_search() {
 	$('.search-modal')[0].style.display = 'flex';
-	$(".search-modal").stop().css("marginTop", ($(window).scrollTop()) + "px").css("marginLeft",($(window).scrollLeft()) + "px");
+	$('.search-modal').stop().css('marginTop', ($(window).scrollTop()) + 'px').css('marginLeft',($(window).scrollLeft()) + 'px');
 };
 
 function close_search() {
 	$('.search-modal')[0].style.display = 'none';
 };
 
+// --------------------------------------------- login box
+function open_login() {
+	$('.login-modal')[0].style.display = 'flex';
+	$('.login-modal').stop().css('marginTop', ($(window).scrollTop()) + 'px').css('marginLeft',($(window).scrollLeft()) + 'px');
+};
+
+function close_login() {
+	$('.login-modal')[0].style.display = 'none';
+};
 
 // --------------------------------------------- message popup
 function open_message() {	
@@ -93,9 +102,10 @@ $(document).ready(function(){
 
 //------------------------------------------ auto-scroll
 $(document).ready(function(){
-	if ($(".div-reg-log")[0]){
-	$("html, body").animate({
-	scrollTop: $(".div-reg-log").offset().top - 100
-	},1000);
+	if ($('.div-reg-log')[0]){
+		$('html, body').animate({
+			scrollTop: $('.div-reg-log').offset().top - 100
+			},2000);
 	}
 });
+
