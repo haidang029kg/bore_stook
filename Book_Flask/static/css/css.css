@@ -7,6 +7,7 @@ html, body{
 	padding: 0;
 	margin: 0;
 	width: 100%;
+	height: fit-content;
 }
 
 /* ---------------------------------------------- navigation bar */
@@ -237,8 +238,6 @@ nav.black {
 	width: 50%;
 }
 
-
-
 /* ---------------------------------------------- register login */
 .sec-reg-log {
 	margin-top: 10px;
@@ -249,16 +248,8 @@ nav.black {
 
 .div-reg-log {
 	width: 500px;
+	height: fit-content;
 }
-
-
-
-
-
-
-
-
-
 
 /*---------------------------------------------------------------------*/
 .div-center {
@@ -284,4 +275,27 @@ nav.black {
 
 .mt--5 {
 	margin-top: 40px;
+}
+
+/*---------------------------------------------  form control*/
+
+.form-control-label {
+	font-style: italic;
+	font-size: 110%;
+}
+
+.account-img {
+	border-radius: 10px;
+}
+
+.title {
+	margin-top: 18px;
+}
+
+.media{
+	margin-bottom: 20px;
+}
+
+.border-top{
+	margin-bottom: 5px;
 }

@@ -14,7 +14,7 @@ def home():
 	#items = Book.query.order_by(Book.Title.asc()).paginate(page = page, per_page = per_page)
 	items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(Book.Title.asc()).paginate(page = page, per_page = per_page)
 	db.session.close()
-	
+	print (len(items.items))
 	return render_template('home.html', title = 'Home page', items = items)
 
 
