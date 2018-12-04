@@ -31,15 +31,6 @@ def book_detail():
 	string_temp = 'select Name from genre where GenreID = ' + str(book_temp.GenreID)
 	genre_name = db.session.execute(string_temp).first()[0]
 	
-	#list_authorID = book_temp.AuthorsID.split(',')
-	
-	#list_authorName = []
-
-	#for i in list_authorID:
-	#	string_temp = 'select Name from author where AuthorID = ' + str(i)
-	#	list_authorName.append(str(db.session.execute(string_temp).first()[0]))
-	
-	#dic_author = dict(zip(list_authorID, list_authorName))
 	db.session.close()
 
 	if book_temp:
@@ -55,4 +46,27 @@ def book_detail():
 						'GenreID' : book_temp.GenreID,
 						'GenreName' : genre_name})
 	
-	return jsonify({'error' : 'Wrong!'})
+	return jsonify({'error' : 'error!'})
+
+
+@main.route("/list_authors", methods = ['POST'])
+def list_authors():
+	string_ids = request.form.getlist('list_id')
+	string_ids = string_ids[0]
+
+	lis_ids = string_ids.split(',')
+	lis_names = []
+
+	for i in lis_ids:
+		i = i.strip()
+		string_temp = 'select Name from author where AuthorID = ' + str(i)
+		lis_names.append(db.session.execute(string_temp).first()[0])
+
+	db.session.close()
+
+	dict_authors = dict(zip(lis_ids, lis_names))
+	
+	if dict_authors:
+		return jsonify(dict_authors)
+
+	return jsonify({'error' : 'error!'})

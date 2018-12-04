@@ -81,7 +81,27 @@ $(document).ready(function(){
 				$('#tb-ISBN').text(result.ISBN);
 				$('#tb-public').text(result.PublicationYear);
 				$('#tb-genre a').text(result.GenreName);
-				$('#tb-author').text(result.AuthorsID);
+				
+				$.ajax({
+					data : {
+						list_id : result.AuthorsID
+					},
+					type : 'POST',
+					dataType : 'json',
+					url : '/list_authors',
+					success : function(result_2){
+						$('#tb-author ul').remove()
+						$('#tb-author').prepend('<ul></ul>');
+						var count = Object.keys(result_2).length;
+						$.each(result_2, function(key, value){
+							$('#tb-author ul').prepend('<li><a href = "">'+ value +'</a></li>');
+						});
+					},
+					error : function(result_2){
+						$('#ModalExtraInfo').modal('show');
+						$('.modal-title').text('Unavailable');
+					}
+				});
 			},
 			error : function(result){
 				$('#ModalExtraInfo').modal('show');
