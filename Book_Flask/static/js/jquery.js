@@ -90,7 +90,8 @@ $(document).ready(function(){
 				$('#tb-ISBN').text(result.ISBN);
 				$('#tb-public').text(result.PublicationYear);
 				$('#tb-genre a').text(result.GenreName);
-				
+				var temp_link = '/home/genre/' + String(result.GenreID)
+				$('#tb-genre a').attr("href", temp_link)
 				$.ajax({
 					data : {
 						list_id : result.AuthorsID
@@ -103,7 +104,8 @@ $(document).ready(function(){
 						$('#tb-author').prepend('<ul></ul>');
 						var count = Object.keys(result_2).length;
 						$.each(result_2, function(key, value){
-							$('#tb-author ul').prepend('<li><a href = "">'+ value +'</a></li>');
+							var temp_link = '/home/author/' + String(key)
+							$('#tb-author ul').prepend('<li><a href = "' + temp_link + '">'+ value +'</a></li>');
 						});
 					},
 					error : function(result_2){

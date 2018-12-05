@@ -1,5 +1,8 @@
 {% extends 'layout.html' %}
 {% block body %}
-	  
-	  {% include 'includes/_items.html' %}
+{% if items.items %}
+{% include 'includes/_items.html' %}
+{% else %}
+{% include 'includes/_items_for_list_type.html' %}
+{% endif %}
 {% endblock %}

@@ -11,14 +11,35 @@ def home():
 	page = request.args.get('page', 1, type = int)
 	per_page = 20
 
-	#items = Book.query.order_by(Book.Title.asc()).paginate(page = page, per_page = per_page)
 	items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(Book.Title.asc()).paginate(page = page, per_page = per_page)
 	db.session.close()
-	print (len(items.items))
+
 	return render_template('home.html', title = 'Home page', items = items)
 
 
 
+@main.route("/home/author/<int:authorid>", methods = ['GET'])
+def home_author(authorid):
+	string_temp = 'select BookID, Title, ImgUrl, Price from book where FIND_IN_SET(+' + str(authorid) + ', AuthorsID);'
+	
+	items = db.session.execute(string_temp).fetchall()
+
+	db.session.close()
+
+	return render_template('home.html', title = 'Filter by author', items = items)
+
+
+
+@main.route("/home/genre/<int:genreid>", methods = ['GET'])
+def home_genre(genreid):
+	page = request.args.get('page', 1, type = int)
+	per_page = 20
+
+	items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter_by(GenreID = genreid).order_by(Book.Title.asc()).paginate(page = page, per_page = per_page)
+	
+	db.session.close()
+
+	return render_template('home.html', title = 'Filter by gnere', items = items)
 
 @main.route("/book_detail", methods = ['POST'])
 def book_detail():
