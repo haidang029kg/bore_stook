@@ -186,39 +186,6 @@ nav.black {
     float: none;
 }
 
-.card {
-	border-style: double;
-	border-width: 5px;
-	border-color: green;
-}
-
-.card img {
-	height: 250px;
-}
-
-.card-body {
-	display: flex;
-	justify-content: center;
-	padding: 0;
-	margin: 0;
-	position: relative;
-	width: 100%;
-}
-
-.card-body h4 {
-	position: absolute;
-	top: 10px;
-}
-
-.card-body h5 {
-	font-weight: bold;
-}
-
-.card-body div {
-	position: absolute;
-	bottom: 0;
-}
-
 /* -----------------------------------------------modal extra book info*/
 #ModalExtraInfo .modal-body div {
 	margin: 1%;
@@ -299,3 +266,46 @@ nav.black {
 .border-top{
 	margin-bottom: 5px;
 }
+
+
+/*------------------------------------------ card edit*/
+.card {
+	border-style: double;
+	border-width: 5px;
+	border-color: green;
+	margin-left: 15%;
+	width: 70%;
+	height: 30rem;
+}
+
+.card img {
+	height: 250px;
+}
+/*
+.card-body {
+	display: flex;
+	justify-content: center;
+	padding: 0;
+	margin: 0;
+	position: relative;
+	width: 100%;
+}
+
+.card-body h4 {
+	position: absolute;
+	top: 10px;
+}
+
+.card-body h5 {
+	font-weight: bold;
+}
+
+.card-body div {
+	position: absolute;
+	bottom: 0;
+}
+*/
+.card-columns {
+	column-count: 4;
+}
+
