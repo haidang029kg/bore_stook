@@ -50,12 +50,20 @@ html, body{
 	border-radius: 10px;
 }
 
-nav.black {
-	background-color: black;
-	
+.txt-black{
+	color: black !important;
+} 
+
+nav.opa-lblue {
+	background-color: #ccefff;
+	opacity: 0.8;
 	height: 80px;
 	border-radius: 0 0 10px 10px;
 	border-width: 10px;
+}
+
+nav.opa-lblue:hover {
+	opacity: 1;
 }
 
 .dropdown .dropbtn {
@@ -269,12 +277,48 @@ nav.black {
 
 
 /*------------------------------------------ card edit*/
-.card {
-	border-style: double;
-	border-width: 5px;
-	border-color: green;
+.btn-primary {
+    background-color: #ccefff;
+    border-color: #ccefff;
+    color: #000000;
+}
+
+.btn-primary:hover {
+	background-color: #006600;
+	border-color:  #006600;
 }
 
 .card-columns {
 	column-count: 5;
 }
+
+.mb-2 {
+    margin-bottom: 1.5rem!important;
+}
+
+.card {
+	background-color: #f2f2f3;
+	border-radius: 1rem;
+}
+
+.card-img-top {
+    width: 90%;
+	margin-top: 1rem;
+	border-radius: 0.5rem;
+}
+
+
+button.btn.btn-success.my-2.my-sm-0:hover {
+	background-color:#006600 !important;
+	color: white !important;
+}
+
+button.btn.btn-outline-success.my-2.my-sm-0:hover {
+	background-color:#006600 !important;
+	color: white !important;
+}
+
+a.nav-link:hover {
+	text-decoration: underline !important;
+}
+
