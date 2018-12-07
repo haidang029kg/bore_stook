@@ -1,13 +1,16 @@
 <div class="contianer">
     <div class="card-columns text-center">
         {% for item in items.items %}
-            <div class="card" data-id="{{ item.BookID }}" style="width: 15vw;height: 27vw;">
-                <img class="card-img-top" src="{{ item.ImgUrl }}" style="height: 16vw">
-                <div class="card-body" style="height: 7.5vw;">
-                    <h5 class="card-title" style="font-size: 1.2vw">{{ item.Title }}</h5>
-                    <h4 class="card-text" style="font-size: 1vw"> {{ item.Price }} $</h4>
+            <div class="card" data-id="{{ item.BookID }}" style="width: 200px;height: 400px;">
+                <img class="card-img-top" src="{{ item.ImgUrl }}" style="height: 240px">
+                <div class="card-body" style="height: 150px;">
+                    <h5 class="card-title" style="font-size: 16px">{{ item.Title }}</h5>
+                    <h4 class="card-text"> {{ item.Price }} $   </h4>
+                    <a href="#" class="btn btn-primary" style="width:100px; height: 33px; font-size: 14px;" >
+                        Add To Cart
+                    </a>
                 </div>
-                <a href="#" class="btn btn-primary" style="width: 7vw; height: 2.2vw; font-size: 1vw;" >Add To Cart</a>
+                
             </div>
         {% endfor %}
     </div>

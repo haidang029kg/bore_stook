@@ -56,3 +56,9 @@ def book_detail():
 						'GenreName' : genre_name})
 	
 	return jsonify({'error' : 'Wrong!'})
+
+
+
+@main.route("/checkout")
+def checkout():
+    return render_template('cart.html')

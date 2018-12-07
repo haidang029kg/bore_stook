@@ -49,8 +49,8 @@ function close_message() {
 $('.card-title').ready(function(){
 	$('.card-title').each(function(){
 		len = $(this).text().length;
-		if (len>50){
-			$(this).text($(this).text().substr(0, 50)+' ...');
+		if (len>40){
+			$(this).text($(this).text().substr(0, 40)+' ...');
 		}
 	});
 });

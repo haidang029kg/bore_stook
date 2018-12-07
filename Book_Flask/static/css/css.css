@@ -78,6 +78,8 @@ nav.opa-lblue:hover {
 	width: 100%;
 	position: absolute;
 	top: 35px;
+	background-color: green;
+	border-radius:  0 0 10px 10px;
 }
 .dropdown-content a {
     float: none;
@@ -280,7 +282,10 @@ nav.opa-lblue:hover {
 .btn-primary {
     background-color: #ccefff;
     border-color: #ccefff;
-    color: #000000;
+	color: #000000;
+	position: absolute;
+	bottom: 10px;
+	left: 51px;
 }
 
 .btn-primary:hover {
@@ -290,6 +295,8 @@ nav.opa-lblue:hover {
 
 .card-columns {
 	column-count: 5;
+	width: 1200px;
+	margin: auto;
 }
 
 .mb-2 {
@@ -303,10 +310,9 @@ nav.opa-lblue:hover {
 
 .card-img-top {
     width: 90%;
-	margin-top: 1rem;
-	border-radius: 0.5rem;
+	margin-top: 10px;
+	border-radius: 10px;
 }
-
 
 button.btn.btn-success.my-2.my-sm-0:hover {
 	background-color:#006600 !important;
@@ -322,3 +328,54 @@ a.nav-link:hover {
 	text-decoration: underline !important;
 }
 
+.card-text {
+	position: absolute;
+    left: 85px;
+	bottom: 40px;
+	font-size: 14px; 
+	color: green;
+}
+
+
+/*--------------------------------- cart edit */
+.table{
+	width: 1200px;
+}
+.table>tbody>tr>td, .table>tfoot>tr>td{
+    vertical-align: middle;
+}
+@media screen and (max-width: 600px) {
+    table#cart tbody td .form-control{
+		width:20%;
+		display: inline !important;
+	}
+	.actions .btn{
+		width:36%;
+		margin:1.5em 0;
+	}
+	
+	.actions .btn-info{
+		float:left;
+	}
+	.actions .btn-danger{
+		float:right;
+	}
+	
+	table#cart thead { display: none; }
+	table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
+	table#cart tbody tr td:first-child { background: #333; color: #fff; }
+	table#cart tbody td:before {
+		content: attr(data-th); font-weight: bold;
+		display: inline-block; width: 8rem;
+	}
+	
+	
+	
+	table#cart tfoot td{display:block; }
+	table#cart tfoot td .btn{display:block;}
+	
+}
+
+.cart-container{
+	margin: auto;
+}

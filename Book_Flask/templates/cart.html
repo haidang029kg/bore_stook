@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="cart-container div-center">
+    <table id="cart" class="table table-hover table-condensed">
+        <!--header of table-->
+        <thead>
+            <tr>
+                <th style="width:55%">Product</th>
+                <th style="width:10%">Price</th>
+                <th style="width:8%">Quantity</th>
+                <th style="width:22%" class="text-center">Subtotal</th>
+                <th style="width:5%"></th>
+            </tr>
+        </thead>
+        <!--List product-->
+        <tbody>
+            <tr>
+                <td data-th="Product">
+                    <div class="row">
+                        <div class="col-sm-2 hidden-xs"><img src="https://images.gr-assets.com/books/1485991317m/8621462.jpg" alt="..." class="img-responsive"/></div>
+                        <div class="col-sm-10">
+                            <h4 class="nomargin">Product 1</h4>
+                        </div>
+                    </div>
+                </td>
+                <td data-th="Price">$1.99</td>
+                <td data-th="Quantity">
+                    <input type="number" class="form-control text-center" value="1">
+                </td>
+                <td data-th="Subtotal" class="text-center">1.99</td>
+                <td class="actions" data-th="">
+                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
+                </td>
+            </tr>
+        </tbody>
+        <!--Footer of table-->
+        <tfoot>
+            <tr>
+                <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                <td colspan="2" class="hidden-xs"></td>
+                <td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
+                <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+{% endblock %}
