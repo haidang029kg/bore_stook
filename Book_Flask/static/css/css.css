@@ -50,12 +50,20 @@ html, body{
 	border-radius: 10px;
 }
 
-nav.black {
-	background-color: black;
-	
+.txt-black{
+	color: black !important;
+} 
+
+nav.opa-lblue {
+	background-color: #ccefff;
+	opacity: 0.8;
 	height: 80px;
 	border-radius: 0 0 10px 10px;
 	border-width: 10px;
+}
+
+nav.opa-lblue:hover {
+	opacity: 1;
 }
 
 .dropdown .dropbtn {
@@ -70,6 +78,8 @@ nav.black {
 	width: 100%;
 	position: absolute;
 	top: 35px;
+	background-color: green;
+	border-radius:  0 0 10px 10px;
 }
 .dropdown-content a {
     float: none;
@@ -186,39 +196,6 @@ nav.black {
     float: none;
 }
 
-.card {
-	border-style: double;
-	border-width: 5px;
-	border-color: green;
-}
-
-.card img {
-	height: 250px;
-}
-
-.card-body {
-	display: flex;
-	justify-content: center;
-	padding: 0;
-	margin: 0;
-	position: relative;
-	width: 100%;
-}
-
-.card-body h4 {
-	position: absolute;
-	top: 10px;
-}
-
-.card-body h5 {
-	font-weight: bold;
-}
-
-.card-body div {
-	position: absolute;
-	bottom: 0;
-}
-
 /* -----------------------------------------------modal extra book info*/
 #ModalExtraInfo .modal-body div {
 	margin: 1%;
@@ -255,10 +232,6 @@ nav.black {
 .div-center {
 	display: flex;
 	justify-content: center;
-}
-
-.div-bg-white {
-	background-color: white;
 }
 
 .border-green-double {
@@ -298,4 +271,120 @@ nav.black {
 
 .border-top{
 	margin-bottom: 5px;
+}
+
+
+/*------------------------------------------ card edit*/
+.btn-card {
+    background-color: #ccefff;
+    border-color: #ccefff;
+	color: #000000;
+	position: absolute;
+	bottom: 10px;
+	left: 51px;
+	width:100px; 
+	height: 33px; 
+	font-size: 14px;
+}
+
+.btn-warning {
+	background-color: yellow;
+    border-color: yellow;
+}
+
+.btn-card:hover {
+	background-color: #006600;
+	border-color:  #006600;
+}
+
+.card-columns {
+	column-count: 5;
+	width: 1200px;
+	margin: auto;
+}
+
+.mb-2 {
+    margin-bottom: 1.5rem!important;
+}
+
+.card {
+	background-color: #f2f2f3;
+	border-radius: 1rem;
+}
+
+.card-img-top {
+    width: 90%;
+	margin-top: 10px;
+	border-radius: 10px;
+}
+
+button.btn.btn-success.my-2.my-sm-0:hover {
+	background-color:#006600 !important;
+	color: white !important;
+}
+
+button.btn.btn-outline-success.my-2.my-sm-0:hover {
+	background-color:#006600 !important;
+	color: white !important;
+}
+
+a.nav-link:hover {
+	text-decoration: underline !important;
+}
+
+.card-text {
+	position: absolute;
+    left: 85px;
+	bottom: 40px;
+	font-size: 14px; 
+	color: green;
+}
+
+
+/*--------------------------------- cart edit */
+#cart{
+	width: 1200px;
+}
+#cart>tbody>tr>td, .table>tfoot>tr>td{
+    vertical-align: middle;
+}
+
+ul {
+	list-style: none;
+}
+
+@media screen and (max-width: 600px) {
+    table#cart tbody td .form-control{
+		width:20%;
+		display: inline !important;
+	}
+	.actions .btn{
+		width:36%;
+		margin:1.5em 0;
+	}
+	
+	.actions .btn-info{
+		float:left;
+	}
+	.actions .btn-danger{
+		float:right;
+	}
+	
+	table#cart thead { display: none; }
+	table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
+	table#cart tbody tr td:first-child { background: #333; color: #fff; }
+	table#cart tbody td:before {
+		content: attr(data-th); font-weight: bold;
+		display: inline-block; width: 8rem;
+	}
+	
+	
+	
+	table#cart tfoot td{display:block; }
+	table#cart tfoot td .btn{display:block;}
+	
+}
+
+.cart-container{
+	margin: auto;
 }

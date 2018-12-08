@@ -91,3 +91,7 @@ def list_authors():
 		return jsonify(dict_authors)
 
 	return jsonify({'error' : 'error!'})
+
+@main.route("/cart")
+def cart():
+    return render_template('cart.html')

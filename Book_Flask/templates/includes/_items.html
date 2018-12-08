@@ -1,19 +1,20 @@
-<section id="sec-items">
-    {% for item in items.items %}
-    <div class="card" data-id="{{ item.BookID }}" style="width: 18%; height: 30rem;">
-        <img class="card-img-top" src="{{ item.ImgUrl }}">
-        <div class="card-body">
-            <h4 class="card-title">{{ item.Title }}</h4>
-            <div>
-                <h5 class="card-text"> {{ item.Price }} $</h5>
-                <button type="button" class="adding-cart btn btn-primary">Add to cart</button>          
+<div class="contianer">
+    <div class="card-columns text-center">
+        {% for item in items.items %}
+        <div class="card" data-id="{{ item.BookID }}" style="width: 200px;height: 400px;">
+            <img class="card-img-top" src="{{ item.ImgUrl }}" style="height: 240px">
+            <div class="card-body" style="height: 150px;">
+                <h5 class="card-title" style="font-size: 16px">{{ item.Title }}</h5>
+                <h4 class="card-text"> {{ item.Price }} $ </h4>
+                <button type="button" class="adding-cart btn btn-primary btn-card">Add to cart</button>
             </div>
+
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
     <section id="page-num">
         <div>
-            {% for page_num in items.iter_pages(left_edge = 1, right_edge = 1, left_current = 4, right_current = 4) %}
+            {% for page_num in items.iter_pages(left_edge = 1, right_edge = 1, left_current = 3, right_current = 3) %}
             {% if page_num %}
             {% if items.page == page_num %}
             <a class="btn btn-info mb-2" href="{{ url_for('main.home', page = page_num) }}">{{ page_num }}</a>
@@ -26,7 +27,7 @@
             {% endfor %}
         </div>
     </section>
-</section>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="ModalExtraInfo" role="dialog">
     <div class="modal-dialog modal-lg">

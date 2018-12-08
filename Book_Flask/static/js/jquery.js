@@ -1,10 +1,15 @@
 // ---------------------------------------------- on scroll
+
 $(window).on('scroll', function () {
 	if ($(window).scrollTop()) {
-		$('#my-navbar').addClass('black');
+		$('#my-navbar').addClass('opa-lblue');
+		$('.my-2.my-sm-0').addClass('txt-black');
+		$('.nav-link').addClass('txt-black')
 	}
 	else {
-		$('#my-navbar').removeClass('black');
+		$('#my-navbar').removeClass('opa-lblue');
+		$('.my-2.my-sm-0').removeClass('txt-black');
+		$('.nav-link').removeClass('txt-black')
 	}
 	if ($('.search-modal').css('display') == 'flex') {
 		$('.search-modal').stop().animate({ 'marginTop': ($(window).scrollTop()) + 'px', 'marginLeft': ($(window).scrollLeft()) + 'px' }, 500);
@@ -45,8 +50,8 @@ function close_message() {
 $('.card-title').ready(function () {
 	$('.card-title').each(function () {
 		len = $(this).text().length;
-		if (len > 50) {
-			$(this).text($(this).text().substr(0, 50) + ' ...');
+		if (len > 40) {
+			$(this).text($(this).text().substr(0, 40) + ' ...');
 		}
 	});
 });
@@ -71,6 +76,8 @@ $(document).ready(function () {
 		});
 	}*/
 	$('.card .card-img-top').on('click', function (e) {
+		e.preventDefault();
+
 		var clicked = $(this).parents('.card').attr('data-id');
 		$.ajax({
 			data: {
@@ -127,7 +134,7 @@ $(document).ready(function () {
 	if ($('.div-reg-log')[0]) {
 		$('html, body').animate({
 			scrollTop: $('.div-reg-log').offset().top - 100
-		}, 2000);
+		}, 1500);
 	}
 });
 
@@ -137,11 +144,13 @@ $(document).ready(function () {
 
 var cart = [];
 
-var Item = function (bookid, count, price) {
+var Item = function (bookid, title, count, price, image) {
 	this.bookid = bookid;
+	this.title = title;
 	this.count = count;
 	this.price = price;
-	this.count_price = price * count;
+	this.image = image;
+	this.count_price = (price * count).toFixed(2);
 };
 
 
@@ -153,8 +162,8 @@ function saveCart() {
 function loadCart() {
 	jsondata = JSON.parse(localStorage.getItem('shoppingcart'));
 
-	for ( var i in jsondata) {
-		var item = new Item(jsondata[i].bookid, jsondata[i].count, jsondata[i].price);
+	for (var i in jsondata) {
+		var item = new Item(jsondata[i].bookid, jsondata[i].title, jsondata[i].count, jsondata[i].price, jsondata[i].image);
 		cart.push(item);
 	}
 }
@@ -165,7 +174,7 @@ $(document).ready(function () {
 	}
 });
 
-function addItemToCart(bookid, count, price) {
+function addItemToCart(bookid, title, count, price, image) {
 	for (var i in cart) {
 		if (cart[i].bookid === bookid) {
 			cart[i].count += count;
@@ -174,9 +183,17 @@ function addItemToCart(bookid, count, price) {
 			return;
 		}
 	}
-	var item = new Item(bookid, count, price);
+	var item = new Item(bookid, title, count, price, image);
 	cart.push(item);
 	saveCart();
+};
+
+function updateItemCount(bookid, new_count) {
+	for (var i in cart) {
+		if (cart[i].bookid === bookid) {
+			cart[i].count = new_count;
+		}
+	}
 };
 
 function removeItemFromCart(bookid) {
@@ -213,25 +230,113 @@ function clearCart() {
 function totalCart() {
 	var totalCost = 0;
 	for (var i in cart) {
-		totalCost += cart[i].count_price;
+		totalCost += Number(cart[i].count_price);
 	}
-	return totalCost;
+	return totalCost.toFixed(2);
 };
 
+$(document).ready(function () {
+	$('.adding-cart').on('click', function (e) {
+		e.preventDefault();
 
-
-$(document).ready(function() {
-	$('.adding-cart').on('click', function () {
 		var bookid = $(this).parents('.card').attr('data-id');
+		var title = $(this).closest('.card').find('.card-title').text();
 		var count = 1;
 		var price = $(this).closest('.card').find('.card-text').text();
+		var image = $(this).closest('.card').find('img').attr('src');
+
 		price = Number(price.substr(0, price.length - 2));
 
-		addItemToCart(bookid, count, price);
+		addItemToCart(bookid, title, count, price, image);
 
 		$(this).text('Added');
 		$(this).addClass('btn-warning');
-
-		console.log(cart);
 	});
+});
+
+
+function displayCart() {
+	var output = '';
+	for (var i in cart) {
+		var bookid = cart[i].bookid
+		var title = cart[i].title;
+		var count = cart[i].count;
+		var image = cart[i].image;
+		var price = cart[i].price;
+		var count_price = cart[i].count_price;
+
+		output += "<tr data-bookid=" + bookid + "><td data-th='Product'><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + image + "' alt='...' class='img-responsive' /></div><div class='col-sm-10'><h4 class='nomargin'>" + title + "</h4></div></div></td><td data-th='Price'>" + price + "</td><td data-th='Quantity'><input type='number' class='form-control text-center input-count' value='" + count + "'></td><td data-th='Subtotal' class='text-center price-item'>" + count_price + "</td><td class='actions' data-th=''><button class='btn btn-danger btn-sm remove-item'><i class='fa fa-trash-o'></i></button></td></tr>"
+	}
+	$('#cart-data').html(output);
+	
+	$('#num-items').fadeOut(300, function(){
+		$(this).text('Number of items: ' + cart.length);
+		$(this).fadeIn(300);
+	});
+
+	$('#total-price').fadeOut(300, function(){
+		$(this).text('Total   $' + totalCart());
+		$(this).fadeIn(300);
+	});
+}
+
+
+$(document).ready(function () {
+	displayCart();
+});
+
+
+$(document).ready(function () {
+	$('#clear-cart').on('click', function (e) {
+		e.preventDefault();
+		clearCart();
+		displayCart();
+	});
+});
+
+$(document).on('click', '.remove-item', function (e) {
+	e.preventDefault();
+	var bookid = $(this).closest('tr').attr('data-bookid');
+	removeItemFromCartAll(bookid);
+	displayCart();
+});
+
+
+$(document).on('change', '.input-count', function (e) {
+	e.preventDefault();
+	var bookid = $(this).closest('tr').attr('data-bookid');
+	var count = $(this).val();
+	var price = 0;
+	for ( var i in cart) {
+		if (cart[i].bookid === bookid) {
+			price = cart[i].price;
+			break;
+		}
+	}
+	var price_count = Number(price * count).toFixed(2);
+
+	$(this).closest('tr').find('.price-item').fadeOut(300, function () {
+		$(this).text(price_count);
+		$(this).fadeIn(300);
+	});
+
+	$('#num-items').fadeOut(300, function() {
+		$(this).text('Number of items: ' + cart.length);
+		$(this).fadeIn(300);
+	});
+
+	$('#total-price').fadeOut(300, function() {
+		$(this).text('Total   $' + totalCart());
+		$(this).fadeIn(300);
+	});
+
+	updateItemCount(bookid, count);
+});
+
+
+$(document).ready(function() {
+	$('#check-out').on('click', function (e) {
+		e.preventDefault();
+		saveCart();
+	})
 });
