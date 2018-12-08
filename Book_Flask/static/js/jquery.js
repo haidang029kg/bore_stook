@@ -97,8 +97,8 @@ $(document).ready(function () {
 				$('#tb-ISBN').text(result.ISBN);
 				$('#tb-public').text(result.PublicationYear);
 				$('#tb-genre a').text(result.GenreName);
-				var temp_link = '/home/genre/' + String(result.GenreID)
-				$('#tb-genre a').attr("href", temp_link)
+				var temp_link = '/home/genre/' + String(result.GenreID);
+				$('#tb-genre a').attr("href", temp_link);
 				$.ajax({
 					data: {
 						list_id: result.AuthorsID
@@ -111,7 +111,9 @@ $(document).ready(function () {
 						$('#tb-author').prepend('<ul></ul>');
 						var count = Object.keys(result_2).length;
 						$.each(result_2, function (key, value) {
-							var temp_link = '/home/author/' + String(key)
+							var temp_id = Number(key);
+							var temp_link = '/home/author/' + String(temp_id);
+							console.log(temp_link);
 							$('#tb-author ul').prepend('<li><a href = "' + temp_link + '">' + value + '</a></li>');
 						});
 					},
@@ -268,7 +270,7 @@ function displayCart() {
 		output += "<tr data-bookid=" + bookid + "><td data-th='Product'><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + image + "' alt='...' class='img-responsive' /></div><div class='col-sm-10'><h4 class='nomargin'>" + title + "</h4></div></div></td><td data-th='Price'>" + price + "</td><td data-th='Quantity'><input type='number' class='form-control text-center input-count' value='" + count + "'></td><td data-th='Subtotal' class='text-center price-item'>" + count_price + "</td><td class='actions' data-th=''><button class='btn btn-danger btn-sm remove-item'><i class='fa fa-trash-o'></i></button></td></tr>"
 	}
 	$('#cart-data').html(output);
-	
+
 	$('#num-items').fadeOut(300, function(){
 		$(this).text('Number of items: ' + cart.length);
 		$(this).fadeIn(300);

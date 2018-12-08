@@ -24,6 +24,7 @@ def home_author(authorid):
 	
 	items = db.session.execute(string_temp).fetchall()
 
+
 	db.session.close()
 
 	return render_template('home.html', title = 'Filter by author', items = items)
