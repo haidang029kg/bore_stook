@@ -20,7 +20,6 @@ def generate_id(type):
 def send_message(msg):
     with app.test_request_context():
         mail.send(msg)
-        print('sent')
 
 
 def send_token_reset(user):
@@ -37,7 +36,6 @@ If you did not make this request then simply ignore this email and no changes wi
 
     myThread = Thread(target=send_message, args=(msg, ))
     myThread.start()
-
 
 
 def save_picture(form_picture):
