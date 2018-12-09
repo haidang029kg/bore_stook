@@ -1,5 +1,5 @@
-from flask import render_template, request, Blueprint, jsonify, json
-from Book_Flask.models import Book
+from flask import render_template, request, Blueprint, jsonify, json, flash
+from Book_Flask.models import Book, Author, Genre
 from Book_Flask import db
 
 main = Blueprint('main', __name__)
@@ -12,6 +12,7 @@ def home():
 	per_page = 20
 
 	items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(Book.Title.asc()).paginate(page = page, per_page = per_page)
+	
 	db.session.close()
 
 	return render_template('home.html', title = 'Home page', items = items)
@@ -24,8 +25,12 @@ def home_author(authorid):
 	
 	items = db.session.execute(string_temp).fetchall()
 
+	author_name = db.session.query(Author.Name).filter_by(AuthorID = authorid).first()[0]
+	count_result = len(items)
 
 	db.session.close()
+
+	flash(str(count_result) + ' results for ' + author_name, 'info')
 
 	return render_template('home.html', title = 'Filter by author', items = items)
 
@@ -37,8 +42,13 @@ def home_genre(genreid):
 	per_page = 20
 
 	items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter_by(GenreID = genreid).order_by(Book.Title.asc()).paginate(page = page, per_page = per_page)
+
+	genre_name = db.session.query(Genre.Name).filter_by(GenreID = genreid).first()[0]
+	count_result = db.session.query(Book.BookID).filter_by(GenreID = genreid).count()
 	
 	db.session.close()
+
+	flash(str(count_result) + ' results for ' + genre_name, 'info')
 
 	return render_template('home.html', title = 'Filter by gnere', items = items)
 

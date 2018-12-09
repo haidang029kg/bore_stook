@@ -18,7 +18,7 @@
       {% if current_user.is_authenticated %}
       <li class="nav-item">
           <div class="dropdown">
-              <button class="dropbtn"> Hello {{ current_user.FirstName }},
+              <button class="dropbtn">Hello {{ current_user.FirstName }},
                 <i class="fa fa-caret-down"></i>
               </button>
               <div class="dropdown-content">
@@ -27,7 +27,7 @@
               </div>
             </div> 
       </li>
-      <li class="nav-item"><a class="nav-link" href="{{ url_for('user.logout') }}">Your cart</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.cart') }}">Your cart</a></li>
       <li class="nav-item"><a class="nav-link" href="{{ url_for('user.logout') }}">Log out</a></li>
       {% else %}
       <li class="nav-item"><a class="nav-link" href="{{ url_for('user.login') }}">Log in</a></li>

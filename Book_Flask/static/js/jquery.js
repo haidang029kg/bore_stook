@@ -140,6 +140,14 @@ $(document).ready(function () {
 	}
 });
 
+$(document).ready(function () {
+	if ($('.contianer')[0]) {
+		$('html, body').animate({
+			scrollTop: $('.contianer').offset().top - 100
+		}, 2000);
+	}
+});
+
 
 // -------------------------------------------------------------- shopping cart
 
