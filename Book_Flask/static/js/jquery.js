@@ -5,11 +5,13 @@ $(window).on('scroll', function () {
 		$('#my-navbar').addClass('opa-lblue');
 		$('.my-2.my-sm-0').addClass('txt-black');
 		$('.nav-link').addClass('txt-black')
+		$('.')
 	}
 	else {
 		$('#my-navbar').removeClass('opa-lblue');
 		$('.my-2.my-sm-0').removeClass('txt-black');
 		$('.nav-link').removeClass('txt-black')
+
 	}
 	if ($('.search-modal').css('display') == 'flex') {
 		$('.search-modal').stop().animate({ 'marginTop': ($(window).scrollTop()) + 'px', 'marginLeft': ($(window).scrollLeft()) + 'px' }, 500);
@@ -342,3 +344,4 @@ $(document).ready(function() {
 		saveCart();
 	})
 });
+

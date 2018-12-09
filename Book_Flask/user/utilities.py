@@ -4,6 +4,7 @@ from Book_Flask import mail, app
 import uuid
 import secrets, os
 from PIL import Image
+import threading
 
 def generate_id(type):
     id = str(uuid.uuid1())
@@ -32,8 +33,6 @@ If you did not make this request then simply ignore this email and no changes wi
 
     mail.send(msg)
 
-
-
 def send_token_register(user):
     token = user.get_token()
 
@@ -44,9 +43,18 @@ def send_token_register(user):
     msg.body = f'''Register completely, click link below to continue:
 {url_for('user.register_token', token = token, _external = True)}
 '''
+    thr = threading.Thread(target=send_async_email, args=[msg])
+    thr.start()
+    # mail.send(msg)
+    # def send_message(msg):
+    #     mail.send(msg)
+    
+    # sender = threading.Thread(name='mail_sender', target=send_message, args=(msg,))
+    # sender.start()
 
-    mail.send(msg)
-
+def send_async_email(msg):
+    with app.app_context():
+        mail.send(msg)
 
 def save_picture(form_picture):
     randome_hex = secrets.token_hex(8)
