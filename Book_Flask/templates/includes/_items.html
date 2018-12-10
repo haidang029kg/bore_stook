@@ -2,7 +2,16 @@
     <div class="card-columns text-center">
         {% for item in items.items %}
         <div class="card" data-id="{{ item.BookID }}" style="width: 200px;height: 400px;">
-            <img class="card-img-top" src="{{ item.ImgUrl }}" style="height: 240px">
+            <!-- <div class="imageWrapper">
+                <img class="card-img-top" src="{{ item.ImgUrl }}" style="height: 240px">
+                <a href="http://google.com" class="cornerLink">Click for more details</a>
+            </div> -->
+            <div class="hvrbox">
+                    <img src="{{ item.ImgUrl }}" style="height: 240px" class=" card-img-top hvrbox-layer_bottom">
+                    <div class="hvrbox-layer_top">
+                        <div class="hvrbox-text">Click for more details</div>
+                    </div>
+                </div>
             <div class="card-body" style="height: 150px;">
                 <h5 class="card-title" style="font-size: 16px">{{ item.Title }}</h5>
                 <h4 class="card-text"> {{ item.Price }} $ </h4>
@@ -80,6 +89,14 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <div class="select">
+                    <select name="slct" id="slct">
+                        <option>Quantity</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
                 <button type="button" class="btn btn-primary">Add to cart</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
