@@ -115,7 +115,6 @@ $(document).ready(function () {
 						$.each(result_2, function (key, value) {
 							var temp_id = Number(key);
 							var temp_link = '/home/author/' + String(temp_id);
-							console.log(temp_link);
 							$('#tb-author ul').prepend('<li><a href = "' + temp_link + '">' + value + '</a></li>');
 						});
 					},
@@ -177,7 +176,7 @@ var Item = function (bookid, title, count, price, image) {
 
 function saveCart() {
 	localStorage.setItem('shoppingcart', JSON.stringify(cart));
-}
+};
 
 
 function loadCart() {
@@ -187,7 +186,7 @@ function loadCart() {
 		var item = new Item(jsondata[i].bookid, jsondata[i].title, jsondata[i].count, jsondata[i].price, jsondata[i].image);
 		cart.push(item);
 	}
-}
+};
 
 $(document).ready(function () {
 	if (cart.length === 0) {
@@ -299,7 +298,7 @@ function displayCart() {
 		$(this).text('Total   $' + totalCart());
 		$(this).fadeIn(300);
 	});
-}
+};
 
 
 $(document).ready(function () {
