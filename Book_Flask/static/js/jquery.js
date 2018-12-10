@@ -4,13 +4,14 @@ $(window).on('scroll', function () {
 	if ($(window).scrollTop()) {
 		$('#my-navbar').addClass('opa-lblue');
 		$('.my-2.my-sm-0').addClass('txt-black');
-		$('.nav-link').addClass('txt-black')
-		$('.')
+		$('.nav-link').addClass('txt-black');
+		$('.dropdown-toggle').addClass('txt-black');
 	}
 	else {
 		$('#my-navbar').removeClass('opa-lblue');
 		$('.my-2.my-sm-0').removeClass('txt-black');
-		$('.nav-link').removeClass('txt-black')
+		$('.nav-link').removeClass('txt-black');
+		$('.dropdown-toggle').removeClass('txt-black');
 
 	}
 	if ($('.search-modal').css('display') == 'flex') {
@@ -60,15 +61,13 @@ $('.card-title').ready(function () {
 
 
 //--------------------------------------------- hover to show account
-$(document).ready(function () {
-	$('.dropdown').hover(function () {
-		$('.dropdown-content').css('display', 'block');
-	}, function () {
-		$('.dropdown-content').css('display', 'none');
-	});
-});
-
-
+// $(document).ready(function () {
+// 	$('.dropdown').hover(function () {
+// 		$('.dropdown-content').css('display', 'block');
+// 	}, function () {
+// 		$('.dropdown-content').css('display', 'none');
+// 	});
+// });
 //----------------------------------------------- modal extra book infor
 $(document).ready(function () {
 	/*for (var i = 0; i < 20; i++){
@@ -77,7 +76,7 @@ $(document).ready(function () {
 			console.log(mess);
 		});
 	}*/
-	$('.card .card-img-top').on('click', function (e) {
+	$('.card .hvrbox-layer_top').on('click', function (e) {
 		e.preventDefault();
 
 		var clicked = $(this).parents('.card').attr('data-id');
@@ -132,6 +131,8 @@ $(document).ready(function () {
 		});
 	});
 });
+
+
 
 //------------------------------------------ auto-scroll
 $(document).ready(function () {
@@ -271,7 +272,7 @@ $(document).ready(function () {
 		addItemToCart(bookid, title, count, price, image);
 
 		$(this).text('Added');
-		$(this).addClass('btn-warning');
+		$(this).css('background-color','yellow');
 	});
 });
 
