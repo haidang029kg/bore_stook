@@ -106,3 +106,7 @@ def list_authors():
 @main.route("/cart")
 def cart():
     return render_template('cart.html')
+
+@main.route("/checkout")
+def checkout():
+    return render_template('checkout.html')
