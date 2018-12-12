@@ -18,23 +18,10 @@
                 </form>
             </li>
             {% if current_user.is_authenticated %}
-
-
-
-            <li class="nav-item"><a href="/cart"><img style="width: 70px;height: 40px;" src="/static/image/logo/cart.png"></a></li>
-            <!-- <li class="nav-item u-menu">
-          <div class="dropdown">
-              <button class="dropbtn">Hello {{ current_user.FirstName }},
-                <i class="fa fa-caret-down"></i>
-              </button>
-              <div class="dropdown-content">
-                <a href="{{ url_for('user.account') }}">Account</a>
-                <a href="{{ url_for('user.change_password') }}">Change password</a>
-                <a href="{{ url_for('user.logout') }}">Log out</a>
-              </div>
-            </div> 
-      </li> -->
-
+            <div class="nav-item hover"><a href="/cart">
+                    <figure><img style="width: 70px;height: 40px;" src="/static/image/logo/cart.png">
+                </a></figure>
+            </div>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -56,8 +43,10 @@
                                                 {{current_user.LastName}}</strong></p>
                                         <p class="text-left small">{{current_user.Email}}</p>
                                         <p class="text-left">
-                                            <a href="{{ url_for('user.account') }}" class="btn btn-primary btn-block btn-sm">account details</a>
-                                            <a href="{{ url_for('user.change_password') }}" class="btn btn-primary btn-block btn-sm">Change password</a>
+                                            <a href="{{ url_for('user.account') }}" class="btn btn-primary btn-block btn-sm">account
+                                                details</a>
+                                            <a href="{{ url_for('user.change_password') }}" class="btn btn-primary btn-block btn-sm">Change
+                                                password</a>
                                         </p>
                                     </div>
                                 </div>

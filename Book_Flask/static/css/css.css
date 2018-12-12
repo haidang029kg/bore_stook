@@ -97,6 +97,21 @@ nav.opa-lblue:hover {
 	padding-top: 8px;
 }
 
+figure {
+	margin: 0;
+}
+
+.hover figure img {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.hover figure:hover img {
+	-webkit-transform: scale(1.3);
+	transform: scale(1.3);
+}
+
 /* ---------------------------------------------- background section */
 #sec-background {
 	background: url(/static/image/background/books-wallpaper.jpg);
@@ -232,7 +247,7 @@ select {
 	appearance: none;
 	outline: 0;
 	box-shadow: none;
-	border: 0 !important;
+	border: 0 ;
 	background: #3898f8;
 	background-image: none;
 }
@@ -661,7 +676,7 @@ footer {
 
 .checkout-container {
 	background-color: #f2f2f2;
-	padding: 5px 20px 15px 20px;
+	padding: 20px 20px 15px 20px;
 	border: 1px solid lightgrey;
 	border-radius: 3px;
 }
