@@ -1,6 +1,5 @@
 // ---------------------------------------------- on scroll
-
-$(window).on('scroll', function () {
+$(window).on('scroll', function onscroll() {
 	if ($(window).scrollTop()) {
 		$('#my-navbar').addClass('opa-lblue');
 		$('.my-2.my-sm-0').addClass('txt-black');
@@ -40,17 +39,8 @@ function close_login() {
 	$('.login-modal')[0].style.display = 'none';
 };
 
-// --------------------------------------------- message popup
-function open_message() {
-	$('.message-modal')[0].style.display = 'flex';
-};
-
-function close_message() {
-	$('.message-modal')[0].style.display = 'none';
-};
-
 //----------------------------------------------- resitrct legth title
-$('.card-title').ready(function () {
+$('.card-title').ready(function resitrct_title_length () {
 	$('.card-title').each(function () {
 		len = $(this).text().length;
 		if (len > 40) {
@@ -60,7 +50,7 @@ $('.card-title').ready(function () {
 });
 
 //----------------------------------------------- modal extra book infor
-$(document).ready(function () {
+$(document).ready(function ajax_bookdetail () {
 	/*for (var i = 0; i < 20; i++){
 		$('.card').eq(i).on('click', {value : i}, function(){
 			var mess = $(this).attr('data-id');
@@ -79,6 +69,7 @@ $(document).ready(function () {
 			dataType: 'json',
 			url: '/book_detail',
 			success: function (result) {
+				$('#tb-bookid').attr('data-bookid', clicked);
 				$('#ModalExtraInfo').modal('show');
 				$('.modal-title').text(result.Title);
 				$('.extra-img img').attr('src', result.ImgUrl);
@@ -122,38 +113,30 @@ $(document).ready(function () {
 	});
 });
 
-
-
 //------------------------------------------ auto-scroll
-$(document).ready(function () {
+$(document).ready(function auto_scroll() {
 	if ($('.div-reg-log')[0]) {
 		$('html, body').animate({
 			scrollTop: $('.div-reg-log').offset().top - 100
 		}, 1500);
 	}
-});
 
-$(document).ready(function () {
 	if ($('.contianer')[0]) {
 		$('html, body').animate({
 			scrollTop: $('.contianer').offset().top - 100
 		}, 2000);
 	}
-});
 
-
-$(document).ready(function (){
 	if ($('.cart-container')[0]) {
 		$('html, body').animate({
 			scrollTop: $('.cart-container').offset().top - 100
 		}, 2000);
 	}
+
 });
 
 
 // -------------------------------------------------------------- shopping cart
-
-
 var cart = [];
 
 var Item = function (bookid, title, count, price, image) {
@@ -180,7 +163,7 @@ function loadCart() {
 	}
 };
 
-$(document).ready(function () {
+$(document).ready(function loadCart_auto () {
 	cart.splice(0, cart.length);
 	loadCart();
 });
@@ -188,7 +171,8 @@ $(document).ready(function () {
 function addItemToCart(bookid, title, count, price, image) {
 	for (var i in cart) {
 		if (cart[i].bookid === bookid) {
-			cart[i].count += count;
+			var temp = Number(cart[i].count) + Number(count);
+			cart[i].count = temp;
 			cart[i].count_price = price * cart[i].count;
 			saveCart();
 			return;
@@ -249,7 +233,7 @@ function totalCart() {
 	return totalCost;
 };
 
-$(document).ready(function () {
+$(document).ready(function addingbookfromhome () {
 	$('.adding-cart').on('click', function (e) {
 		e.preventDefault();
 
@@ -267,6 +251,23 @@ $(document).ready(function () {
 		$(this).css('background-color','yellow');
 	});
 });
+
+$(document).ready(function addboookfromajax() {
+	$('.adding-cart-ajax').on('click', function (e) {
+		e.preventDefault();
+
+		var count = $(this).closest('.modal-footer').find('#slct').val();
+		var bookid = $('#tb-bookid').attr('data-bookid');
+		var price = Number($('#tb-price').text());
+		var title = $('.modal-title').text();
+		var image = $('#ModalExtraInfo img').attr('src');
+
+		addItemToCart(bookid, title, count, price, image);
+
+		$(this).text('Added');
+		$(this).css('background-color','yellow');
+	})
+})
 
 
 function displayCart() {
@@ -294,14 +295,11 @@ function displayCart() {
 	});
 };
 
-
-
 $(document).ready(function () {
 	displayCart();
 });
 
-
-$(document).ready(function () {
+$(document).ready(function clear_the_cart () {
 	$('#clear-cart').on('click', function (e) {
 		e.preventDefault();
 		clearCart();
@@ -309,15 +307,14 @@ $(document).ready(function () {
 	});
 });
 
-$(document).on('click', '.remove-item', function (e) {
+$(document).on('click', '.remove-item', function remove_item (e) {
 	e.preventDefault();
 	var bookid = $(this).closest('tr').attr('data-bookid');
 	removeItemFromCartAll(bookid);
 	displayCart();
 });
 
-
-$(document).on('change', '.input-count', function (e) {
+$(document).on('change', '.input-count', function changes_on_count_number (e) {
 	e.preventDefault();
 
 	var bookid = $(this).closest('tr').attr('data-bookid');

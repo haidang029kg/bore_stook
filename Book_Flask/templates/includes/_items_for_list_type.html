@@ -2,73 +2,24 @@
     <div class="card-columns text-center">
         {% for item in items %}
         <div class="card" data-id="{{ item.BookID }}" style="width: 200px;height: 400px;">
-            <img class="card-img-top" src="{{ item.ImgUrl }}" style="height: 240px">
+            <!-- <div class="imageWrapper">
+                <img class="card-img-top" src="{{ item.ImgUrl }}" style="height: 240px">
+                <a href="http://google.com" class="cornerLink">Click for more details</a>
+            </div> -->
+            <div class="hvrbox">
+                    <img src="{{ item.ImgUrl }}" style="height: 240px" class=" card-img-top hvrbox-layer_bottom">
+                    <div class="hvrbox-layer_top">
+                        <div class="hvrbox-text">Click for more details</div>
+                    </div>
+                </div>
             <div class="card-body" style="height: 150px;">
                 <h5 class="card-title" style="font-size: 16px">{{ item.Title }}</h5>
                 <h4 class="card-text"> {{ item.Price }} $ </h4>
                 <button type="button" class="adding-cart btn btn-primary btn-card">Add to cart</button>
             </div>
-
         </div>
         {% endfor %}
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="ModalExtraInfo" role="dialog">
-    <div class="modal-dialog modal-lg">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title"></h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="extra-img">
-                    <img>
-                </div>
-                <div class="extra-info">
-                    <table class="table table-info table-hover">
-                        <tbody>
-                            <tr>
-                                <td>Price ($)</td>
-                                <td id="tb-price"></td>
-                            </tr>
-                            <tr>
-                                <td>In Stock (unit)</td>
-                                <td id="tb-quan"></td>
-                            </tr>
-                            <tr>
-                                <td>Rating</td>
-                                <td id="tb-rating"></td>
-                            </tr>
-                            <tr>
-                                <td>ISBN</td>
-                                <td id="tb-ISBN"></td>
-                            </tr>
-                            <tr>
-                                <td>Publication Year</td>
-                                <td id="tb-public"></td>
-                            </tr>
-                            <tr>
-                                <td>Genre</td>
-                                <td id="tb-genre">
-                                    <a href=""></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Author</td>
-                                <td id="tb-author">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add to cart</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+{% include 'includes/_ajax_book_detail.html' %}
