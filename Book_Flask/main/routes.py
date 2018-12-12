@@ -53,6 +53,7 @@ def home_genre(genreid):
 
 	return render_template('home.html', title = 'Filter by genre', items = items, genreid = genreid)
 
+
 @main.route("/book_detail", methods = ['POST'])
 def book_detail():
 	book_id = request.form.getlist('id') # if using POST method

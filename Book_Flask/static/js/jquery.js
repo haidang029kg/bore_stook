@@ -3,13 +3,11 @@ $(window).on('scroll', function onscroll() {
 	if ($(window).scrollTop()) {
 		$('#my-navbar').addClass('opa-lblue');
 		$('.my-2.my-sm-0').addClass('txt-black');
-		$('.nav-link').addClass('txt-black');
 		$('.dropdown-toggle').addClass('txt-black');
 	}
 	else {
 		$('#my-navbar').removeClass('opa-lblue');
 		$('.my-2.my-sm-0').removeClass('txt-black');
-		$('.nav-link').removeClass('txt-black');
 		$('.dropdown-toggle').removeClass('txt-black');
 
 	}
