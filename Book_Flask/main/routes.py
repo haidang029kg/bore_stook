@@ -1,7 +1,7 @@
 from flask import render_template, request, Blueprint, jsonify, json, flash
 from Book_Flask.models import Book, Author, Genre
 from Book_Flask import db
-
+from flask_login import login_required
 main = Blueprint('main', __name__)
 
 
@@ -48,9 +48,10 @@ def home_genre(genreid):
 	
 	db.session.close()
 
+
 	flash(str(count_result) + ' results for ' + genre_name, 'info')
 
-	return render_template('home.html', title = 'Filter by gnere', items = items)
+	return render_template('home.html', title = 'Filter by genre', items = items, genreid = genreid)
 
 @main.route("/book_detail", methods = ['POST'])
 def book_detail():
@@ -107,6 +108,8 @@ def list_authors():
 def cart():
     return render_template('cart.html')
 
+
 @main.route("/checkout")
+@login_required
 def checkout():
     return render_template('checkout.html')

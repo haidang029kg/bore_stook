@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% block body %}
+    <button id="sticky-cart"><a href="/cart"><img style="width: 120px;height: 70px;" src="/static/image/logo/cart.png"></a></button>
 {% if items.items %}
 {% include 'includes/_items.html' %}
 {% else %}

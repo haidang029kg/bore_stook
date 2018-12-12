@@ -730,3 +730,23 @@ span.price {
 		margin-bottom: 20px;
 	}
 }
+
+/* ------------------------------------------stick cart icon */
+#sticky-cart {
+	position: fixed;
+	top: 50%;
+	right: 0;
+	z-index: 2;
+	background: none;
+	border: none;
+}
+
+#sticky-cart :hover { 
+	-webkit-transition: 0.6s ease-out;
+    -moz-transition:  0.6s ease-out;
+	transition:  0.6s ease-out;
+	
+	-webkit-transform: rotateZ(720deg);
+    -moz-transform: rotateZ(720deg);
+    transform: rotateZ(720deg);
+}

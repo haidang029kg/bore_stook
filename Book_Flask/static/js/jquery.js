@@ -133,6 +133,12 @@ $(document).ready(function auto_scroll() {
 		}, 2000);
 	}
 
+	if ($('.checkout-container')[0]) {
+		$('html, body').animate({
+			scrollTop: $('.checkout-container').offset().top - 100
+		}, 2000);
+	}
+
 });
 
 
@@ -249,6 +255,8 @@ $(document).ready(function addingbookfromhome () {
 
 		$(this).text('Added');
 		$(this).css('background-color','yellow');
+
+		cart_blink();
 	});
 });
 
@@ -266,6 +274,8 @@ $(document).ready(function addboookfromajax() {
 
 		$(this).text('Added');
 		$(this).css('background-color','yellow');
+
+		cart_blink();
 	})
 })
 
@@ -280,7 +290,7 @@ function displayCart() {
 		var price = cart[i].price;
 		var count_price = cart[i].count_price;
 
-		output += "<tr data-bookid=" + bookid + "><td data-th='Product'><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + image + "' alt='...' class='img-responsive' /></div><div class='col-sm-10'><h4 class='nomargin'>" + title + "</h4></div></div></td><td class='price-for-an-item' data-th='Price'>" + price + "</td><td data-th='Quantity'><input type='number' min='1' class='form-control text-center input-count' value='" + count + "'></td><td data-th='Subtotal' class='text-center price-for-items'>" + count_price + "</td><td class='actions' data-th=''><button class='btn btn-danger btn-sm remove-item'><i class='fa fa-trash-o'></i></button></td></tr>"
+		output += "<tr data-bookid=" + bookid + "><td data-th='Product'><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + image + "' alt='...' class='img-responsive' /></div><div class='col-sm-10'><h4 class='nomargin'>" + title + "</h4></div></div></td><td class='price-for-an-item' data-th='Price'>" + price + "</td><td data-th='Quantity'><input type='number' min='1' class='form-control text-center input-count' value='" + count + "'></td><td data-th='Subtotal' class='text-center price-for-items'>" + count_price + "</td><td class='actions' data-th=''><button class='btn btn-danger btn-sm remove-item'><i class='fas fa-trash-alt'></i></button></td></tr>"
 	}
 	$('#cart-data').html(output);
 
@@ -339,9 +349,6 @@ $(document).on('change', '.input-count', function changes_on_count_number (e) {
 
 });
 
-
-$(document).ready(function() {
-	$('#check-out').on('click', function (e) {
-		e.preventDefault();
-	})
-});
+function cart_blink () {
+	$('#sticky-cart').effect('shake');
+};
