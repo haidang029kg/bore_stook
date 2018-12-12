@@ -4,13 +4,11 @@ $(window).on('scroll', function () {
 	if ($(window).scrollTop()) {
 		$('#my-navbar').addClass('opa-lblue');
 		$('.my-2.my-sm-0').addClass('txt-black');
-		$('.nav-link').addClass('txt-black');
 		$('.dropdown-toggle').addClass('txt-black');
 	}
 	else {
 		$('#my-navbar').removeClass('opa-lblue');
 		$('.my-2.my-sm-0').removeClass('txt-black');
-		$('.nav-link').removeClass('txt-black');
 		$('.dropdown-toggle').removeClass('txt-black');
 
 	}
@@ -277,7 +275,7 @@ function displayCart() {
 		var price = cart[i].price;
 		var count_price = cart[i].count_price;
 
-		output += "<tr data-bookid=" + bookid + "><td data-th='Product'><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + image + "' alt='...' class='img-responsive' /></div><div class='col-sm-10'><h4 class='nomargin'>" + title + "</h4></div></div></td><td data-th='Price'>" + price + "</td><td data-th='Quantity'><input type='number' class='form-control text-center input-count' value='" + count + "'></td><td data-th='Subtotal' class='text-center price-item'>" + count_price + "</td><td class='actions' data-th=''><button class='btn btn-danger btn-sm remove-item'><i class='fa fa-trash-o'></i></button></td></tr>"
+		output += "<tr data-bookid=" + bookid + "><td data-th='Product'><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + image + "' alt='...' class='img-responsive' /></div><div class='col-sm-10'><h4 class='nomargin'>" + title + "</h4></div></div></td><td data-th='Price'>" + price + "</td><td data-th='Quantity'><input type='number' class='form-control text-center input-count' value='" + count + "'></td><td data-th='Subtotal' class='text-center price-item'>" + count_price + "</td><td class='actions' data-th=''><button class='btn btn-danger btn-sm remove-item'><i class='fas fa-trash-alt'></i></button></td></tr>"
 	}
 	$('#cart-data').html(output);
 

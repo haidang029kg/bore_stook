@@ -408,10 +408,6 @@ button.btn.btn-outline-success.my-2.my-sm-0:hover {
 	color: white !important;
 }
 
-a.nav-link:hover {
-	text-decoration: underline !important;
-}
-
 .card-text {
 	position: absolute;
 	left: 85px;

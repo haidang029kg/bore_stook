@@ -50,7 +50,7 @@ def home_genre(genreid):
 
 	flash(str(count_result) + ' results for ' + genre_name, 'info')
 
-	return render_template('home.html', title = 'Filter by gnere', items = items)
+	return render_template('home.html', title = 'Filter by gnere', items = items, genreid = genreid)
 
 @main.route("/book_detail", methods = ['POST'])
 def book_detail():
