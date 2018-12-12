@@ -113,3 +113,9 @@ def cart():
 @login_required
 def checkout():
     return render_template('checkout.html')
+
+
+@main.route("/payment_option")
+@login_required
+def payment_option():
+	return render_template('includes/payment/_payment_option.html')
