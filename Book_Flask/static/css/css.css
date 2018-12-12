@@ -1,11 +1,12 @@
-html, body{
-  margin:0 !important;
-  padding:0 !important;
+html,
+body {
+	margin: 0 !important;
+	padding: 0 !important;
 }
 
 #bootstrap-overrides .my-container {
 	padding: 0;
-	margin: 0;
+	margin: auto auto 20px;
 	width: 100%;
 	height: fit-content;
 }
@@ -54,9 +55,9 @@ html, body{
 	padding: 0px
 }
 
-.txt-black{
+.txt-black {
 	color: black !important;
-} 
+}
 
 nav.opa-lblue {
 	background-color: #ccefff;
@@ -76,27 +77,39 @@ nav.opa-lblue:hover {
 	top: 49px;
 }
 
-.navbar-login
-{
-    width: 305px;
-    padding: 10px;
-    padding-bottom: 0px;
+.navbar-login {
+	width: 305px;
+	padding: 10px;
+	padding-bottom: 0px;
 }
 
-.navbar-login-session
-{
-    padding: 10px;
-    padding-bottom: 0px;
-    padding-top: 0px;
+.navbar-login-session {
+	padding: 10px;
+	padding-bottom: 0px;
+	padding-top: 0px;
 }
 
-.icon-size
-{
-    font-size: 87px;
+.icon-size {
+	font-size: 87px;
 }
 
 .navbar-right {
 	padding-top: 8px;
+}
+
+figure {
+	margin: 0;
+}
+
+.hover figure img {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.hover figure:hover img {
+	-webkit-transform: scale(1.3);
+	transform: scale(1.3);
 }
 
 /* ---------------------------------------------- background section */
@@ -110,7 +123,7 @@ nav.opa-lblue:hover {
 
 /* ---------------------------------------------- section search box */
 #sec-search-box {
-	margin: 10px 5px 0 5px;	
+	margin: 10px 5px 0 5px;
 	display: flex;
 	height: 130px;
 }
@@ -137,8 +150,8 @@ nav.opa-lblue:hover {
 	z-index: 1;
 }
 
-.advance-search-close-btn{
-	float:right;
+.advance-search-close-btn {
+	float: right;
 }
 
 .search-modal-content {
@@ -161,7 +174,7 @@ nav.opa-lblue:hover {
 
 /* ---------------------------------------------- section flash sale */
 #sec-flash-sale {
-	margin: 10px 5px 0 5px;	
+	margin: 10px 5px 0 5px;
 	display: flex;
 	height: 130px;
 }
@@ -174,7 +187,7 @@ nav.opa-lblue:hover {
 
 /* ---------------------------------------------- section category */
 #sec-category {
-	margin: 10px 5px 0 5px;	
+	margin: 10px 5px 0 5px;
 	display: flex;
 	height: 130px;
 }
@@ -203,8 +216,8 @@ nav.opa-lblue:hover {
 #page-num {
 	width: 100%;
 	justify-content: space-around;
-    display: flex;
-    float: none;
+	display: flex;
+	float: none;
 }
 
 /* -----------------------------------------------modal extra book info*/
@@ -234,12 +247,13 @@ select {
 	appearance: none;
 	outline: 0;
 	box-shadow: none;
-	border: 0 !important;
+	border: 0 ;
 	background: #3898f8;
 	background-image: none;
-  }
-  /* Custom Select */
-  .select {
+}
+
+/* Custom Select */
+.select {
 	position: relative;
 	display: block;
 	width: 100px;
@@ -248,20 +262,23 @@ select {
 	background: #3898f8;
 	overflow: hidden;
 	border-radius: .25em;
-  }
-  select {
+}
+
+select {
 	width: 100%;
 	height: 100%;
 	margin: 0;
 	padding: 0 0 0 .5em;
 	color: #fff;
 	cursor: pointer;
-  }
-  select::-ms-expand {
+}
+
+select::-ms-expand {
 	display: none;
-  }
-  /* Arrow */
-  .select::after {
+}
+
+/* Arrow */
+.select::after {
 	content: '\25BC';
 	position: absolute;
 	top: 0;
@@ -270,16 +287,18 @@ select {
 	padding: 0 5px;
 	background: #0f81f3;
 	pointer-events: none;
-  }
-  /* Transition */
-  .select:hover::after {
+}
+
+/* Transition */
+.select:hover::after {
 	color: #f39c12;
-  }
-  .select::after {
+}
+
+.select::after {
 	-webkit-transition: .25s all ease;
 	-o-transition: .25s all ease;
 	transition: .25s all ease;
-  }
+}
 
 /* ---------------------------------------------- register login */
 .sec-reg-log {
@@ -335,19 +354,19 @@ select {
 	margin-top: 18px;
 }
 
-.media{
+.media {
 	margin-bottom: 20px;
 }
 
-.border-top{
+.border-top {
 	margin-bottom: 5px;
 }
 
 
 /*------------------------------------------ card edit*/
 .btn-card {
-    background-color: #ccefff;
-    border-color: #ccefff;
+	background-color: #ccefff;
+	border-color: #ccefff;
 	color: #000000;
 	position: absolute;
 	bottom: 10px;
@@ -367,7 +386,7 @@ select {
 }
 
 .mb-2 {
-    margin-bottom: 1.5rem!important;
+	margin-bottom: 1.5rem !important;
 }
 
 .card {
@@ -380,12 +399,12 @@ select {
 }
 
 button.btn.btn-success.my-2.my-sm-0:hover {
-	background-color:#006600 !important;
+	background-color: #006600 !important;
 	color: white !important;
 }
 
 button.btn.btn-outline-success.my-2.my-sm-0:hover {
-	background-color:#006600 !important;
+	background-color: #006600 !important;
 	color: white !important;
 }
 
@@ -395,17 +414,18 @@ a.nav-link:hover {
 
 .card-text {
 	position: absolute;
-    left: 85px;
+	left: 85px;
 	bottom: 40px;
-	font-size: 14px; 
+	font-size: 14px;
 	color: green;
 }
 
 
-.hvrbox ,
+.hvrbox,
 .hvrbox * {
 	box-sizing: border-box;
 }
+
 .hvrbox {
 	position: relative;
 	display: inline-block;
@@ -415,12 +435,15 @@ a.nav-link:hover {
 	width: 95%;
 	margin-top: 10px;
 }
+
 .hvrbox img {
 	max-width: 100%;
 }
+
 .hvrbox .hvrbox-layer_bottom {
 	display: block;
 }
+
 .hvrbox .hvrbox-layer_top {
 	opacity: 0;
 	position: absolute;
@@ -443,10 +466,12 @@ a.nav-link:hover {
 	text-decoration: underline;
 	cursor: pointer;
 }
+
 .hvrbox:hover .hvrbox-layer_top,
 .hvrbox.active .hvrbox-layer_top {
 	opacity: 1;
 }
+
 .hvrbox .hvrbox-text {
 	text-align: center;
 	font-size: 18px;
@@ -459,17 +484,21 @@ a.nav-link:hover {
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
+
 .hvrbox .hvrbox-text_mobile {
 	font-size: 15px;
-	border-top: 1px solid rgb(179, 179, 179); /* for old browsers */
+	border-top: 1px solid rgb(179, 179, 179);
+	/* for old browsers */
 	border-top: 1px solid rgba(179, 179, 179, 0.7);
 	margin-top: 5px;
 	padding-top: 2px;
 	display: none;
 }
+
 .hvrbox.active .hvrbox-text_mobile {
 	display: block;
 }
+
 /* .cornerLink {
     opacity: 0;
     position: absolute;
@@ -498,93 +527,206 @@ a.nav-link:hover {
 	width: 1200px;
 }
 
-.table>tbody>tr>td, .table>tfoot>tr>td{
-    vertical-align: middle;
-}
-@media screen and (max-width: 600px) {
-    table#cart tbody td .form-control{
-		width:20%;
-		display: inline !important;
-	}
-	.actions .btn{
-		width:36%;
-		margin:1.5em 0;
-	}
-	
-	.actions .btn-info{
-		float:left;
-	}
-	.actions .btn-danger{
-		float:right;
-	}
-	
-	table#cart thead { display: none; }
-	table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
-	table#cart tbody tr td:first-child { background: #333; color: #fff; }
-	table#cart tbody td:before {
-		content: attr(data-th); font-weight: bold;
-		display: inline-block; width: 8rem;
-	}
-	
-	
-	
-	table#cart tfoot td{display:block; }
-	table#cart tfoot td .btn{display:block;}
-	
+.table>tbody>tr>td,
+.table>tfoot>tr>td {
+	vertical-align: middle;
 }
 
-.cart-container{
+@media screen and (max-width: 600px) {
+	table#cart tbody td .form-control {
+		width: 20%;
+		display: inline !important;
+	}
+
+	.actions .btn {
+		width: 36%;
+		margin: 1.5em 0;
+	}
+
+	.actions .btn-info {
+		float: left;
+	}
+
+	.actions .btn-danger {
+		float: right;
+	}
+
+	table#cart thead {
+		display: none;
+	}
+
+	table#cart tbody td {
+		display: block;
+		padding: .6rem;
+		min-width: 320px;
+	}
+
+	table#cart tbody tr td:first-child {
+		background: #333;
+		color: #fff;
+	}
+
+	table#cart tbody td:before {
+		content: attr(data-th);
+		font-weight: bold;
+		display: inline-block;
+		width: 8rem;
+	}
+
+
+
+	table#cart tfoot td {
+		display: block;
+	}
+
+	table#cart tfoot td .btn {
+		display: block;
+	}
+
+}
+
+.cart-container {
 	margin: auto;
 }
 
 /*------------------------------------ footer */
-.footer-classic a, .footer-classic a:focus, .footer-classic a:active {
-    color: #000000;
+.footer-classic a,
+.footer-classic a:focus,
+.footer-classic a:active {
+	color: #000000;
 }
+
 .nav-list li {
-    padding-top: 5px;
-    padding-bottom: 5px; 
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .nav-list li a:hover:before {
-    margin-left: 0;
-    opacity: 1;
-    visibility: visible;
+	margin-left: 0;
+	opacity: 1;
+	visibility: visible;
 }
 
-ul, ol {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+ul,
+ol {
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 .social-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 23px;
-    font: 900 13px/1 "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	padding: 23px;
+	font: 900 13px/1 "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.5);
 }
+
 .social-container .col {
-    border: 1px solid #75d0f9;
+	border: 1px solid #75d0f9;
 }
+
 .nav-list li a:before {
-    content: "\f14f";
-    font: 400 21px/1 "Material Design Icons";
-    color: #006600;
-    display: inline-block;
-    vertical-align: baseline;
-    margin-left: -28px;
-    margin-right: 7px;
-    opacity: 0;
-    visibility: hidden;
-    transition: .22s ease;
+	content: "\f14f";
+	font: 400 21px/1 "Material Design Icons";
+	color: #006600;
+	display: inline-block;
+	vertical-align: baseline;
+	margin-left: -28px;
+	margin-right: 7px;
+	opacity: 0;
+	visibility: hidden;
+	transition: .22s ease;
 }
 
 footer {
 	background-color: #ccefff !important;
 	color: #000000 !important;
+}
+
+/*-------------------------------------------------checkout edit*/
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	margin: auto;
+}
+
+.col-25 {
+
+	flex: 25%;
+}
+
+.col-50 {
+	flex: 50%;
+}
+
+.col-75 {
+	flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+	padding: 0 16px;
+}
+
+.checkout-container {
+	background-color: #f2f2f2;
+	padding: 20px 20px 15px 20px;
+	border: 1px solid lightgrey;
+	border-radius: 3px;
+}
+
+input[type=text] {
+	width: 100%;
+	margin-bottom: 20px;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+label {
+	margin-bottom: 10px;
+	display: block;
+}
+
+.icon-container {
+	margin-bottom: 20px;
+	padding: 7px 0;
+	font-size: 24px;
+}
+
+.co-btn {
+	background-color: #4CAF50;
+	color: white;
+	padding: 12px;
+	margin: 10px 0;
+	border: none;
+	width: 100%;
+	border-radius: 3px;
+	cursor: pointer;
+	font-size: 17px;
+}
+
+.co-btn:hover {
+	background-color: #45a049;
+}
+
+span.price {
+	float: right;
+	color: grey;
+}
+
+@media (max-width: 800px) {
+	.row {
+		flex-direction: column-reverse;
+	}
+
+	.col-25 {
+		margin-bottom: 20px;
+	}
 }
