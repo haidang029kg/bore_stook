@@ -1,5 +1,6 @@
-// ---------------------------------------------- on scroll
-$(window).on('scroll', function onscroll() {
+// -------------------------------------------------------- on scroll window
+$(window).on('scroll', function onscroll() { 
+	// navigation bar
 	if ($(window).scrollTop()) {
 		$('#my-navbar').addClass('opa-lblue');
 		$('.my-2.my-sm-0').addClass('txt-black');
@@ -11,11 +12,24 @@ $(window).on('scroll', function onscroll() {
 		$('.dropdown-toggle').removeClass('txt-black');
 
 	}
+	// modal search
 	if ($('.search-modal').css('display') == 'flex') {
-		$('.search-modal').stop().animate({ 'marginTop': ($(window).scrollTop()) + 'px', 'marginLeft': ($(window).scrollLeft()) + 'px' }, 500);
+		$('.search-modal').stop().animate({ 'marginTop': ($(window).scrollTop()) + 'px', 'marginLeft': ($(window).scrollLeft()) + 'px' }, 700);
 	}
-});
 
+	// bill information
+	var $marginSecBackground = $(window).scrollTop() - $('#sec-background').height();
+	if ($marginSecBackground > 0 && ($marginSecBackground < ($('.col-50').height() - $('.bill').height() - 100 ) ) ) {
+		$('.bill').stop().animate({ 'marginTop': ($(window).scrollTop() - $('#sec-background').height() + 75) + 'px'}, 500);
+		
+		}
+		else if ($marginSecBackground < 0) {
+		$('.bill').stop().animate({ 'marginTop': 0});
+		}
+		else {
+		$('.bill').stop().animate({ 'marginTop': 384});
+		}
+});
 
 // --------------------------------------------- advance search
 function advance_search() {
@@ -38,7 +52,7 @@ function close_login() {
 };
 
 //----------------------------------------------- resitrct legth title
-$('.card-title').ready(function resitrct_title_length () {
+$('.card-title').ready(function resitrct_title_length() {
 	$('.card-title').each(function () {
 		len = $(this).text().length;
 		if (len > 40) {
@@ -48,7 +62,7 @@ $('.card-title').ready(function resitrct_title_length () {
 });
 
 //----------------------------------------------- modal extra book infor
-$(document).ready(function ajax_bookdetail () {
+$(document).ready(function ajax_bookdetail() {
 	/*for (var i = 0; i < 20; i++){
 		$('.card').eq(i).on('click', {value : i}, function(){
 			var mess = $(this).attr('data-id');
@@ -136,7 +150,6 @@ $(document).ready(function auto_scroll() {
 			scrollTop: $('.checkout-container').offset().top - 100
 		}, 2000);
 	}
-
 });
 
 
@@ -167,7 +180,7 @@ function loadCart() {
 	}
 };
 
-$(document).ready(function loadCart_auto () {
+$(document).ready(function loadCart_auto() {
 	cart.splice(0, cart.length);
 	loadCart();
 });
@@ -237,7 +250,7 @@ function totalCart() {
 	return totalCost;
 };
 
-$(document).ready(function addingbookfromhome () {
+$(document).ready(function addingbookfromhome() {
 	$('.adding-cart').on('click', function (e) {
 		e.preventDefault();
 
@@ -252,7 +265,7 @@ $(document).ready(function addingbookfromhome () {
 		addItemToCart(bookid, title, count, price, image);
 
 		$(this).text('Added');
-		$(this).css('background-color','yellow');
+		$(this).css('background-color', 'yellow');
 
 		cart_blink();
 	});
@@ -271,7 +284,7 @@ $(document).ready(function addboookfromajax() {
 		addItemToCart(bookid, title, count, price, image);
 
 		$(this).text('Added');
-		$(this).css('background-color','yellow');
+		$(this).css('background-color', 'yellow');
 
 		cart_blink();
 	})
@@ -292,12 +305,12 @@ function displayCart() {
 	}
 	$('#cart-data').html(output);
 
-	$('#num-items').fadeOut(300, function(){
+	$('#num-items').fadeOut(300, function () {
 		$(this).text('Number of items: ' + cart.length);
 		$(this).fadeIn(300);
 	});
 
-	$('#total-price').fadeOut(300, function(){
+	$('#total-price').fadeOut(300, function () {
 		$(this).text('Total   $' + totalCart());
 		$(this).fadeIn(300);
 	});
@@ -307,7 +320,7 @@ $(document).ready(function () {
 	displayCart();
 });
 
-$(document).ready(function clear_the_cart () {
+$(document).ready(function clear_the_cart() {
 	$('#clear-cart').on('click', function (e) {
 		e.preventDefault();
 		clearCart();
@@ -315,14 +328,14 @@ $(document).ready(function clear_the_cart () {
 	});
 });
 
-$(document).on('click', '.remove-item', function remove_item (e) {
+$(document).on('click', '.remove-item', function remove_item(e) {
 	e.preventDefault();
 	var bookid = $(this).closest('tr').attr('data-bookid');
 	removeItemFromCartAll(bookid);
 	displayCart();
 });
 
-$(document).on('change', '.input-count', function changes_on_count_number (e) {
+$(document).on('change', '.input-count', function changes_on_count_number(e) {
 	e.preventDefault();
 
 	var bookid = $(this).closest('tr').attr('data-bookid');
@@ -330,7 +343,7 @@ $(document).on('change', '.input-count', function changes_on_count_number (e) {
 	updateItemCount(bookid, count);
 	var price = Number($(this).closest('tr').find('.price-for-an-item').text());
 	var count_price = Number(price * count).toFixed(2);
-	
+
 	cart.splice(0, cart.length);
 	loadCart();
 
@@ -340,13 +353,31 @@ $(document).on('change', '.input-count', function changes_on_count_number (e) {
 	});
 
 
-	$('#total-price').fadeOut(1, function() {
+	$('#total-price').fadeOut(1, function () {
 		$(this).text('Total   $' + totalCart());
 		$(this).fadeIn(300);
 	});
 
 });
 
-function cart_blink () {
+function cart_blink() {
 	$('#sticky-cart').effect('shake');
 };
+
+$(document).ready(function loading_checkout() {
+	var output = '';
+	for (var i in cart) {
+		output += "<tr><td>" + String(cart[i].title) + "</td><td>" + cart[i].count + "</td><td>" + cart[i].count_price + "</td></tr>"
+	}
+
+	$('#tb-checkout').html(output);
+	$('#total-checkout').text('$ ' + totalCart());
+});
+
+
+// payment method selected
+$(document).ready(function () {
+	$('#payment').on('click', function () {
+		console.log($('#payment').tabs().tabs('option', 'active'));
+	});
+});
