@@ -1,6 +1,10 @@
 {% extends 'layout.html' %}
 {% block body %}
-	  {% include 'includes/_flash-sale.html' %}
-	  {% include 'includes/_category.html' %}
-	  {% include 'includes/_items.html' %}
+    <button id="sticky-cart"><a href="/cart"><img style="width: 120px;height: 70px;" src="/static/image/logo/cart.png"></a></button>
+{% if items.items %}
+{% include 'includes/_items.html' %}
+{% else %}
+{% include 'includes/_items_for_list_type.html' %}
+{% endif %}
+
 {% endblock %}

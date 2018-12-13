@@ -1,0 +1,138 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="row" style="width: 1200px;">
+	<div class="col-50">
+		<div class="checkout-container">
+			<form action="">
+				<div class="row">
+					<div class="col-50">
+						<h3>Billing Address</h3>
+						<label for="fname"><i class="fa fa-user"></i> Full Name</label>
+						<input type="text" id="fname" name="firstname" placeholder="Nguyen Van A">
+						<label for="phone"><i class="fas fa-phone"></i> Phone</label>
+						<input type="text" id="phone" name="phone" placeholder="0912345678">
+						<label for="email"><i class="fa fa-envelope"></i> Email</label>
+						<input type="text" id="email" name="email" placeholder="nva@example.com">
+						<label for="adr"><i class="fas fa-map-marker-alt"></i> Address</label>
+						<input type="text" id="adr" name="address" placeholder="100 Dien Bien Phu">
+						<label for="city"><i class="fa fa-institution"></i> City</label>
+						<input type="text" id="city" name="city" placeholder="Ho Chi Minh">
+					</div>
+				</div>
+				<input type="submit" value="Finish checkout" class="co-btn">
+			</form>
+		</div>
+	</div>
+
+	<div class="col-50">
+		
+		<div class="checkout-container">
+			<h4>Cart
+				<span class="price" style="color:black">
+					<i class="fa fa-shopping-cart"></i>
+				</span>
+			</h4>
+			<table class="table table-hover table-condensed">
+				<thread>
+					<tr>
+						<th style="width:55%">Items</th>
+						<th style="width:25%">Quantity</th>
+						<th style="width:20%">Price</th>
+					</tr>
+				</thread>
+				<tbody>
+					<tr data-bookid="23545800">
+						<td>Kaleidoscope Hearts</td>
+						<td>12</td>
+						<td>$24</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td><strong>Total</strong></td>
+						<td><strong>$40</strong></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+
+		<div class="checkout-container" style="margin-top:20px;">
+				<div class="card-body">
+	
+					<ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
+								<i class="fa fa-credit-card"></i> Credit Card</a></li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
+								<i class="fas fa-wallet"></i> Cash</a></li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="pill" href="#nav-tab-bank">
+								<i class="fa fa-university"></i> Bank Transfer</a></li>
+					</ul>
+	
+					<div class="tab-content">
+						<div class="tab-pane fade show active" id="nav-tab-card">
+							<form role="form">
+								<div class="form-group">
+									<label for="username">Full name (on the card)</label>
+									<input type="text" class="form-control" name="username" placeholder="" required="">
+								</div>
+	
+								<div class="form-group">
+									<label for="cardNumber">Card number</label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="cardNumber" placeholder="">
+										<div class="input-group-append">
+											<span class="input-group-text text-muted">
+												<i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>  
+												<i class="fab fa-cc-mastercard"></i>
+											</span>
+										</div>
+									</div>
+								</div>
+	
+								<div class="row">
+									<div class="col-sm-8">
+										<div class="form-group">
+											<label><span class="hidden-xs">Expiration</span> </label>
+											<div class="input-group">
+												<input type="number" class="form-control" placeholder="MM" name="">
+												<input type="number" class="form-control" placeholder="YY" name="">
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i
+												 class="fa fa-question-circle"></i></label>
+											<input type="number" class="form-control" required="">
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="tab-pane fade" id="nav-tab-paypal">
+							<p>Payment on delivery</p>
+							<p><strong>Note:</strong> We will receive the cash after the package is deliveried.</p>
+						</div>
+						<div class="tab-pane fade" id="nav-tab-bank">
+							<p>Bank account details</p>
+							<dl class="param">
+								<dt>BANK: </dt>
+								<dd> THE ACB BANK</dd>
+							</dl>
+							<dl class="param">
+								<dt>Account number: </dt>
+								<dd> 12345678912345</dd>
+							</dl>
+							<p><strong>Note:</strong> Please specify your name in the description of transaction.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	</div>
+</div>
+{% endblock %}

@@ -56,8 +56,8 @@ class Book(db.Model):
     AuthorsID = db.Column(db.Text(convert_unicode = True))
     PublicationYear = db.Column(db.Integer)
     ImgUrl = db.Column(db.String(100), default = 'default_book.jpg')
-    Price = db.Column(db.Integer, default = 100)
-    AvgRating = db.Column(db.Integer)
+    Price = db.Column(db.Float, default = 100)
+    AvgRating = db.Column(db.Float)
     Quantity = db.Column(db.Integer, default = 0)
     GenreID = db.Column(db.Integer, db.ForeignKey('genre.GenreID'), nullable = False)
 
@@ -73,23 +73,21 @@ class Author(db.Model):
 
 
 
-
-
-
-#class Store(db.Model):
-#    StoreID = db.Column(db.Integer, primary_key = True)
-#    Phone = db.Column(db.String(15))
-#    Address = db.Column(db.String(length = 200, convert_unicode = True), nullable = False)
-
-
-
-
 class Orders(db.Model):
     OrderID = db.Column(db.Integer, primary_key = True)
     UserID = db.Column(db.Integer, db.ForeignKey('user.UserID'), nullable = False)
     Date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow())
-    isDelivery = db.Column(db.Boolean, default = 0)
-    TotalPrice = db.Column(db.Integer)
+    Address = db.Column(db.Text(convert_unicode = True), nullable = False)
+    TotalPrice = db.Column(db.Float ,nullable = False)
+    IsPaid = db.Column(db.Boolean, default = 0)
+    # 0. No
+    # 1. Yes
+    PaymentMethod = db.Column(db.Integer, default = 0)
+    # 0. Cash
+    # 1. Credit Card
+    # 2. Bank Transfer
+    # 3. Code
+
 
 class OrderDetails(db.Model):
     OrderID = db.Column(db.Integer, db.ForeignKey('orders.OrderID'), primary_key = True)

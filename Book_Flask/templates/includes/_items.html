@@ -1,29 +1,56 @@
-<section id="sec-items">
-    {% for item in items.items %}
-        <div class="card" style="width: 15rem; height: 30rem;">
-                <img class="card-img-top" src="{{ item.ImgUrl }}">
-                <div class="card-body">
-                    <h4 class="card-title">{{ item.Title }}</h4>
-                    <div>
-                        <h5 class="card-text"> {{ item.Price }} $</h5>
-                        <a href="#" class="btn btn-primary">Add To Cart</a>
-                    </div>
+<div class="contianer">
+    <div class="card-columns text-center">
+        {% for item in items.items %}
+        <div class="card" data-id="{{ item.BookID }}" style="width: 200px;height: 400px;">
+            <!-- <div class="imageWrapper">
+                <img class="card-img-top" src="{{ item.ImgUrl }}" style="height: 240px">
+                <a href="http://google.com" class="cornerLink">Click for more details</a>
+            </div> -->
+            <div class="hvrbox">
+                <img src="{{ item.ImgUrl }}" style="height: 240px" class=" card-img-top hvrbox-layer_bottom">
+                <div class="hvrbox-layer_top">
+                    <div class="hvrbox-text">Click for more details</div>
                 </div>
+            </div>
+            <div class="card-body" style="height: 150px;">
+                <h5 class="card-title" style="font-size: 16px">{{ item.Title }}</h5>
+                <h4 class="card-text"> {{ item.Price }} $ </h4>
+                <button type="button" class="adding-cart btn btn-primary btn-card">Add to cart</button>
+            </div>
         </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
     <section id="page-num">
         <div>
-            {% for page_num in items.iter_pages(left_edge = 1, right_edge = 1, left_current = 4, right_current = 4) %}
-                {% if page_num %}
-                    {% if items.page == page_num %}
-                        <a class="btn btn-info mb-2" href="{{ url_for('main.home', page = page_num) }}">{{ page_num }}</a>
-                    {% else %}
-                        <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page = page_num) }}">{{ page_num }}</a>
-                    {% endif %}
-                {% else %}
-                    ...
-                {% endif %}
+            {% if genreid %}
+            {% for page_num in items.iter_pages(left_edge = 1, right_edge = 1, left_current = 3, right_current = 3) %}
+            {% if page_num %}
+            {% if items.page == page_num %}
+            <a class="btn btn-info mb-2" href="{{ url_for('main.home_genre', genreid = genreid, page = page_num) }}">{{
+                page_num }}</a>
+            {% else %}
+            <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home_genre', genreid = genreid, page = page_num) }}">{{
+                page_num }}</a>
+            {% endif %}
+            {% else %}
+            ...
+            {% endif %}
             {% endfor %}
+            {% else %}
+            {% for page_num in items.iter_pages(left_edge = 1, right_edge = 1, left_current = 3, right_current = 3) %}
+            {% if page_num %}
+            {% if items.page == page_num %}
+            <a class="btn btn-info mb-2" href="{{ url_for('main.home', page = page_num) }}">{{ page_num }}</a>
+            {% else %}
+            <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page = page_num) }}">{{ page_num }}</a>
+            {% endif %}
+            {% else %}
+            ...
+            {% endif %}
+            {% endfor %}
+            {% endif %}
         </div>
     </section>
-</section>
+</div>
+
+{% include 'includes/_ajax_book_detail.html' %}

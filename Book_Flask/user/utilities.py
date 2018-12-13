@@ -4,6 +4,7 @@ from Book_Flask import mail, app
 import uuid
 import secrets, os
 from PIL import Image
+from threading import Thread
 
 def generate_id(type):
     id = str(uuid.uuid1())
@@ -13,9 +14,12 @@ def generate_id(type):
         'book' : str('book-' + id),
         'order' : str('order-' + id)[:16]
     }
-
     return switcher.get(type)
 
+
+def send_message(msg):
+    with app.test_request_context():
+        mail.send(msg)
 
 
 def send_token_reset(user):
@@ -27,20 +31,8 @@ def send_token_reset(user):
     
     msg.body = "To reset your password, visit the following link:\n{url_for('user.reset_passwd', token = token, _external = True)}\nIf you did not make this request then simply ignore this email and no changes will be made."
 
-    mail.send(msg)
-
-
-
-def send_token_register(user):
-    token = user.get_token()
-
-    msg = Message('Activating Account',
-                    sender = 'no-reply@gmmail.com',
-                    recipients = [user.Email])
-    
-    msg.body = "To activate your account, click the following link to complete:\n{url_for('user.register_token', token = token, _external = True)}\nIf you did not make this request then simply ignore this email and no changes will be made."
-
-    mail.send(msg)
+    myThread = Thread(target=send_message, args=(msg, ))
+    myThread.start()
 
 
 def save_picture(form_picture):
@@ -57,3 +49,17 @@ def save_picture(form_picture):
     i.save(pic_path)
 
     return new_pic_filename
+
+
+def send_token_register(user):
+    token = user.get_token()
+
+    msg = Message('Activating Account',
+                    sender = 'no-reply@gmmail.com',
+                    recipients = [user.Email])
+    
+    msg.body = f'''Register completely, click link below to continue:
+{url_for('user.register_token', token = token, _external = True)}
+'''
+    myThread = Thread(target=send_message, args=(msg, ))
+    myThread.start()

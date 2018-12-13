@@ -6,7 +6,7 @@ from flask_mail import Mail
 
 import os
 LOCAL_URI = 'mysql+pymysql://flask:Flask_123@127.0.0.1:3306/borestook'
-LIVE_URI = 'mysql+pymysql://flask:Flask_123@localhost/test?unix_socket=/cloudsql/final-thesis-100496:asia-east2:borestook'
+LIVE_URI = 'mysql+pymysql://flask:Flask_123@localhost/borestook?unix_socket=/cloudsql/final-thesis-100496:asia-east2:borestook'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')

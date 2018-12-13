@@ -40,7 +40,7 @@ def register():
         
         send_token_register(user = user)        
 
-        flash('Un email has been sent with un instruction to complete your registration. Please check your email to continue!!!', 'info')
+        flash('An email has been sent with an instruction to complete your registration. Please check your email to continue!!!', 'info')
         return redirect(url_for('main.home'))
     
     return render_template('register.html', title = 'Register', form = form)
@@ -57,13 +57,13 @@ def register_token(token):
 
     if user is None:
         flash('That is an invalid or expired token', 'warning')
-
         return redirect(url_for('user.register'))
 
-    flash('Register completely!!! Now you can login', 'info')
-    
-    return render_template('home.html', title = 'Home')
+    else:
+        flash('Register completely!!! Now you can login', 'info')
+        return redirect(url_for('user.login'))
 
+    return redirect(url_for('user.register'))
 
 
 @user.route("/login", methods = ['GET', 'POST'])
@@ -111,7 +111,7 @@ def request_passwd():
 
         send_token_reset(user)
 
-        flash('Un email has been sent with un instruction to reset your password', 'info')
+        flash('An email has been sent with an instruction to reset your password', 'info')
 
         return redirect(url_for('user.login'))
 

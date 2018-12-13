@@ -1,11 +1,11 @@
 {% extends 'layout.html' %}
 {% block body %}
-    <section class="sec-reg-log div-center">
+<section class="sec-reg-log div-center">
         <div class="div-reg-log content-section div-center div-bg-white border-green-double">
             <form  method="POST" action="">
                 {{ form.hidden_tag() }}
                 <fieldset class="form-group">
-                    <legend class="border-bottom mb-4">Login</legend>
+                    <h3 class="border-bottom mb-4 title">Login</h3>
                     <div class="form-group">
                         {{ form.email.label(class="form-control-label") }}
                         {% if form.email.errors %}
@@ -51,4 +51,5 @@
             </form>
         </div>
 </section>
+
 {% endblock %}
