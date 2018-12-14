@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[9]:
+
 
 import pandas as pd
 import sqlalchemy
 import os
 import random
 
-URI = LOCAL_URI = 'mysql+pymysql://flask:Flask_123@127.0.0.1:3306/borestook'
+URI = 'mysql+pymysql://flask:Flask_123@127.0.0.1:3306/borestook'
 connection = sqlalchemy.create_engine(URI)
 
 df = pd.read_csv('books.csv')
@@ -16,7 +17,7 @@ df = df[['book_id', 'original_title', 'isbn','authors', 'original_publication_ye
 df.sort_values(inplace=True, by = ['book_id'])
 
 
-# In[2]:
+# In[11]:
 
 
 #Clean database
@@ -27,7 +28,7 @@ db.engine.execute('USE borestook')
 db.create_all()
 
 
-# In[3]:
+# In[12]:
 
 
 data = [{'GenreID': 1, 'Name': 'Science fiction'},
@@ -61,13 +62,13 @@ data = [{'GenreID': 1, 'Name': 'Science fiction'},
        {'GenreID': 29, 'Name': 'Others'}]
 
 
-# In[4]:
+# In[7]:
 
 
 data_genres = pd.DataFrame(data)
 
 
-# In[5]:
+# In[8]:
 
 
 authors_name = []
@@ -83,20 +84,20 @@ for i in range(len(authors_name)):
     authors_id.append(i+1)
 
 
-# In[6]:
+# In[9]:
 
 
 data_authors = pd.DataFrame({'AuthorID': authors_id, 'Name': authors_name})
 
 
-# In[7]:
+# In[10]:
 
 
 a = data_authors[data_authors['Name'] == 'J.K. Rowling'].values[0].tolist()
 a[1]
 
 
-# In[8]:
+# In[11]:
 
 
 def get_id_of_author(s):
@@ -104,13 +105,13 @@ def get_id_of_author(s):
     return temp[0]
 
 
-# In[9]:
+# In[12]:
 
 
 get_id_of_author('Frank Herbert')
 
 
-# In[10]:
+# In[13]:
 
 
 def replace_author(s):
@@ -125,13 +126,13 @@ def replace_author(s):
     return authors_id
 
 
-# In[11]:
+# In[14]:
 
 
 replace_author('Heidi Murkoff, Sharon Mazel, Heidi Murkoff, Arlene Eisenberg, Sandee Hathaway, Mark D. Widome')
 
 
-# In[12]:
+# In[15]:
 
 
 temp = []
@@ -139,7 +140,7 @@ for x in range(len(df['book_id'])):
     temp.append(df.iloc[x]['authors'])
 
 
-# In[13]:
+# In[ ]:
 
 
 own = []
@@ -147,13 +148,13 @@ for i in temp:
     own.append(replace_author(i))
 
 
-# In[14]:
+# In[ ]:
 
 
 df['authors'] = own
 
 
-# In[15]:
+# In[ ]:
 
 
 random_genre = []
@@ -166,14 +167,14 @@ for i in range(len(df['book_id'])):
     random_price.append(temp_price)
 
 
-# In[16]:
+# In[ ]:
 
 
 df['GenreID'] = random_genre
 df['Price'] = random_price
 
 
-# In[17]:
+# In[ ]:
 
 
 df.rename(columns = {'authors' : 'AuthorsID',
@@ -186,13 +187,13 @@ df.rename(columns = {'authors' : 'AuthorsID',
                      'books_count' : 'Quantity'}, inplace = True)
 
 
-# In[18]:
+# In[ ]:
 
 
 df = df[['BookID', 'Title', 'ISBN', 'AuthorsID', 'PublicationYear', 'ImgUrl', 'Price', 'AvgRating', 'Quantity', 'GenreID']]
 
 
-# In[19]:
+# In[ ]:
 
 
 #delete book with no image
@@ -201,7 +202,7 @@ df = df[df.ImgUrl != 'https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042
 df = df[df.Title != ' ']
 
 
-# In[20]:
+# In[ ]:
 
 
 data_authors.set_index('AuthorID', inplace = True)
@@ -209,7 +210,7 @@ data_authors.set_index('AuthorID', inplace = True)
 data_authors.to_sql(con = connection, name = 'author', if_exists = 'append')
 
 
-# In[21]:
+# In[ ]:
 
 
 data_genres.set_index('GenreID', inplace = True)
@@ -217,7 +218,7 @@ data_genres.set_index('GenreID', inplace = True)
 data_genres.to_sql(con = connection, name = 'genre', if_exists='append')
 
 
-# In[22]:
+# In[ ]:
 
 
 BookID = df['BookID'].values.tolist()
@@ -232,7 +233,7 @@ Quantity = df['Quantity'].values.tolist()
 GenreID = df['GenreID'].values.tolist()
 
 
-# In[23]:
+# In[ ]:
 
 
 book = pd.DataFrame({'BookID':BookID})
@@ -247,19 +248,19 @@ book['Quantity'] = Quantity
 book['GenreID'] = GenreID
 
 
-# In[24]:
+# In[ ]:
 
 
 book['Title'].fillna('Unkown', inplace = True)
 
 
-# In[25]:
+# In[ ]:
 
 
 book.set_index('BookID', inplace = True)
 
 
-# In[ ]:
+# In[35]:
 
 
 book.to_sql(con = connection, name = 'book', if_exists='append')

@@ -1,21 +1,45 @@
-// ---------------------------------------------- on scroll
+// -------------------------------------------------------- on scroll window
 $(window).on('scroll', function onscroll() {
+	// navigation bar
 	if ($(window).scrollTop()) {
 		$('#my-navbar').addClass('opa-lblue');
 		$('.my-2.my-sm-0').addClass('txt-black');
 		$('.dropdown-toggle').addClass('txt-black');
+		$('.res-log').addClass('txt-black');
 	}
 	else {
 		$('#my-navbar').removeClass('opa-lblue');
 		$('.my-2.my-sm-0').removeClass('txt-black');
 		$('.dropdown-toggle').removeClass('txt-black');
-
+		$('.res-log').removeClass('txt-black');
 	}
+	// modal search
 	if ($('.search-modal').css('display') == 'flex') {
-		$('.search-modal').stop().animate({ 'marginTop': ($(window).scrollTop()) + 'px', 'marginLeft': ($(window).scrollLeft()) + 'px' }, 500);
+		$('.search-modal').stop().animate({ 'marginTop': ($(window).scrollTop()) + 'px', 'marginLeft': ($(window).scrollLeft()) + 'px' }, 700);
+	}
+	// sticky cart
+	$('#sticky-cart').stop().animate({
+		'marginTop': ($(window).scrollTop()) + 'px',
+		'marginLeft': ($(window).scrollLeft()) + 'px'
+	}, 200);
+
+	// bill information
+	var $marginSecBackground = $(window).scrollTop() - $('#sec-background').height();
+	if ($marginSecBackground > 0 && ($marginSecBackground < ($('.col-50').height() - $('.bill').height() - 100))) {
+		$('.bill').stop().animate({
+			'marginTop': ($(window).scrollTop() - $('#sec-background').height() + 75) + 'px'
+		}, 500);
+
+	} else if ($marginSecBackground < 0) {
+		$('.bill').stop().animate({
+			'marginTop': 0
+		});
+	} else {
+		$('.bill').stop().animate({
+			'marginTop': $maxMar
+		});
 	}
 });
-
 
 // --------------------------------------------- advance search
 function advance_search() {
@@ -38,7 +62,7 @@ function close_login() {
 };
 
 //----------------------------------------------- resitrct legth title
-$('.card-title').ready(function resitrct_title_length () {
+$('.card-title').ready(function resitrct_title_length() {
 	$('.card-title').each(function () {
 		len = $(this).text().length;
 		if (len > 40) {
@@ -48,13 +72,7 @@ $('.card-title').ready(function resitrct_title_length () {
 });
 
 //----------------------------------------------- modal extra book infor
-$(document).ready(function ajax_bookdetail () {
-	/*for (var i = 0; i < 20; i++){
-		$('.card').eq(i).on('click', {value : i}, function(){
-			var mess = $(this).attr('data-id');
-			console.log(mess);
-		});
-	}*/
+$(document).ready(function ajax_bookdetail() {
 	$('.card .hvrbox-layer_top').on('click', function (e) {
 		e.preventDefault();
 
@@ -136,7 +154,6 @@ $(document).ready(function auto_scroll() {
 			scrollTop: $('.checkout-container').offset().top - 100
 		}, 2000);
 	}
-
 });
 
 
@@ -167,7 +184,7 @@ function loadCart() {
 	}
 };
 
-$(document).ready(function loadCart_auto () {
+$(document).ready(function loadCart_auto() {
 	cart.splice(0, cart.length);
 	loadCart();
 });
@@ -237,7 +254,7 @@ function totalCart() {
 	return totalCost;
 };
 
-$(document).ready(function addingbookfromhome () {
+$(document).ready(function addingbookfromhome() {
 	$('.adding-cart').on('click', function (e) {
 		e.preventDefault();
 
@@ -252,7 +269,7 @@ $(document).ready(function addingbookfromhome () {
 		addItemToCart(bookid, title, count, price, image);
 
 		$(this).text('Added');
-		$(this).css('background-color','yellow');
+		$(this).css('background-color', 'yellow');
 
 		cart_blink();
 	});
@@ -271,7 +288,7 @@ $(document).ready(function addboookfromajax() {
 		addItemToCart(bookid, title, count, price, image);
 
 		$(this).text('Added');
-		$(this).css('background-color','yellow');
+		$(this).css('background-color', 'yellow');
 
 		cart_blink();
 	})
@@ -292,12 +309,12 @@ function displayCart() {
 	}
 	$('#cart-data').html(output);
 
-	$('#num-items').fadeOut(300, function(){
+	$('#num-items').fadeOut(300, function () {
 		$(this).text('Number of items: ' + cart.length);
 		$(this).fadeIn(300);
 	});
 
-	$('#total-price').fadeOut(300, function(){
+	$('#total-price').fadeOut(300, function () {
 		$(this).text('Total   $' + totalCart());
 		$(this).fadeIn(300);
 	});
@@ -307,7 +324,7 @@ $(document).ready(function () {
 	displayCart();
 });
 
-$(document).ready(function clear_the_cart () {
+$(document).ready(function clear_the_cart() {
 	$('#clear-cart').on('click', function (e) {
 		e.preventDefault();
 		clearCart();
@@ -315,14 +332,14 @@ $(document).ready(function clear_the_cart () {
 	});
 });
 
-$(document).on('click', '.remove-item', function remove_item (e) {
+$(document).on('click', '.remove-item', function remove_item(e) {
 	e.preventDefault();
 	var bookid = $(this).closest('tr').attr('data-bookid');
 	removeItemFromCartAll(bookid);
 	displayCart();
 });
 
-$(document).on('change', '.input-count', function changes_on_count_number (e) {
+$(document).on('change', '.input-count', function changes_on_count_number(e) {
 	e.preventDefault();
 
 	var bookid = $(this).closest('tr').attr('data-bookid');
@@ -330,7 +347,7 @@ $(document).on('change', '.input-count', function changes_on_count_number (e) {
 	updateItemCount(bookid, count);
 	var price = Number($(this).closest('tr').find('.price-for-an-item').text());
 	var count_price = Number(price * count).toFixed(2);
-	
+
 	cart.splice(0, cart.length);
 	loadCart();
 
@@ -340,13 +357,162 @@ $(document).on('change', '.input-count', function changes_on_count_number (e) {
 	});
 
 
-	$('#total-price').fadeOut(1, function() {
+	$('#total-price').fadeOut(1, function () {
 		$(this).text('Total   $' + totalCart());
 		$(this).fadeIn(300);
 	});
 
 });
 
-function cart_blink () {
+function cart_blink() {
 	$('#sticky-cart').effect('shake');
 };
+
+$(document).ready(function loading_checkout() {
+	var output = '';
+	for (var i in cart) {
+		output += "<tr><td>" + String(cart[i].title) + "</td><td>" + cart[i].count + "</td><td>" + cart[i].count_price + "</td></tr>"
+	}
+
+	$('#tb-checkout').html(output);
+	$('#total-checkout').text('$ ' + totalCart());
+	$maxMar = $('.col-50').height() - $('.bill').height() - 35;
+});
+
+
+// payment method ready
+$(document).ready(function payment_ready() {
+	$('#payment').tabs().tabs('option', 'active', 0);
+});
+
+function bill_form_check() {
+	var forms_check = $('.bill').find('#fname, #phone, #email, #adr, #city').serializeArray();
+	var temp_check = true;
+	$.each(forms_check, function (i, form) {
+		if (!form.value) {
+			alert(form.name + ' is required');
+			temp_check = false;
+			return false;
+		}
+	});
+
+	if (temp_check) {
+		return true;
+	}
+	return false;
+};
+
+function credit_card_check() {
+	var forms_check = $('#nav-tab-credit-card').find('#credit-name, #credit-cardnumber, #credit-card-month, #credit-card-year, #credit-card-ccv').serializeArray();
+	var temp_check = true;
+	$.each(forms_check, function (i, form) {
+		if (!form.value) {
+			alert('Credit card info is required!');
+			temp_check = false;
+			return false;
+		}
+	});
+
+	if (temp_check) {
+		return true;
+	}
+	return false;
+};
+
+var Order = function (address, totalprice, ispaid, status, paymentmethod) {
+	this.Address = address;
+	this.TotalPrice = totalprice;
+	this.IsPaid = ispaid;
+	this.Status = status;
+	this.PaymentMethod = paymentmethod;
+};
+
+var Order_Details = function (bookid, count) {
+	this.BookID = bookid;
+	this.Quantity = count;
+}
+
+
+function create_order(payment_index) {
+	// getting address
+	var Address = $('.bill #adr').val();
+	Address += (' ' + $('.bill #city').val());
+	// getting total price
+	var TotalPrice = totalCart();
+	// geting isPaid
+	var IsPaid = 0;
+	// getting status
+	var Status = 0;
+	// getting payment method
+	var PaymentMethod = payment_index;
+
+	var order = new Order(Address, TotalPrice, IsPaid, Status, PaymentMethod);
+
+	return order;
+}
+
+function create_order_detail() {
+	var order_list = [];
+	for (var i in cart) {
+		var item = new Order_Details(cart[i].bookid, cart[i].count);
+		order_list.push(item);
+	}
+
+	return order_list;
+}
+
+function ajax_sending_order(payment_index) {
+	var temp_order = create_order(payment_index);
+
+	var temp_order_detail = create_order_detail();
+
+	temp_order_detail = JSON.stringify(temp_order_detail);
+
+	temp_order['Detail'] = temp_order_detail;
+
+	$.ajax({
+		data: {
+			order: JSON.stringify(temp_order)
+		},
+		type: 'POST',
+		dataType: 'json',
+		url: '/create_order',
+		success: function (result) {
+			alert(result.success);
+		},
+		error: function () {
+			alert('error');
+		}
+	});
+};
+
+function payment_method_check() {
+	var payment_index = $('#payment').tabs().tabs('option', 'active');
+
+	switch (payment_index) {
+		case 0: {
+			if (credit_card_check()) {
+				alert('This payment method is not available!');
+			}
+		}
+			break;
+		case 1: {
+			ajax_sending_order(payment_index);
+		}
+			break;
+		case 2: {
+			ajax_sending_order(payment_index);
+		}
+			break;
+	}
+};
+
+$(document).ready(function finish_checkout() {
+	$('#finish-checkout').on('click', function (e) {
+		e.preventDefault();
+
+		if (bill_form_check()) {
+			payment_method_check();
+		}
+	});
+});

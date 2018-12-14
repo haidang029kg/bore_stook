@@ -1,21 +1,12 @@
 from flask import url_for
 from flask_mail import Message
 from Book_Flask import mail, app
-import uuid
 import secrets, os
 from PIL import Image
 from threading import Thread
+from google.cloud import storage
 
-def generate_id(type):
-    id = str(uuid.uuid1())
-
-    switcher = {
-        'user' : str('user-' + id)[:16],
-        'book' : str('book-' + id),
-        'order' : str('order-' + id)[:16]
-    }
-    return switcher.get(type)
-
+SUB_URL = 'userava/'
 
 def send_message(msg):
     with app.test_request_context():
@@ -35,19 +26,22 @@ def send_token_reset(user):
     myThread.start()
 
 
-def save_picture(form_picture):
+def save_picture(form_picture, old_file):
     randome_hex = secrets.token_hex(8)
 
     _, file_ext = os.path.splitext(form_picture.filename)
+
     new_pic_filename = randome_hex + file_ext
-    pic_path = os.path.join(app.root_path, 'static/image/profile_user_pic', new_pic_filename)
-    # pic_path will be changed to the appropriate cloud store on gcloud
 
-    output_pic_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(output_pic_size)
-    i.save(pic_path)
-
+    print(new_pic_filename)
+    client = storage.Client('final-thesis-100496')
+    bucket = client.bucket('borestook')
+    if (old_file != ''):
+        blob = bucket.blob('userava/' + old_file)
+        blob.delete()
+    blob = bucket.blob('userava/' + new_pic_filename)
+    blob.upload_from_string(form_picture.read(),content_type=form_picture.content_type)
+	
     return new_pic_filename
 
 

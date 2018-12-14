@@ -1,6 +1,7 @@
 from Book_Flask import db, login_user_manager, app
 from flask_login import UserMixin
 from datetime import datetime
+import uuid
 
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
@@ -12,6 +13,15 @@ def user_loader(user_id):
     return User.query.get(str(user_id))
 
 
+def generate_id(type):
+    id = str(uuid.uuid1())
+
+    switcher = {
+        'user' : str('user-' + id)[:16],
+        'book' : str('book-' + id),
+        'order' : str('order-' + id)[:16]
+    }
+    return switcher.get(type)
 
 
 class User(db.Model, UserMixin):
@@ -74,7 +84,7 @@ class Author(db.Model):
 
 
 class Orders(db.Model):
-    OrderID = db.Column(db.Integer, primary_key = True)
+    OrderID = db.Column(db.String(length = 16, convert_unicode = True), primary_key = True)
     UserID = db.Column(db.Integer, db.ForeignKey('user.UserID'), nullable = False)
     Date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow())
     Address = db.Column(db.Text(convert_unicode = True), nullable = False)
@@ -82,14 +92,19 @@ class Orders(db.Model):
     IsPaid = db.Column(db.Boolean, default = 0)
     # 0. No
     # 1. Yes
+    Status = db.Column(db.Integer, default = 0)
+    # 0. Waiting
+    # 1. Packaging
+    # 2. Delivering
+    # 3. Delivered
     PaymentMethod = db.Column(db.Integer, default = 0)
-    # 0. Cash
-    # 1. Credit Card
+    # 0. Credit Card
+    # 1. Cash
     # 2. Bank Transfer
     # 3. Code
 
 
 class OrderDetails(db.Model):
-    OrderID = db.Column(db.Integer, db.ForeignKey('orders.OrderID'), primary_key = True)
+    OrderID = db.Column(db.String(length = 16, convert_unicode = True), primary_key = True)
     BookID = db.Column(db.Integer, db.ForeignKey('book.BookID'), primary_key = True)
     Quantity = db.Column(db.Integer, default = 1)

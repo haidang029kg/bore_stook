@@ -24,3 +24,4 @@ six==1.11.0
 SQLAlchemy==1.2.14
 Werkzeug==0.14.1
 WTForms==2.2.1
+google-cloud-storage==1.13.1

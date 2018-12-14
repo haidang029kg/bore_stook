@@ -1,7 +1,10 @@
 from flask import render_template, request, Blueprint, jsonify, json, flash
-from Book_Flask.models import Book, Author, Genre
+from Book_Flask.models import Book, Author, Genre, Orders, OrderDetails, generate_id
 from Book_Flask import db
-from flask_login import login_required
+from flask_login import login_required, current_user
+
+import json
+
 main = Blueprint('main', __name__)
 
 
@@ -114,3 +117,45 @@ def cart():
 @login_required
 def checkout():
     return render_template('checkout.html')
+
+
+@main.route("/create_order", methods = ['POST'])
+@login_required
+def create_order():
+	order = request.form.getlist('order')[0]
+	order = json.loads(order)
+	print(order)
+	order_detail = order['Detail']
+
+	order_detail = json.loads(order_detail)
+
+	order_id = generate_id('order')
+	user_id = current_user.get_id()
+
+	data_order = Orders(OrderID = order_id,
+						UserID = user_id,
+						Address = order.get('Address'),
+						TotalPrice = order.get('TotalPrice'),
+						IsPaid = order.get('IsPaid'),
+						Status = order.get('Status'),
+						PaymentMethod = order.get('PaymentMethod'))
+
+	data_order_details = []
+
+	for i in order_detail:
+		each_detail = OrderDetails(OrderID = order_id,
+									BookID = i.get('BookID'),
+									Quantity = i.get('Quantity'))
+		data_order_details.append(each_detail)
+
+	if (data_order):
+		if (data_order_details):
+			db.session.add(data_order)
+			
+			for i in data_order_details:
+				db.session.add(i)
+		
+		db.session.commit()
+		db.session.close()
+	
+	return jsonify({'success' : 'done!'})
