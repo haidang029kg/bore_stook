@@ -1,20 +1,9 @@
 from flask import url_for
 from flask_mail import Message
 from Book_Flask import mail, app
-import uuid
 import secrets, os
 from PIL import Image
 from threading import Thread
-
-def generate_id(type):
-    id = str(uuid.uuid1())
-
-    switcher = {
-        'user' : str('user-' + id)[:16],
-        'book' : str('book-' + id),
-        'order' : str('order-' + id)[:16]
-    }
-    return switcher.get(type)
 
 
 def send_message(msg):

@@ -8,18 +8,20 @@
 					<div class="col-50">
 						<h3>Billing Address</h3>
 						<label for="fname"><i class="fa fa-user"></i> Full Name</label>
-						<input type="text" id="fname" name="firstname" value="{{ current_user.FirstName + ' ' + current_user.LastName }}">
+						<input type="text" id="fname" name="Name" value="{{ current_user.FirstName + ' ' + current_user.LastName }}">
 						<label for="phone"><i class="fas fa-phone"></i> Phone</label>
-						<input type="text" id="phone" name="phone" value="{{ current_user.Phone }}">
+						<input type="text" id="phone" name="Phone" value="{{ current_user.Phone }}">
 						<label for="email"><i class="fa fa-envelope"></i> Email</label>
-						<input type="text" id="email" name="email" value="{{ current_user.Email }}">
+						<input type="text" id="email" name="Email" value="{{ current_user.Email }}">
 						<label for="adr"><i class="fas fa-map-marker-alt"></i> Address</label>
-						<input type="text" id="adr" name="address" placeholder="100 Dien Bien Phu" value="">
+						<input type="text" id="adr" name="Address" placeholder="100 Dien Bien Phu" value="123">
 						<label for="city"><i class="fa fa-institution"></i> City / Province</label>
-						<input type="text" id="city" name="city" placeholder="Ho Chi Minh" value="">
+						<input type="text" id="city" name="City / Province" placeholder="Ho Chi Minh" value="123">
 					</div>
 				</div>
-				<input type="submit" value="Finish checkout" class="co-btn">
+				<div class="row">
+					<button id="finish-checkout" type="button" class="btn btn-success">Finish Checkout</button>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -71,13 +73,13 @@
 						<form role="form">
 							<div class="form-group">
 								<label for="username">Full name (on the card)</label>
-								<input type="text" class="form-control" name="username" placeholder="" required="">
+								<input id="credit-name" type="text" class="form-control" name="username" placeholder="" required="">
 							</div>
 
 							<div class="form-group">
 								<label for="cardNumber">Card number</label>
 								<div class="input-group">
-									<input type="text" class="form-control" name="cardNumber" placeholder="">
+									<input id="credit-cardnumber" type="text" class="form-control" name="cardNumber" placeholder="">
 									<div class="input-group-append">
 										<span class="input-group-text text-muted">
 											<i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>  
@@ -92,8 +94,8 @@
 									<div class="form-group">
 										<label><span class="hidden-xs">Expiration</span> </label>
 										<div class="input-group">
-											<input type="number" class="form-control" placeholder="MM" name="">
-											<input type="number" class="form-control" placeholder="YY" name="">
+											<input id="credit-card-month" type="number" class="form-control" placeholder="MM" name="month">
+											<input id="credit-card-year" type="number" class="form-control" placeholder="YY" name="year">
 										</div>
 									</div>
 								</div>
@@ -101,7 +103,7 @@
 									<div class="form-group">
 										<label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i
 											 class="fa fa-question-circle"></i></label>
-										<input type="number" class="form-control" required="">
+										<input id="credit-card-ccv" type="number" class="form-control" required="" name="ccv">
 									</div>
 								</div>
 							</div>

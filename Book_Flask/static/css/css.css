@@ -55,6 +55,10 @@ body {
 	padding: 0px
 }
 
+.res-log:hover {
+	text-decoration: underline;
+}
+
 .txt-black {
 	color: black !important;
 }
@@ -380,10 +384,17 @@ select::-ms-expand {
 }
 
 .card-columns {
-	column-count: 5;
+	display: flex;
+	flex-flow: row wrap;
 	width: 1200px;
 	margin: auto;
 }
+
+@-moz-document url-prefix() {
+	.card-columns {
+	width: 1300px;
+	}
+	}
 
 .mb-2 {
 	margin-bottom: 1.5rem !important;
@@ -392,6 +403,7 @@ select::-ms-expand {
 .card {
 	background-color: #f2f2f3;
 	border-radius: 1rem;
+	margin: 0 20px 10px 20px;
 }
 
 .card-img-top {
@@ -494,28 +506,6 @@ button.btn.btn-outline-success.my-2.my-sm-0:hover {
 .hvrbox.active .hvrbox-text_mobile {
 	display: block;
 }
-
-/* .cornerLink {
-    opacity: 0;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    padding: 2px 0px;
-    color: #ffffff;
-    background: #000000;
-    text-decoration: none;
-    text-align: center;
-    -webkit-transition: opacity 500ms;
-    -moz-transition: opacity 500ms;
-    -o-transition: opacity 500ms;
-    transition: opacity 500ms;
-    
-}
-.imageWrapper:hover .cornerLink {
-	opacity: 0.8;
- } */
-
 
 /*--------------------------------- cart edit */
 
@@ -729,15 +719,15 @@ span.price {
 
 /* ------------------------------------------stick cart icon */
 #sticky-cart {
-	position: fixed;
+	position: absolute;
 	top: 50%;
-	right: 0;
+	right: 20px;
 	z-index: 2;
 	background: none;
 	border: none;
 }
 
-#sticky-cart :hover { 
+#sticky-cart:hover { 
 	-webkit-transition: 0.6s ease-out;
     -moz-transition:  0.6s ease-out;
 	transition:  0.6s ease-out;
@@ -745,4 +735,9 @@ span.price {
 	-webkit-transform: rotateZ(720deg);
     -moz-transform: rotateZ(720deg);
     transform: rotateZ(720deg);
+}
+
+/*---------------------------------finish checkout button */
+#finish-checkout {
+	width: 100%;
 }
