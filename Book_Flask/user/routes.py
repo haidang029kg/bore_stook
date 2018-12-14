@@ -31,6 +31,7 @@ def register():
             form.password.data).decode('utf-8')
 
         user = User(Email=form.email.data,
+                    Phone=form.phone.data,
                     FirstName=form.fname.data,
                     LastName=form.lname.data,
                     Password=hashed_password)
@@ -217,6 +218,7 @@ def create_order():
     data_order = Orders(OrderID=order_id,
                         UserID=user_id,
                         Address=order.get('Address'),
+                        Phone=order.get('Phone'),
                         TotalPrice=order.get('TotalPrice'),
                         IsPaid=order.get('IsPaid'),
                         Status=order.get('Status'),
@@ -244,12 +246,14 @@ def create_order():
     return jsonify({'success': 'done!'})
 
 
-@user.route("/order_management")
+@user.route("/ordered_history")
 @login_required
-def order_management():
-    
-    items = db.session.query(Orders.OrderID, Orders.Date, Orders.Address, Orders.TotalPrice, Ispaid.Name, Orders.PaymentMethod, Orders.Status).filter(Orders.IsPaid == Ispaid.IsPaidID).filter(Orders.PaymentMethod == Paymentmethod.PaymentMethodID).filter(Orders.Status == Status.StatusID).all()
+def ordered_history():
 
-    print(items)
+    page = request.args.get('page', 1, type=int)
+    per_page = 5
 
-    return render_template('mana.html', title = 'mana', items = items)
+    items = db.session.query(Orders.OrderID, Orders.Date, Orders.Address, Orders.Phone, Orders.TotalPrice, Ispaid.NamePaid, Paymentmethod.NamePayment, Status.NameStatus).filter(
+        Orders.IsPaid == Ispaid.IsPaidID).filter(Orders.PaymentMethod == Paymentmethod.PaymentMethodID).filter(Orders.Status == Status.StatusID).order_by(Orders.Date.desc()).paginate(page = page, per_page = per_page)
+
+    return render_template('ordered_history.html', title='Ordered History', items=items)

@@ -419,8 +419,9 @@ function credit_card_check() {
 	return false;
 };
 
-var Order = function (address, totalprice, ispaid, status, paymentmethod) {
+var Order = function (address, phone, totalprice, ispaid, status, paymentmethod) {
 	this.Address = address;
+	this.Phone = phone;
 	this.TotalPrice = totalprice;
 	this.IsPaid = ispaid;
 	this.Status = status;
@@ -445,8 +446,10 @@ function create_order(payment_index) {
 	var Status = 1;
 	// getting payment method
 	var PaymentMethod = Number(payment_index) + 1;
+	// getting phone
+	var Phone = $('.bill #phone').val()
 
-	var order = new Order(Address, TotalPrice, IsPaid, Status, PaymentMethod);
+	var order = new Order(Address, Phone, TotalPrice, IsPaid, Status, PaymentMethod);
 
 	return order;
 }

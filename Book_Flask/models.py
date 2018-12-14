@@ -28,7 +28,7 @@ class User(db.Model, UserMixin):
     UserID = db.Column(db.Integer, primary_key = True)
     FirstName = db.Column(db.String(length = 50, convert_unicode = True), nullable = False)
     LastName = db.Column(db.String(length = 50, convert_unicode = True), nullable = False)
-    Phone = db.Column(db.String(15))
+    Phone = db.Column(db.String(15) , nullable = False)
     Email = db.Column(db.String(100), unique = True, nullable = False)
     ImgUrl = db.Column(db.String(100), nullable = False, default = 'default.jpg')
     Password = db.Column(db.String(100), nullable = False)
@@ -38,6 +38,9 @@ class User(db.Model, UserMixin):
     # override this def, bc it's executed in user_login from flask_login     
     def get_id(self):
         return self.UserID
+
+    def get_fullname(self):
+        return (self.FirstName + ' ' + self.LastName)
 
         
 
@@ -86,18 +89,19 @@ class Author(db.Model):
 class Orders(db.Model):
     OrderID = db.Column(db.String(length = 16, convert_unicode = True), primary_key = True)
     UserID = db.Column(db.Integer, db.ForeignKey('user.UserID'), nullable = False)
-    Date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow())
+    Date = db.Column(db.DateTime, nullable = False, default = datetime.now())
     Address = db.Column(db.Text(convert_unicode = True), nullable = False)
+    Phone = db.Column(db.String(15), nullable = False)
     TotalPrice = db.Column(db.Float ,nullable = False)
-    IsPaid = db.Column(db.Boolean, default = 0)
+    IsPaid = db.Column(db.SmallInteger)
     # 1. No
     # 2. Yes
-    Status = db.Column(db.Integer, default = 0)
+    Status = db.Column(db.SmallInteger)
     # 1. Waiting
     # 2. Packaging
     # 3. Delivering
     # 4. Delivered
-    PaymentMethod = db.Column(db.Integer, default = 0)
+    PaymentMethod = db.Column(db.SmallInteger)
     # 1. Credit Card
     # 2. Cash
     # 3. Bank Transfer
@@ -111,13 +115,13 @@ class OrderDetails(db.Model):
 
 
 class Ispaid(db.Model):
-    IsPaidID = db.Column(db.Integer, primary_key = True)
-    Name = db.Column(db.String(length = 5, convert_unicode = True), nullable = False)
+    IsPaidID = db.Column(db.SmallInteger, primary_key = True)
+    NamePaid = db.Column(db.String(length = 5, convert_unicode = True), nullable = False)
 
 class Status(db.Model):
-    StatusID = db.Column(db.Integer, primary_key = True)
-    Name = db.Column(db.String(length = 12, convert_unicode = True), nullable = False)
+    StatusID = db.Column(db.SmallInteger, primary_key = True)
+    NameStatus = db.Column(db.String(length = 12, convert_unicode = True), nullable = False)
 
 class Paymentmethod(db.Model):
-    PaymentMethodID = db.Column(db.Integer, primary_key = True)
-    Name = db.Column(db.String(length = 20, convert_unicode = True), nullable = False)
+    PaymentMethodID = db.Column(db.SmallInteger, primary_key = True)
+    NamePayment = db.Column(db.String(length = 20, convert_unicode = True), nullable = False)
