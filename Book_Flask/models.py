@@ -90,21 +90,34 @@ class Orders(db.Model):
     Address = db.Column(db.Text(convert_unicode = True), nullable = False)
     TotalPrice = db.Column(db.Float ,nullable = False)
     IsPaid = db.Column(db.Boolean, default = 0)
-    # 0. No
-    # 1. Yes
+    # 1. No
+    # 2. Yes
     Status = db.Column(db.Integer, default = 0)
-    # 0. Waiting
-    # 1. Packaging
-    # 2. Delivering
-    # 3. Delivered
+    # 1. Waiting
+    # 2. Packaging
+    # 3. Delivering
+    # 4. Delivered
     PaymentMethod = db.Column(db.Integer, default = 0)
-    # 0. Credit Card
-    # 1. Cash
-    # 2. Bank Transfer
-    # 3. Code
+    # 1. Credit Card
+    # 2. Cash
+    # 3. Bank Transfer
+    # 4. Code
 
 
 class OrderDetails(db.Model):
     OrderID = db.Column(db.String(length = 16, convert_unicode = True), primary_key = True)
     BookID = db.Column(db.Integer, db.ForeignKey('book.BookID'), primary_key = True)
     Quantity = db.Column(db.Integer, default = 1)
+
+
+class Ispaid(db.Model):
+    IsPaidID = db.Column(db.Integer, primary_key = True)
+    Name = db.Column(db.String(length = 5, convert_unicode = True), nullable = False)
+
+class Status(db.Model):
+    StatusID = db.Column(db.Integer, primary_key = True)
+    Name = db.Column(db.String(length = 12, convert_unicode = True), nullable = False)
+
+class Paymentmethod(db.Model):
+    PaymentMethodID = db.Column(db.Integer, primary_key = True)
+    Name = db.Column(db.String(length = 20, convert_unicode = True), nullable = False)

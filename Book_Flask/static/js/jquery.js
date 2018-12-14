@@ -440,11 +440,11 @@ function create_order(payment_index) {
 	// getting total price
 	var TotalPrice = totalCart();
 	// geting isPaid
-	var IsPaid = 0;
+	var IsPaid = 1;
 	// getting status
-	var Status = 0;
+	var Status = 1;
 	// getting payment method
-	var PaymentMethod = payment_index;
+	var PaymentMethod = Number(payment_index) + 1;
 
 	var order = new Order(Address, TotalPrice, IsPaid, Status, PaymentMethod);
 
@@ -478,7 +478,8 @@ function ajax_sending_order(payment_index) {
 		dataType: 'json',
 		url: '/create_order',
 		success: function (result) {
-			alert(result.success);
+			clearCart();
+			window.location.href = "/home";
 		},
 		error: function () {
 			alert('error');
