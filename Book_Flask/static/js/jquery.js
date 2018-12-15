@@ -419,8 +419,9 @@ function credit_card_check() {
 	return false;
 };
 
-var Order = function (address, totalprice, ispaid, status, paymentmethod) {
+var Order = function (address, phone, totalprice, ispaid, status, paymentmethod) {
 	this.Address = address;
+	this.Phone = phone;
 	this.TotalPrice = totalprice;
 	this.IsPaid = ispaid;
 	this.Status = status;
@@ -440,13 +441,15 @@ function create_order(payment_index) {
 	// getting total price
 	var TotalPrice = totalCart();
 	// geting isPaid
-	var IsPaid = 0;
+	var IsPaid = 1;
 	// getting status
-	var Status = 0;
+	var Status = 1;
 	// getting payment method
-	var PaymentMethod = payment_index;
+	var PaymentMethod = Number(payment_index) + 1;
+	// getting phone
+	var Phone = $('.bill #phone').val()
 
-	var order = new Order(Address, TotalPrice, IsPaid, Status, PaymentMethod);
+	var order = new Order(Address, Phone, TotalPrice, IsPaid, Status, PaymentMethod);
 
 	return order;
 }
@@ -478,7 +481,8 @@ function ajax_sending_order(payment_index) {
 		dataType: 'json',
 		url: '/create_order',
 		success: function (result) {
-			alert(result.success);
+			clearCart();
+			window.location.href = "/home";
 		},
 		error: function () {
 			alert('error');
@@ -492,23 +496,30 @@ function payment_method_check() {
 	switch (payment_index) {
 		case 0: {
 			if (credit_card_check()) {
-				alert('This payment method is not available!');
+				$('#finish-checkout').css('pointer-events','none');
+				ajax_sending_order(payment_index);
 			}
-		}
 			break;
+		}
+			
 		case 1: {
+			$('#finish-checkout').css('pointer-events','none');
 			ajax_sending_order(payment_index);
-		}
 			break;
+		}
+			
 		case 2: {
+			$('#finish-checkout').css('pointer-events','none');
 			ajax_sending_order(payment_index);
-		}
 			break;
+		}
+			
 	}
+
 };
 
 $(document).ready(function finish_checkout() {
-	$('#finish-checkout').on('click', function (e) {
+	$('#checkout').submit(function (e) {
 		e.preventDefault();
 
 		if (bill_form_check()) {

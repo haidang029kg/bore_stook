@@ -33,7 +33,6 @@ def save_picture(form_picture, old_file):
 
     new_pic_filename = randome_hex + file_ext
 
-    print(new_pic_filename)
     client = storage.Client('final-thesis-100496')
     bucket = client.bucket('borestook')
     if (old_file != ''):

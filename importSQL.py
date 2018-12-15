@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[9]:
+# In[ ]:
 
 
 import pandas as pd
@@ -16,19 +16,24 @@ df = pd.read_csv('books.csv')
 df = df[['book_id', 'original_title', 'isbn','authors', 'original_publication_year','image_url', 'average_rating', 'books_count']]
 df.sort_values(inplace=True, by = ['book_id'])
 
-
-# In[11]:
-
-
-#Clean database
 from Book_Flask import db
 db.engine.execute('DROP DATABASE borestook;')
 db.engine.execute('CREATE DATABASE IF NOT EXISTS borestook CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;')
 db.engine.execute('USE borestook')
 db.create_all()
 
+# In[ ]:
 
-# In[12]:
+
+#Clean database
+from Book_Flask import db
+db.engine.execute('DROP DATABASE bore_stook;')
+db.engine.execute('CREATE DATABASE IF NOT EXISTS bore_stook CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;')
+db.engine.execute('USE bore_stook')
+db.create_all()
+
+
+# In[ ]:
 
 
 data = [{'GenreID': 1, 'Name': 'Science fiction'},
@@ -62,13 +67,13 @@ data = [{'GenreID': 1, 'Name': 'Science fiction'},
        {'GenreID': 29, 'Name': 'Others'}]
 
 
-# In[7]:
+# In[ ]:
 
 
 data_genres = pd.DataFrame(data)
 
 
-# In[8]:
+# In[ ]:
 
 
 authors_name = []
@@ -84,20 +89,20 @@ for i in range(len(authors_name)):
     authors_id.append(i+1)
 
 
-# In[9]:
+# In[ ]:
 
 
 data_authors = pd.DataFrame({'AuthorID': authors_id, 'Name': authors_name})
 
 
-# In[10]:
+# In[ ]:
 
 
 a = data_authors[data_authors['Name'] == 'J.K. Rowling'].values[0].tolist()
 a[1]
 
 
-# In[11]:
+# In[ ]:
 
 
 def get_id_of_author(s):
@@ -105,13 +110,13 @@ def get_id_of_author(s):
     return temp[0]
 
 
-# In[12]:
+# In[ ]:
 
 
 get_id_of_author('Frank Herbert')
 
 
-# In[13]:
+# In[ ]:
 
 
 def replace_author(s):
@@ -126,13 +131,13 @@ def replace_author(s):
     return authors_id
 
 
-# In[14]:
+# In[ ]:
 
 
 replace_author('Heidi Murkoff, Sharon Mazel, Heidi Murkoff, Arlene Eisenberg, Sandee Hathaway, Mark D. Widome')
 
 
-# In[15]:
+# In[ ]:
 
 
 temp = []
@@ -260,13 +265,38 @@ book['Title'].fillna('Unkown', inplace = True)
 book.set_index('BookID', inplace = True)
 
 
-# In[35]:
+# In[ ]:
 
 
 book.to_sql(con = connection, name = 'book', if_exists='append')
 
 
 # In[ ]:
+
+
+data_IsPaid = [{'IsPaidID' : 1, 'NamePaid' : 'No'},
+              {'IsPaidID' : 2, 'NamePaid' : 'Yes'}]
+data_IsPaid = pd.DataFrame(data_IsPaid)
+data_IsPaid.set_index('IsPaidID', inplace = True)
+data_IsPaid.to_sql(con = connection, name = 'ispaid', if_exists='append')
+
+data_Status = [{'StatusID' : 1, 'NameStatus' : 'Waiting'},
+              {'StatusID' : 2, 'NameStatus' : 'Packaging'},
+              {'StatusID' : 3, 'NameStatus' : 'Delivering'},
+              {'StatusID' : 4, 'NameStatus' : 'Delivered'}]
+data_Status = pd.DataFrame(data_Status)
+data_Status.set_index('StatusID', inplace = True)
+data_Status.to_sql(con = connection, name = 'status', if_exists='append')
+
+data_PaymentMethod = [{'PaymentMethodID' : 1, 'NamePayment' : 'Credit Card'},
+                     {'PaymentMethodID' : 2, 'NamePayment' : 'Cash'},
+                     {'PaymentMethodID' : 3, 'NamePayment' : 'Bank Transfer'},
+                     {'PaymentMethodID' : 4, 'NamePayment' : 'Code'}]
+data_PaymentMethod = pd.DataFrame(data_PaymentMethod)
+data_PaymentMethod.set_index('PaymentMethodID', inplace = True)
+data_PaymentMethod.to_sql(con = connection, name = 'paymentmethod', if_exists='append')
+
+
 
 
 
