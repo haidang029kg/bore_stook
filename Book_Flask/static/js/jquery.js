@@ -413,10 +413,7 @@ function credit_card_check() {
 		}
 	});
 
-	if (temp_check) {
-		return true;
-	}
-	return false;
+	return temp_check;
 };
 
 var Order = function (address, phone, totalprice, ispaid, status, paymentmethod) {
@@ -496,23 +493,30 @@ function payment_method_check() {
 	switch (payment_index) {
 		case 0: {
 			if (credit_card_check()) {
-				alert('This payment method is not available!');
+				$('#finish-checkout').css('pointer-events','none');
+				ajax_sending_order(payment_index);
 			}
-		}
 			break;
+		}
+			
 		case 1: {
+			$('#finish-checkout').css('pointer-events','none');
 			ajax_sending_order(payment_index);
-		}
 			break;
+		}
+			
 		case 2: {
+			$('#finish-checkout').css('pointer-events','none');
 			ajax_sending_order(payment_index);
-		}
 			break;
+		}
+			
 	}
+
 };
 
 $(document).ready(function finish_checkout() {
-	$('#finish-checkout').on('click', function (e) {
+	$('#checkout').submit(function (e) {
 		e.preventDefault();
 
 		if (bill_form_check()) {
