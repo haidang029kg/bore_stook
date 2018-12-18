@@ -1,10 +1,10 @@
 {% extends 'layout.html' %}
 {% block body %}
-<div class="row" style="width: 1200px;">
+<div class="checkout-row" style="width: 1200px;">
 	<div class="col-50">
 		<div class="checkout-container bill">
 			<form action="">
-				<div class="row">
+				<div class="checkout-row">
 					<div class="col-50">
 						<h3>Billing Address</h3>
 						<label for="fname"><i class="fa fa-user"></i> Full Name</label>
@@ -19,9 +19,7 @@
 						<input type="text" id="city" name="City / Province" placeholder="Ho Chi Minh" value="">
 					</div>
 				</div>
-				<div class="row">
-					<button id="finish-checkout" type="button" class="btn btn-success">Finish Checkout</button>
-				</div>
+				<button id="finish-checkout" type="button" class="btn btn-success">Finish Checkout</button>
 			</form>
 		</div>
 	</div>

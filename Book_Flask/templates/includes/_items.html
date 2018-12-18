@@ -2,10 +2,6 @@
     <div class="card-columns text-center">
         {% for item in items.items %}
         <div class="card" data-id="{{ item.BookID }}" style="width: 200px;height: 400px;">
-            <!-- <div class="imageWrapper">
-                <img class="card-img-top" src="{{ item.ImgUrl }}" style="height: 240px">
-                <a href="http://google.com" class="cornerLink">Click for more details</a>
-            </div> -->
             <div class="hvrbox">
                 <img src="{{ item.ImgUrl }}" style="height: 240px" class=" card-img-top hvrbox-layer_bottom">
                 <div class="hvrbox-layer_top">
