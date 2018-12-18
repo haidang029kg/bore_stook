@@ -8,21 +8,17 @@
 				<div class="form-group">
 					<label for="filter">Filter by</label>
 					<select class="form-control">
-						<option value="0" selected>All</option>
-						<option value="1">Most popular</option>
-						<option value="2">Top rated</option>
-						<option value="3">Most commented</option>
+						<option value="0" selected>Title</option>
+						<option value="1">ISBN</option>
+						<option value="2">Author</option>
+						<option value="3">Genre</option>
 					</select>
-				</div>
-				<div class="form-group">
-					<label for="contain">Author</label>
-					<input class="form-control" type="text" />
 				</div>
 				<div class="form-group">
 					<label for="contain">Contains the words</label>
 					<input class="form-control" type="text" />
 				</div>
-				<button type="submit" class="btn btn-success">Search<span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+				<button id="adv_search" type="button" class="btn btn-success">Search<span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
 			</form>
 		</div>
 	</div>

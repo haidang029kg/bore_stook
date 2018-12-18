@@ -493,24 +493,24 @@ function payment_method_check() {
 	switch (payment_index) {
 		case 0: {
 			if (credit_card_check()) {
-				$('#finish-checkout').css('pointer-events','none');
+				$('#finish-checkout').css('pointer-events', 'none');
 				ajax_sending_order(payment_index);
 			}
 			break;
 		}
-			
+
 		case 1: {
-			$('#finish-checkout').css('pointer-events','none');
+			$('#finish-checkout').css('pointer-events', 'none');
 			ajax_sending_order(payment_index);
 			break;
 		}
-			
+
 		case 2: {
-			$('#finish-checkout').css('pointer-events','none');
+			$('#finish-checkout').css('pointer-events', 'none');
 			ajax_sending_order(payment_index);
 			break;
 		}
-			
+
 	}
 
 };
@@ -522,5 +522,38 @@ $(document).ready(function finish_checkout() {
 		if (bill_form_check()) {
 			payment_method_check();
 		}
+	});
+});
+
+
+
+
+// ----------------------------------------------------------- searching event
+$(document).ready(function adv_searching () {
+	$('#adv_search, #btnn-search').click(function () {
+		var type_search;
+		var value_search;
+		var temp_list;
+
+		if (this.id == 'btnn-search') {
+			type_search = 0;
+			value_search = $('#my-navbar input').val();
+		} else {
+			type_search = $('.search-modal select').val();
+			value_search = $('.search-modal input').val();
+		}
+
+		temp_list = [type_search, value_search];
+
+		$.ajax({
+			data : {
+				data_search :JSON.stringify(temp_list)
+			},
+			type : 'GET',
+			dataType : 'json',
+			url : '/searching',
+			success : {},
+			error : {}
+		});
 	});
 });

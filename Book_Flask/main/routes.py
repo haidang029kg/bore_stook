@@ -115,3 +115,23 @@ def cart():
 @login_required
 def checkout():
     return render_template('checkout.html')
+
+
+@main.route("/searching" , methods = ['GET', 'POST'])
+def searching():
+	data1 = request.args.get('data_search')
+	data2 = request.form.get('input-search')
+
+	type_search = None
+	value_search = None
+
+	if (data1):
+		data1 = json.loads(data1)
+		type_search = data1[0]
+		value_search = data1[1]
+	else:
+		type_search = 0
+		value_search = data2
+		print(value_search)
+
+	return render_template('cart.html')
