@@ -1,7 +1,9 @@
 {% extends 'layout.html' %}
 {% block body %}
 <button id="sticky-cart" class="btn" onclick="window.location.href='/cart'"><img style="width: 120px;height: 70px;" src="/static/image/logo/cart.png"></button>
+{% include 'includes/_genre-and-carousel.html' %}
 {% if items.items %}
+<h1 style="text-align:center">All books</h1>
 {% include 'includes/_items.html' %}
 {% else %}
 {% include 'includes/_items_without_page_number.html' %}

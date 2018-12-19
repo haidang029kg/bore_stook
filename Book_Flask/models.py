@@ -125,3 +125,9 @@ class Status(db.Model):
 class Paymentmethod(db.Model):
     PaymentMethodID = db.Column(db.SmallInteger, primary_key = True)
     NamePayment = db.Column(db.String(length = 20, convert_unicode = True), nullable = False)
+
+class Rules(db.Model):
+    RID = db.Column(db.Integer, primary_key = True, autoincrement = True)
+    Antecendents = db.Column(db.Text(convert_unicode = True), nullable = False)
+    Consequents = db.Column(db.Text(convert_unicode = True), nullable = False)
+    Confidence = db.Column(db.Float)

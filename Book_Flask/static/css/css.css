@@ -2,11 +2,16 @@ html,
 body {
 	margin: 0 !important;
 	padding: 0 !important;
+	background: url(/static/image/background/background.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 #bootstrap-overrides .my-container {
 	padding: 0;
-	margin: auto auto 20px;
+	margin: 60px auto auto auto;
 	width: 100%;
 	height: fit-content;
 }
@@ -18,6 +23,7 @@ body {
 	transition: .3s;
 	height: 80px;
 	z-index: 2;
+	background: #ccefff;
 }
 
 #my-navbar li {
@@ -31,7 +37,7 @@ body {
 }
 
 #navbarSupportedContent form button {
-	color: white;
+	color: black;
 	background-color: inherit;
 }
 
@@ -40,9 +46,13 @@ body {
 	width: 400px;
 }
 
+a.dropdown-toggle {
+    color: black !important;
+}
+
 #my-navbar a {
 	text-transform: uppercase;
-	color: white;
+	color: black;
 	transition: .3s;
 }
 
@@ -59,12 +69,7 @@ body {
 	text-decoration: underline;
 }
 
-.txt-black {
-	color: black !important;
-}
-
 nav.opa-lblue {
-	background-color: #ccefff;
 	opacity: 0.8;
 	height: 80px;
 	border-radius: 0 0 10px 10px;
@@ -111,11 +116,14 @@ figure {
 	-webkit-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
 }
+
 .hover figure:hover img {
 	-webkit-transform: scale(1.3);
 	transform: scale(1.3);
 }
-
+a.btn.btn-primary.btn-block.btn-sm {
+	color: white;
+}
 /* ---------------------------------------------- background section */
 #sec-background {
 	background: url(/static/image/background/books-wallpaper.jpg);
@@ -251,7 +259,7 @@ select {
 	appearance: none;
 	outline: 0;
 	box-shadow: none;
-	border: 0 ;
+	border: 0;
 	background: #3898f8;
 	background-image: none;
 }
@@ -315,6 +323,7 @@ select::-ms-expand {
 .div-reg-log {
 	width: 500px;
 	height: fit-content;
+	margin: auto;
 }
 
 /*---------------------------------------------------------------------*/
@@ -392,9 +401,9 @@ select::-ms-expand {
 
 @-moz-document url-prefix() {
 	.card-columns {
-	width: 1300px;
+		width: 1300px;
 	}
-	}
+}
 
 .mb-2 {
 	margin-bottom: 1.5rem !important;
@@ -404,6 +413,8 @@ select::-ms-expand {
 	background-color: #f2f2f3;
 	border-radius: 1rem;
 	margin: 0 20px 10px 20px;
+	width: 200px;
+	height: 400px;
 }
 
 .card-img-top {
@@ -511,6 +522,7 @@ button.btn.btn-outline-success.my-2.my-sm-0:hover {
 
 #cart {
 	width: 1200px;
+	background: white;
 }
 
 .table>tbody>tr>td,
@@ -635,10 +647,10 @@ footer {
 
 /*-------------------------------------------------checkout edit*/
 
-.row {
+.checkout-row {
 	display: flex;
 	flex-wrap: wrap;
-	margin: auto;
+	margin: auto auto 30px auto;
 }
 
 .col-25 {
@@ -665,6 +677,7 @@ footer {
 	padding: 20px 20px 15px 20px;
 	border: 1px solid lightgrey;
 	border-radius: 3px;
+	margin-top: 30px;
 }
 
 input[type=text] {
@@ -708,7 +721,7 @@ span.price {
 }
 
 @media (max-width: 800px) {
-	.row {
+	.checkout-row {
 		flex-direction: column-reverse;
 	}
 
@@ -722,22 +735,68 @@ span.price {
 	position: absolute;
 	top: 50%;
 	right: 20px;
-	z-index: 2;
+	z-index: 1;
 	background: none;
 	border: none;
 }
 
-#sticky-cart:hover { 
+#sticky-cart:hover {
 	-webkit-transition: 0.6s ease-out;
-    -moz-transition:  0.6s ease-out;
-	transition:  0.6s ease-out;
-	
+	-moz-transition: 0.6s ease-out;
+	transition: 0.6s ease-out;
+
 	-webkit-transform: rotateZ(720deg);
-    -moz-transform: rotateZ(720deg);
-    transform: rotateZ(720deg);
+	-moz-transform: rotateZ(720deg);
+	transform: rotateZ(720deg);
 }
 
 /*---------------------------------finish checkout button */
 #finish-checkout {
 	width: 100%;
+}
+
+/*---------------------------------Order history */
+.table-responsive {
+	width: 80%;
+	margin: auto;
+}
+
+.table-bordered {
+	background: white;
+}
+/*--------------------------------- carousel */
+.carousel-genre {
+	width: 1200px;
+	margin: 80px auto 30px auto;
+	height: fit-content;
+	display: flow-root;
+}
+
+.carousel-container {
+	width: 60%;
+	float: right;
+}
+
+.slick-prev:before,
+.slick-next:before {
+	color: #45a049;
+}
+
+
+.genre-container {
+	height: inherit;
+	width: 35%;
+	float: left;
+	padding: 5px;
+	background: white;
+}
+
+.genre-list {
+	column-count: 3;
+}
+
+.genre-list p {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
