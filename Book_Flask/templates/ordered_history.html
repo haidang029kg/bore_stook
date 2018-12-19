@@ -19,11 +19,12 @@
                         <th>Paid</th>
                         <th>Payment Method</th>
                         <th>Status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in items.items %}
-                    <tr>
+                    <tr data-order-id="{{ item.OrderID }}">
                         <td>{{ item.OrderID }}</td>
                         <td>{{ item.Date }}</td>
                         <td>{{ item.Address }}</td>
@@ -32,6 +33,7 @@
                         <td>{{ item.NamePaid }}</td>
                         <td>{{ item.NamePayment }}</td>
                         <td>{{ item.NameStatus }}</td>
+                        <td><button type="button" class="btn-more-ordered-detail btn btn-info btn-lg" data-toggle="modal" data-target="#modal-more-ordered-detail">more</button></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -59,4 +61,24 @@
         </div>
     </div>
 </div>
+<!-- Modal for orderd detail--> 
+<div class="modal fade" id="modal-more-ordered-detail" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Modal Header</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 {% endblock %}

@@ -142,7 +142,7 @@ def reset_passwd(token):
     return render_template('reset_password.html', title='Reset Password', form=form)
 
 
-@user.route("/change_password", methods=['GET', 'POST'])
+@user.route("/user/change_password", methods=['GET', 'POST'])
 @login_required
 def change_password():
     form = ChangePasswdForm()
@@ -171,7 +171,7 @@ def change_password():
     return render_template('change_password.html', title='Change Password', form=form)
 
 
-@user.route("/account", methods=['GET', 'POST'])
+@user.route("/user/account", methods=['GET', 'POST'])
 @login_required
 def account():
     form = AccountForm()
@@ -246,7 +246,7 @@ def create_order():
     return jsonify({'success': 'done!'})
 
 
-@user.route("/ordered_history")
+@user.route("/user/ordered_history")
 @login_required
 def ordered_history():
 
@@ -259,3 +259,15 @@ def ordered_history():
         Orders.IsPaid == Ispaid.IsPaidID).filter(Orders.PaymentMethod == Paymentmethod.PaymentMethodID).filter(Orders.Status == Status.StatusID).order_by(Orders.Date.desc()).paginate(page = page, per_page = per_page)
 
     return render_template('ordered_history.html', title='Ordered History', items=items)
+
+
+@user.route("/ordered_detail", methods = ['GET'])
+@login_required
+def ordered_detail():
+    ordered_id = request.args.get('ordered_id')
+
+    items = db.session.query(OrderDetails.BookID, OrderDetails.Quantity).filter(OrderDetails.OrderID == ordered_id).all()
+
+    print(items)
+
+    return

@@ -530,3 +530,29 @@ $(document).ready(function () {
 		autoplaySpeed: 3000,
 	});
 });
+
+
+
+// ----------------------------------------------- more ordered detail
+$(document).ready(function more_ordered_detail () {
+	$('.btn-more-ordered-detail').on('click', function (e) {
+		e.preventDefault();
+
+		click_id = $(this).parents('tr').attr('data-order-id');
+
+		$.ajax({
+			data : {
+				ordered_id : click_id
+			},
+			type : 'GET',
+			dataType : 'json',
+			url : '/ordered_detail',
+			success : function () {
+
+			},
+			error : function () {
+
+			}
+		});
+	});
+});

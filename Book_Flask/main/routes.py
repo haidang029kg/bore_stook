@@ -125,7 +125,7 @@ def checkout():
     return render_template('checkout.html')
 
 
-@main.route("/searching", methods=['GET', 'POST'])
+@main.route("/home/searching", methods=['GET', 'POST'])
 def searching():
     value_search = request.form.get('input-search')
     value_search_adv = request.form.get('input-search-adv')
@@ -197,7 +197,7 @@ def searching():
         flash(str(counters) + ' results for ' + value_search, 'info')
         return render_template('home.html', items=items, value_search=value_search, title='Searching')
         
-    else:
+    else: # switching in pages
         genreid = request.args.get('genreid')
 
         if genreid:
