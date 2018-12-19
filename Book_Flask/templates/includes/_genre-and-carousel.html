@@ -15,11 +15,11 @@
       </div>
     </div>
   </div>
-  <div class="carousel-container text-center">
+  <div class="carousel-container text-center" style="width: 60%">
     <hr>
     <h2>New Arrivals</h2>
     <hr>
-    <div class="card-carousel">
+    <div id="new-carousel">
       {% for item in newly_items %}
       <div>
         <div class="card" data-id="{{ item.BookID }}" style="width: 200px;height: 400px;">

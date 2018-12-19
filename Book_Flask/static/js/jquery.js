@@ -74,7 +74,7 @@ $(document).ready(function ajax_bookdetail() {
 	$('.card .hvrbox-layer_top').on('click', function (e) {
 		e.preventDefault();
 
-		var clicked = $(this).parents('.card').attr('data-id');
+		var clicked = $(this).parents('.card').attr('data-id');		
 		$.ajax({
 			data: {
 				id: clicked
@@ -504,12 +504,29 @@ $(document).ready(function finish_checkout() {
 
 //Carousel
 $(document).ready(function () {
-	$('.card-carousel').slick({
+	$('#new-carousel').slick({
 		slidesToShow: 3,
 		slidesToScroll: 2,
-		prevArrow: '<button type="button" class="slick-prev">Previous</button>',
+		prevArrow: '<button type="button" class="slick-prev" style="left: -15px;">Previous</button>',
+		nextArrow: '<button type="button" class="slick-next" style="right: -15px;">Next</button>',
 		autoplay: true,
 		dots: true,
+		autoplaySpeed: 3000,
+	});
+	$('#related-carousel').slick({
+		slidesToShow: 3,
+		slidesToScroll: 2,
+		prevArrow: '<button type="button" class="slick-prev" style="left: -10px;">Previous</button>',
+		nextArrow: '<button type="button" class="slick-next" style="right: 0px;">Next</button>',
+		autoplay: true,
+		autoplaySpeed: 3000,
+	});
+	$('#also-buy-carousel').slick({
+		slidesToShow: 3,
+		slidesToScroll: 2,
+		prevArrow: '<button type="button" class="slick-prev" style="left: -10px;">Previous</button>',
+		nextArrow: '<button type="button" class="slick-next" style="right: 0px;">Next</button>',
+		autoplay: true,
 		autoplaySpeed: 3000,
 	});
 });

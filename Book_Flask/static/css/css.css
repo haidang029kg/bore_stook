@@ -207,6 +207,9 @@ a.btn.btn-primary.btn-block.btn-sm {
 	font-size: 50px;
 }
 
+.modal-footer {
+	border-bottom: 1px solid #e9ecef;
+}
 
 /* ---------------------------------------------- section flash sale */
 #sec-flash-sale {
@@ -334,6 +337,10 @@ select::-ms-expand {
 	-webkit-transition: .25s all ease;
 	-o-transition: .25s all ease;
 	transition: .25s all ease;
+}
+
+.modal-content {
+	padding-bottom: 20px;
 }
 
 /* ---------------------------------------------- register login */
@@ -801,22 +808,16 @@ span.price {
 	display: flow-root;
 }
 
-.slick-prev {
-    left: -15px;
-}
-
-.slick-next {
-    right: -15px;
-}
-
 .carousel-container {
-	width: 60%;
+	width: 95%;
 	float: right;
+	margin: auto;
 }
 
 .slick-prev:before,
 .slick-next:before {
 	color: #45a049;
+	z-index: 2;
 }
 
 
