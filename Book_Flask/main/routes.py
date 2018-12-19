@@ -1,4 +1,4 @@
-from flask import render_template, request, Blueprint, jsonify, json, flash
+from flask import render_template, request, Blueprint, jsonify, json, flash, redirect, url_for
 from Book_Flask.models import Book, Author, Genre, Orders, OrderDetails, generate_id
 from Book_Flask import db
 from flask_login import login_required
@@ -137,6 +137,9 @@ def searching():
     value_search = request.form.get('input-search')
     value_search_adv = request.form.get('input-search-adv')
     type_search_adv = request.form.get('input-type-search-adv')
+
+    if not(value_search):
+        return redirect(url_for('main.home'))
 
     counters = None
     items = None
