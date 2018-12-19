@@ -127,34 +127,16 @@ $(document).ready(function ajax_bookdetail() {
 	});
 });
 
-// //------------------------------------------ auto-scroll
-// $(document).ready(function auto_scroll() {
-// 	if ($('.div-reg-log')[0]) {
-// 		$('html, body').animate({
-// 			scrollTop: $('.div-reg-log').offset().top - 100
-// 		}, 1500);
-// 	}
+// ------------------------------------------------------ fade out alert
 
-// 	if ($('.contianer')[0]) {
-// 		$('html, body').animate({
-// 			scrollTop: $('.contianer').offset().top - 100
-// 		}, 2000);
-// 	}
+$(document).ready(function() {
+	window.setTimeout("fadeAlert();", 2000); //call fade in 3 seconds
+  }
+ )
 
-// 	if ($('.cart-container')[0]) {
-// 		$('html, body').animate({
-// 			scrollTop: $('.cart-container').offset().top - 100
-// 		}, 2000);
-// 	}
-
-// 	if ($('.checkout-container')[0]) {
-// 		$('html, body').animate({
-// 			scrollTop: $('.checkout-container').offset().top - 100
-// 		}, 2000);
-// 	}
-// });
-
-
+function fadeAlert() {
+	$(".alert").fadeOut('slow');
+ }
 // -------------------------------------------------------------- shopping cart
 var cart = [];
 
@@ -532,3 +514,10 @@ $(document).ready(function () {
 		autoplaySpeed: 3000,
 	});
 });
+
+//set background color
+$(document).ready(function () {
+	if(window.location.href.indexOf("home") == -1) {
+		$('.my-container').css('background', 'transparent');
+	}
+})

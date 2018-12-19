@@ -2,7 +2,7 @@ html,
 body {
 	margin: 0 !important;
 	padding: 0 !important;
-	background: url(/static/image/background/background.jpg) no-repeat center center fixed; 
+	background: url(/static/image/background/hip-square.png) repeat ; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -10,12 +10,24 @@ body {
 }
 
 #bootstrap-overrides .my-container {
-	padding: 0;
-	margin: 60px auto auto auto;
-	width: 100%;
-	height: fit-content;
+	padding: 20px;
+    margin: 80px auto auto auto;
+    width: fit-content;
+    height: fit-content;
+    background: white;
 }
 
+/* ---------------------------------------------- alert */
+.mt-4 {
+	position: fixed;
+	top: 80px;
+	margin: 0;
+	width: 100%;
+}
+
+.alert{
+	z-index: 3;
+}
 /* ---------------------------------------------- navigation bar */
 #my-navbar {
 	position: fixed;
@@ -324,6 +336,7 @@ select::-ms-expand {
 	width: 500px;
 	height: fit-content;
 	margin: auto;
+	padding: 10px
 }
 
 /*---------------------------------------------------------------------*/
@@ -406,7 +419,11 @@ select::-ms-expand {
 }
 
 .mb-2 {
-	margin-bottom: 1.5rem !important;
+	margin: 0 !important;
+}
+
+.mb-4 {
+	margin: 0 !important;
 }
 
 .card {
@@ -767,9 +784,17 @@ span.price {
 /*--------------------------------- carousel */
 .carousel-genre {
 	width: 1200px;
-	margin: 80px auto 30px auto;
+	margin: 0 auto 30px auto;
 	height: fit-content;
 	display: flow-root;
+}
+
+.slick-prev {
+    left: -15px;
+}
+
+.slick-next {
+    right: -15px;
 }
 
 .carousel-container {
