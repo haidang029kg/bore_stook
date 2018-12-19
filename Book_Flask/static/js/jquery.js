@@ -393,10 +393,7 @@ function credit_card_check() {
 		}
 	});
 
-	if (temp_check) {
-		return true;
-	}
-	return false;
+	return temp_check;
 };
 
 var Order = function (address, phone, totalprice, ispaid, status, paymentmethod) {
@@ -474,6 +471,7 @@ function payment_method_check() {
 	var payment_index = $('#payment').tabs().tabs('option', 'active');
 
 	switch (payment_index) {
+
 		case 0:
 			{
 				if (credit_card_check()) {
@@ -491,11 +489,11 @@ function payment_method_check() {
 				ajax_sending_order(payment_index);
 			}
 			break;
-	}
+		};
 };
 
 $(document).ready(function finish_checkout() {
-	$('#finish-checkout').on('click', function (e) {
+	$('#checkout').submit(function (e) {
 		e.preventDefault();
 
 		if (bill_form_check()) {
@@ -508,8 +506,9 @@ $(document).ready(function finish_checkout() {
 $(document).ready(function () {
 	$('.card-carousel').slick({
 		slidesToShow: 3,
+		slidesToScroll: 2,
 		prevArrow: '<button type="button" class="slick-prev">Previous</button>',
-		// autoplay: true,
+		autoplay: true,
 		dots: true,
 		autoplaySpeed: 3000,
 	});
@@ -521,3 +520,18 @@ $(document).ready(function () {
 		$('.my-container').css('background', 'transparent');
 	}
 })
+
+//Genre filter
+function genreFilter() {
+	var input = document.getElementById("filter");
+	var filter = input.value.toLowerCase();
+	var nodes = document.getElementsByClassName('genre');
+  
+	for (i = 0; i < nodes.length; i++) {
+	  if (nodes[i].innerText.toLowerCase().includes(filter)) {
+		nodes[i].style.display = "block";
+	  } else {
+		nodes[i].style.display = "none";
+	  }
+	}
+  }

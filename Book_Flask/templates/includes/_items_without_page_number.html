@@ -3,11 +3,11 @@
         {% for item in items %}
         <div class="card" data-id="{{ item.BookID }}" style="width: 200px;height: 400px;">
             <div class="hvrbox">
-                    <img src="{{ item.ImgUrl }}" style="height: 240px" class=" card-img-top hvrbox-layer_bottom">
-                    <div class="hvrbox-layer_top">
-                        <div class="hvrbox-text">Click for more details</div>
-                    </div>
+                <img src="{{ item.ImgUrl }}" style="height: 240px" class=" card-img-top hvrbox-layer_bottom">
+                <div class="hvrbox-layer_top">
+                    <div class="hvrbox-text">Click for more details</div>
                 </div>
+            </div>
             <div class="card-body" style="height: 150px;">
                 <h5 class="card-title" style="font-size: 16px">{{ item.Title }}</h5>
                 <h4 class="card-text"> {{ item.Price }} $ </h4>

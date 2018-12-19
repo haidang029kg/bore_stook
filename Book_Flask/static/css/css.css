@@ -2,20 +2,32 @@ html,
 body {
 	margin: 0 !important;
 	padding: 0 !important;
-	background: url(/static/image/background/hip-square.png) repeat ; 
+	background: url(/static/image/background/background.jpg) repeat fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 }
 
+button, input {
+	outline: none;
+}
+
 #bootstrap-overrides .my-container {
 	padding: 20px;
     margin: 80px auto auto auto;
-    width: fit-content;
-    height: fit-content;
+	width: fit-content;
+	width: -moz-fit-content;
+	height: fit-content;
+	height: -moz-fit-content;
     background: white;
 }
+
+@-moz-document url-prefix() {
+	.my-container {
+		background: white !important;
+	}
+  }
 
 /* ---------------------------------------------- alert */
 .mt-4 {
@@ -824,4 +836,8 @@ span.price {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+
+.genre-list a {
+	color: grey;
 }
