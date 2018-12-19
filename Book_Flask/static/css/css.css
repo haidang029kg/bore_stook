@@ -2,20 +2,44 @@ html,
 body {
 	margin: 0 !important;
 	padding: 0 !important;
-	background: url(/static/image/background/background.jpg) no-repeat center center fixed; 
+	background: url(/static/image/background/background.jpg) repeat fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 }
 
-#bootstrap-overrides .my-container {
-	padding: 0;
-	margin: 60px auto auto auto;
-	width: 100%;
-	height: fit-content;
+button, input {
+	outline: none;
 }
 
+#bootstrap-overrides .my-container {
+	padding: 20px;
+    margin: 80px auto auto auto;
+	width: fit-content;
+	width: -moz-fit-content;
+	height: fit-content;
+	height: -moz-fit-content;
+    background: white;
+}
+
+@-moz-document url-prefix() {
+	.my-container {
+		background: white !important;
+	}
+  }
+
+/* ---------------------------------------------- alert */
+.mt-4 {
+	position: fixed;
+	top: 80px;
+	margin: 0;
+	width: 100%;
+}
+
+.alert{
+	z-index: 3;
+}
 /* ---------------------------------------------- navigation bar */
 #my-navbar {
 	position: fixed;
@@ -183,6 +207,9 @@ a.btn.btn-primary.btn-block.btn-sm {
 	font-size: 50px;
 }
 
+.modal-footer {
+	border-bottom: 1px solid #e9ecef;
+}
 
 /* ---------------------------------------------- section flash sale */
 #sec-flash-sale {
@@ -312,6 +339,10 @@ select::-ms-expand {
 	transition: .25s all ease;
 }
 
+.modal-content {
+	padding-bottom: 20px;
+}
+
 /* ---------------------------------------------- register login */
 .sec-reg-log {
 	margin-top: 10px;
@@ -324,6 +355,7 @@ select::-ms-expand {
 	width: 500px;
 	height: fit-content;
 	margin: auto;
+	padding: 10px
 }
 
 /*---------------------------------------------------------------------*/
@@ -406,7 +438,11 @@ select::-ms-expand {
 }
 
 .mb-2 {
-	margin-bottom: 1.5rem !important;
+	margin: 0 !important;
+}
+
+.mb-4 {
+	margin: 0 !important;
 }
 
 .card {
@@ -767,19 +803,21 @@ span.price {
 /*--------------------------------- carousel */
 .carousel-genre {
 	width: 1200px;
-	margin: 80px auto 30px auto;
+	margin: 0 auto 30px auto;
 	height: fit-content;
 	display: flow-root;
 }
 
 .carousel-container {
-	width: 60%;
+	width: 95%;
 	float: right;
+	margin: auto;
 }
 
 .slick-prev:before,
 .slick-next:before {
 	color: #45a049;
+	z-index: 2;
 }
 
 
@@ -800,3 +838,10 @@ span.price {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
+
+.genre-list a {
+	color: grey;
+}
+
+
+/* -------------------------------- modal content ordered detail*/

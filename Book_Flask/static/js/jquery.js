@@ -74,7 +74,7 @@ $(document).ready(function ajax_bookdetail() {
 	$('.card .hvrbox-layer_top').on('click', function (e) {
 		e.preventDefault();
 
-		var clicked = $(this).parents('.card').attr('data-id');
+		var clicked = $(this).parents('.card').attr('data-id');		
 		$.ajax({
 			data: {
 				id: clicked
@@ -127,34 +127,16 @@ $(document).ready(function ajax_bookdetail() {
 	});
 });
 
-// //------------------------------------------ auto-scroll
-// $(document).ready(function auto_scroll() {
-// 	if ($('.div-reg-log')[0]) {
-// 		$('html, body').animate({
-// 			scrollTop: $('.div-reg-log').offset().top - 100
-// 		}, 1500);
-// 	}
+// ------------------------------------------------------ fade out alert
 
-// 	if ($('.contianer')[0]) {
-// 		$('html, body').animate({
-// 			scrollTop: $('.contianer').offset().top - 100
-// 		}, 2000);
-// 	}
+$(document).ready(function() {
+	window.setTimeout("fadeAlert();", 2000); //call fade in 3 seconds
+  }
+ )
 
-// 	if ($('.cart-container')[0]) {
-// 		$('html, body').animate({
-// 			scrollTop: $('.cart-container').offset().top - 100
-// 		}, 2000);
-// 	}
-
-// 	if ($('.checkout-container')[0]) {
-// 		$('html, body').animate({
-// 			scrollTop: $('.checkout-container').offset().top - 100
-// 		}, 2000);
-// 	}
-// });
-
-
+function fadeAlert() {
+	$(".alert").fadeOut('slow');
+ }
 // -------------------------------------------------------------- shopping cart
 var cart = [];
 
@@ -522,15 +504,32 @@ $(document).ready(function finish_checkout() {
 
 //Carousel
 $(document).ready(function () {
-	$('.card-carousel').slick({
+	$('#new-carousel').slick({
 		slidesToShow: 3,
-		prevArrow: '<button type="button" class="slick-prev">Previous</button>',
-		// autoplay: true,
+		slidesToScroll: 2,
+		prevArrow: '<button type="button" class="slick-prev" style="left: -15px;">Previous</button>',
+		nextArrow: '<button type="button" class="slick-next" style="right: -15px;">Next</button>',
+		autoplay: true,
 		dots: true,
 		autoplaySpeed: 3000,
 	});
+	$('#related-carousel').slick({
+		slidesToShow: 3,
+		slidesToScroll: 2,
+		prevArrow: '<button type="button" class="slick-prev" style="left: -10px;">Previous</button>',
+		nextArrow: '<button type="button" class="slick-next" style="right: 0px;">Next</button>',
+		autoplay: true,
+		autoplaySpeed: 3000,
+	});
+	$('#also-buy-carousel').slick({
+		slidesToShow: 3,
+		slidesToScroll: 2,
+		prevArrow: '<button type="button" class="slick-prev" style="left: -10px;">Previous</button>',
+		nextArrow: '<button type="button" class="slick-next" style="right: 0px;">Next</button>',
+		autoplay: true,
+		autoplaySpeed: 3000,
+	});
 });
-
 
 
 // ----------------------------------------------- more ordered detail
@@ -547,12 +546,46 @@ $(document).ready(function more_ordered_detail () {
 			type : 'GET',
 			dataType : 'json',
 			url : '/ordered_detail',
-			success : function () {
+			success : function (result) {
+				
+				$('#modal-content-more-ordered-detail h4').text('Ordered ID: ' + String(result.ordered_id));
+				$('#modal-content-more-ordered-detail #total-price').text('Total $' + String(result.total_price));
+				$('#modal-content-more-ordered-detail #num-items').text('Number of items: ' + String(result.items.length));
 
+				var items = result.items;
+				html_output = '';
+				for (var i = 0; i < items.length; i++) {
+					html_output += "<tr><td><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + items[i].ImgUrl + "' class='img-responsive'></div></div></td><td class='text-center'>" + items[i].Title + "</td><td class='text-center'>" + items[i].Price + "</td><td class='text-center'>" + items[i].Quantity + "</td><td class='text-center'>12</td></tr>";
+				};
+
+				$('#tb-body-ordered-detail').html(html_output);
 			},
 			error : function () {
-
+				alert('error!!!');
 			}
 		});
 	});
 });
+
+
+//set background color
+$(document).ready(function () {
+	if(window.location.href.indexOf("home") == -1) {
+		$('.my-container').css('background', 'transparent');
+	}
+})
+
+//Genre filter
+function genreFilter() {
+	var input = document.getElementById("filter");
+	var filter = input.value.toLowerCase();
+	var nodes = document.getElementsByClassName('genre');
+  
+	for (i = 0; i < nodes.length; i++) {
+	  if (nodes[i].innerText.toLowerCase().includes(filter)) {
+		nodes[i].style.display = "block";
+	  } else {
+		nodes[i].style.display = "none";
+	  }
+	};
+  };

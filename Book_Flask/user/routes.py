@@ -266,8 +266,11 @@ def ordered_history():
 def ordered_detail():
     ordered_id = request.args.get('ordered_id')
 
-    items = db.session.query(OrderDetails.BookID, OrderDetails.Quantity).filter(OrderDetails.OrderID == ordered_id).all()
+    items = db.session.query(Book.ImgUrl, Book.Title, Book.Price, OrderDetails.Quantity).filter(OrderDetails.OrderID == ordered_id).filter(OrderDetails.OrderID == Orders.OrderID).filter(OrderDetails.BookID == Book.BookID).all()
+    total_price = db.session.query(Orders.TotalPrice).filter(Orders.OrderID == ordered_id).first()[0]
 
-    print(items)
-
-    return
+    return jsonify({
+        'ordered_id' : ordered_id,
+        'total_price' : total_price,
+        'items' : items
+    })
