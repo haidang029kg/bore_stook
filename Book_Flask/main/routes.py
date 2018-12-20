@@ -228,3 +228,7 @@ def searching():
         return render_template('home.html', items=items, value_search=value_search_adv, title='Searching', genre_items = genre_items, newly_items = newly_items, task_name = 'Search Result For: ' + value_search)
     
     return render_template('home.html', items=items, title='Searching')
+
+@main.route("/chart")
+def chart():
+    return render_template("chart.html")

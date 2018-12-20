@@ -15,9 +15,11 @@ button, input {
 
 #bootstrap-overrides .my-container {
 	padding: 20px;
-    margin: 80px auto auto auto;
+	margin: 80px auto auto auto;
+	min-width: 1200px;
 	width: fit-content;
 	width: -moz-fit-content;
+	min-height: 53vh;
 	height: fit-content;
 	height: -moz-fit-content;
     background: white;
@@ -37,9 +39,6 @@ button, input {
 	width: 100%;
 }
 
-.alert{
-	z-index: 3;
-}
 /* ---------------------------------------------- navigation bar */
 #my-navbar {
 	position: fixed;
@@ -844,4 +843,16 @@ span.price {
 }
 
 
-/* -------------------------------- modal content ordered detail*/
+/* -------------------------------- chart*/
+.row i {
+	font-size: 25px;
+	padding: 10px;
+}
+
+.row.text-muted :hover {
+    background: gainsboro;
+}
+
+.col-sm-4.no-padding  {
+	padding: 10px;
+}
