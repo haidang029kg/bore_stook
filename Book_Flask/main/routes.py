@@ -138,8 +138,9 @@ def searching():
     value_search_adv = request.form.get('input-search-adv')
     type_search_adv = request.form.get('input-type-search-adv')
 
-    if not(value_search):
+    if not value_search_adv:
         return redirect(url_for('main.home'))
+    
 
     counters = None
     items = None
@@ -197,6 +198,9 @@ def searching():
         db.session.close()
         flash(str(counters) + ' results for ' + value_search_adv, 'info')
         return render_template('home.html', items=items, value_search=value_search_adv, genreid = genreid, title='Searching', genre_items = genre_items, newly_items = newly_items, task_name = 'Search Result For ' + task_name)
+        
+    elif not value_search:
+        return redirect(url_for('main.home'))
         
     elif (value_search):# search from input in main navagation bar and search by Title
         items = db.session.query(Book.BookID).filter(Book.Title.contains(value_search)).first()
