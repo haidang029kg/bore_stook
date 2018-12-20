@@ -493,7 +493,7 @@ function payment_method_check() {
 };
 
 $(document).ready(function finish_checkout() {
-	$('#checkout').submit(function (e) {
+	$('#finish-checkout').on('click',function (e) {
 		e.preventDefault();
 
 		if (bill_form_check()) {
@@ -570,7 +570,7 @@ $(document).ready(function more_ordered_detail () {
 
 //set background color
 $(document).ready(function () {
-	if(window.location.href.indexOf("home") == -1) {
+	if(window.location.href.indexOf("home") == -1 && window.location.href.indexOf("ordered_history") == -1 && window.location.href.indexOf("chart") == -1) {
 		$('.my-container').css('background', 'transparent');
 	}
 })
@@ -589,3 +589,46 @@ function genreFilter() {
 	  }
 	};
   };
+
+
+//chart draw
+window.onload = function () {
+	var top5booksChart = new CanvasJS.Chart("top5booksChart", {
+		title:{
+			text: "Top 5 books sold yesterday"              
+		},
+		data: [              
+		{
+			type: "doughnut",
+			dataPoints: [
+				{ label: "SpiderMan",  y: 10  },
+				{ label: "IronMan", y: 15  },
+				{ label: "SuperMan", y: 25  },
+				{ label: "AquaMan",  y: 30  },
+				{ label: "Thor",  y: 28  },
+				{ label: "Others", y: 5}
+			]
+		}
+		]
+	});
+	top5booksChart.render();
+
+	var salesChart = new CanvasJS.Chart("salesChart", {
+		title:{
+			text: "Sales in 5 previous day"              
+		},
+		data: [              
+		{
+			type: "line",
+			dataPoints: [
+				{ label: "Jan 1",  y: 10  },
+				{ label: "Jan 2", y: 15  },
+				{ label: "Jan 3", y: 25  },
+				{ label: "Jan 4",  y: 30  },
+				{ label: "Jan 5",  y: 28  },
+			]
+		}
+		]
+	});
+	salesChart.render();
+}
