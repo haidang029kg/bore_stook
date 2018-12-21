@@ -229,6 +229,6 @@ def searching():
     
     return render_template('home.html', items=items, title='Searching')
 
-@main.route("/chart")
+@main.route("/ad")
 def chart():
-    return render_template("chart.html")
+    return render_template("admin/chart.html")
