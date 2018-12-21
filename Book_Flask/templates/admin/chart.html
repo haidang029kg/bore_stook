@@ -1,0 +1,135 @@
+{% extends 'admin/layout.html' %}
+{% block body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+<div class="text-center">
+    <h3 style="margin-top:10px;">Today</h3>
+    <hr>
+    <div class="row text-muted">
+        <div class="col-sm-4 no-padding border-right">
+            <i class="fas fa-shopping-cart"></i>
+            <h2 class="count">100</h2>
+            <p>Orders</p>
+        </div>
+        <div class="col-sm-4 no-padding">
+            <i class="fas fa-book"></i>
+            <h2 class="count">100</h2>
+            <p>Books</p>
+        </div>
+        <div class="col-sm-4 no-padding border-left">
+            <i class="fas fa-money-bill"></i>
+            <h2 class="count">100</h2>
+            <p>Sales</p>
+        </div>
+    </div>
+    <hr>
+    <h3>Yesterday</h3>
+    <hr>
+    <div class="row text-muted">
+        <div class="col-sm-4 no-padding border-right">
+            <i class="fas fa-shopping-cart"></i>
+            <h2 class="count">100</h2>
+            <p>Orders</p>
+        </div>
+        <div class="col-sm-4 no-padding">
+            <i class="fas fa-book"></i>
+            <h2 class="count">100</h2>
+            <p>Books</p>
+        </div>
+        <div class="col-sm-4 no-padding border-left">
+            <i class="fas fa-money-bill"></i>
+            <h2 class="count">100</h2>
+            <p>Sales</p>
+        </div>
+    </div>
+    <hr>
+</div>
+<div class="row">
+    <div class="chart-container">
+        <canvas id="genreChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="salesChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="top10weekChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="top10monthChart"></canvas>
+    </div>
+
+</div>
+<script>
+    $('.count').each(function () {
+        $(this).prop('Counter', 0).animate({
+            Counter: $(this).text()
+        }, {
+            duration: 2000,
+            easing: 'swing',
+            step: function (now) {
+                $(this).text(Math.ceil(now));
+            }
+        });
+    });
+
+    var labels = [];
+    var data = [];
+
+    $.ajax({
+        data: {},
+        type: 'GET',
+        dataType: 'json',
+        url: '/top_genre',
+        success: function (result) {
+            $.each(result, function (key, value) {
+                labels.push(key);
+                data.push(value);
+            })
+            drawChart(labels, data);
+        },
+        error: {}
+    });
+
+    function drawChart(labels, data) {
+        var ctx = document.getElementById("genreChart");
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Top 5 Genres',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    beginAtZero: true,
+                },
+                title: {
+                    display: true,
+                    text: 'Top 5 Genres',
+                    fontSize: 18
+                },
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        });
+    };
+</script>
+{% endblock %}
