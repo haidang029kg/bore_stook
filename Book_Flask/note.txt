@@ -1,3 +1,6 @@
 database: mysql 5.7 chatset utf8
 ORM : sqlalchemy
 DB API Driver : mysql connector python
+
+
+github template admin dashboard : https://github.com/creativetimofficial/light-bootstrap-dashboard

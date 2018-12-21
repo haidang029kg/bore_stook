@@ -15,12 +15,14 @@ def home():
     items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
         Book.Title.asc()).paginate(page=page, per_page=per_page)
 
-    genre_items = db.session.query(Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
-    newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(Book.BookID.desc()).limit(10).all()
+    genre_items = db.session.query(
+        Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
+    newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
+        Book.BookID.desc()).limit(10).all()
 
     db.session.close()
 
-    return render_template('home.html', title='Home page', items=items, genre_items = genre_items, newly_items = newly_items)
+    return render_template('home.html', title='Home page', items=items, genre_items=genre_items, newly_items=newly_items)
 
 
 @main.route("/home/author/<int:authorid>", methods=['GET'])
@@ -34,14 +36,16 @@ def home_author(authorid):
         AuthorID=authorid).first()[0]
     count_result = len(items)
 
-    genre_items = db.session.query(Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
-    newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(Book.BookID.desc()).limit(10).all()
+    genre_items = db.session.query(
+        Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
+    newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
+        Book.BookID.desc()).limit(10).all()
 
     db.session.close()
 
     flash(str(count_result) + ' results for ' + author_name, 'info')
 
-    return render_template('home.html', title='Filter by author', items=items, genre_items = genre_items, newly_items = newly_items, task_name = 'Search Result For Author: ' + author_name)
+    return render_template('home.html', title='Filter by author', items=items, genre_items=genre_items, newly_items=newly_items, task_name='Search Result For Author: ' + author_name)
 
 
 @main.route("/home/genre/<int:genreid>", methods=['GET'])
@@ -57,15 +61,16 @@ def home_genre(genreid):
     count_result = db.session.query(
         Book.BookID).filter_by(GenreID=genreid).count()
 
-
-    genre_items = db.session.query(Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
-    newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(Book.BookID.desc()).limit(10).all()
+    genre_items = db.session.query(
+        Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
+    newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
+        Book.BookID.desc()).limit(10).all()
 
     db.session.close()
 
     flash(str(count_result) + ' results for ' + genre_name, 'info')
 
-    return render_template('home.html', title='Filter by genre', items=items, genreid=genreid, genre_items = genre_items, newly_items = newly_items, task_name = 'Search Result For Genre: ' + genre_name)
+    return render_template('home.html', title='Filter by genre', items=items, genreid=genreid, genre_items=genre_items, newly_items=newly_items, task_name='Search Result For Genre: ' + genre_name)
 
 
 @main.route("/book_detail", methods=['POST'])
@@ -96,6 +101,26 @@ def book_detail():
                         'GenreName': genre_name})
 
     return jsonify({'error': 'error!'})
+
+
+@main.route("/random_book_by_genre", methods=['GET'])
+def random_book_by_genre():
+
+    genre_id = request.args.get('genre_id')
+
+    if genre_id:
+        string_sql = 'select BookID, Title, ImgUrl, Price from book where GenreID = ' + \
+            str(genre_id) + ' ORDER BY RAND() limit 6;'
+
+        items = db.session.execute(string_sql).fetchall()
+
+        items = json.dumps([dict(i) for i in items])
+        return jsonify({ 
+            'items' : items
+        })
+    return jsonify({
+        'error' : 'error'
+    })
 
 
 @main.route("/list_authors", methods=['POST'])
@@ -138,9 +163,8 @@ def searching():
     value_search_adv = request.form.get('input-search-adv')
     type_search_adv = request.form.get('input-type-search-adv')
 
-    if not value_search_adv: # input is none
+    if not value_search_adv:  # input is none
         return redirect(url_for('main.home'))
-    
 
     counters = None
     items = None
@@ -148,86 +172,107 @@ def searching():
     per_page = 20
     genreid = 0
 
-    if (value_search_adv): # advance search
-        if (int(type_search_adv) == 0):# search by Title
-            items = db.session.query(Book.BookID).filter(Book.Title.contains(value_search_adv)).first()
+    if (value_search_adv):  # advance search
+        if (int(type_search_adv) == 0):  # search by Title
+            items = db.session.query(Book.BookID).filter(
+                Book.Title.contains(value_search_adv)).first()
             if (items is None):
                 items = []
                 counters = 0
             else:
-                items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(Book.Title.contains(value_search_adv)).order_by(Book.Title.asc()).paginate(page=page, per_page=per_page)
-                counters = db.session.query(Book.BookID).filter(Book.Title.contains(value_search_adv)).count()
+                items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(
+                    Book.Title.contains(value_search_adv)).order_by(Book.Title.asc()).paginate(page=page, per_page=per_page)
+                counters = db.session.query(Book.BookID).filter(
+                    Book.Title.contains(value_search_adv)).count()
             task_name = 'Title: ' + value_search_adv
-        if (int(type_search_adv) == 1):# search by ISBN
-            items = db.session.query(Book.BookID).filter(Book.ISBN == value_search_adv).first()
+        if (int(type_search_adv) == 1):  # search by ISBN
+            items = db.session.query(Book.BookID).filter(
+                Book.ISBN == value_search_adv).first()
             if (items is None):
                 items = []
                 counters = 0
             else:
-                items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(Book.ISBN == value_search_adv)
+                items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(
+                    Book.ISBN == value_search_adv)
                 counters = 1
             task_name = 'ISBN: ' + str(value_search_adv)
-        if (int(type_search_adv) == 2):# search by Author
-            author = db.session.query(Author.AuthorID, Author.Name).filter(Author.Name.contains(value_search_adv)).first()
+        if (int(type_search_adv) == 2):  # search by Author
+            author = db.session.query(Author.AuthorID, Author.Name).filter(
+                Author.Name.contains(value_search_adv)).first()
             if (author is None):
                 items = []
                 counters = 0
             else:
                 authorid = author[0]
-                string_sql = 'select BookID, Title, ImgUrl, Price from book where FIND_IN_SET(+' + str(authorid) + ', AuthorsID);'
+                string_sql = 'select BookID, Title, ImgUrl, Price from book where FIND_IN_SET(+' + str(
+                    authorid) + ', AuthorsID);'
 
                 items = db.session.execute(string_sql).fetchall()
                 counters = len(items)
             task_name = 'Author: ' + value_search_adv
 
-        if (int(type_search_adv) == 3):# search by Genre
-            genre = db.session.query(Genre.GenreID, Genre.Name).filter(Genre.Name.contains(value_search_adv)).first()
+        if (int(type_search_adv) == 3):  # search by Genre
+            genre = db.session.query(Genre.GenreID, Genre.Name).filter(
+                Genre.Name.contains(value_search_adv)).first()
             if (genre is None):
                 items = []
                 counters = 0
             else:
                 genreid = genre[0]
 
-                items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(Book.GenreID == genreid).order_by(Book.Title.asc()).paginate(page = page, per_page = per_page)
-                counters = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(Book.GenreID == genreid).count()
+                items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(
+                    Book.GenreID == genreid).order_by(Book.Title.asc()).paginate(page=page, per_page=per_page)
+                counters = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(
+                    Book.GenreID == genreid).count()
             task_name = 'Genre: ' + value_search_adv
-        
-        genre_items = db.session.query(Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
-        newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(Book.BookID.desc()).limit(10).all()
-        
+
+        genre_items = db.session.query(
+            Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
+        newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
+            Book.BookID.desc()).limit(10).all()
+
         db.session.close()
         flash(str(counters) + ' results for ' + value_search_adv, 'info')
-        return render_template('home.html', items=items, value_search=value_search_adv, genreid = genreid, title='Searching', genre_items = genre_items, newly_items = newly_items, task_name = 'Search Result For ' + task_name)
-        
-    elif not value_search: # input is none
+        return render_template('home.html', items=items, value_search=value_search_adv, genreid=genreid, title='Searching', genre_items=genre_items, newly_items=newly_items, task_name='Search Result For ' + task_name)
+
+    elif not value_search:  # input is none
         return redirect(url_for('main.home'))
 
-    elif (value_search):# search from input in main navagation bar and search by Title
-        items = db.session.query(Book.BookID).filter(Book.Title.contains(value_search)).first()
+    elif (value_search):  # search from input in main navagation bar and search by Title
+        items = db.session.query(Book.BookID).filter(
+            Book.Title.contains(value_search)).first()
         if (items is None):
             items = []
             counters = 0
         else:
-            items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(Book.Title.contains(value_search)).order_by(Book.Title.asc()).paginate(page=page, per_page=per_page)
-            counters = db.session.query(Book.BookID).filter(Book.Title.contains(value_search)).count()
+            items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(
+                Book.Title.contains(value_search)).order_by(Book.Title.asc()).paginate(page=page, per_page=per_page)
+            counters = db.session.query(Book.BookID).filter(
+                Book.Title.contains(value_search)).count()
 
-        genre_items = db.session.query(Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
-        newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(Book.BookID.desc()).limit(10).all()
+        genre_items = db.session.query(
+            Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
+        newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
+            Book.BookID.desc()).limit(10).all()
 
         flash(str(counters) + ' results for ' + value_search, 'info')
-        return render_template('home.html', items=items, value_search=value_search, title='Searching', genre_items = genre_items, newly_items = newly_items, task_name = 'Search Result For Title: ' + value_search)
-        
-    else: # switching in pages
+        return render_template('home.html', items=items, value_search=value_search, title='Searching', genre_items=genre_items, newly_items=newly_items, task_name='Search Result For Title: ' + value_search)
+
+    else:  # switching in pages
         value_search = request.args.get('value_search')
 
-        items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(Book.Title.contains(value_search)).order_by(Book.Title.asc()).paginate(page=page, per_page=per_page)
-        
-        genre_items = db.session.query(Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
-        newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(Book.BookID.desc()).limit(10).all()
+        items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(
+            Book.Title.contains(value_search)).order_by(Book.Title.asc()).paginate(page=page, per_page=per_page)
 
-        return render_template('home.html', items=items, value_search=value_search_adv, title='Searching', genre_items = genre_items, newly_items = newly_items, task_name = 'Search Result For: ' + value_search)
-    
+        genre_items = db.session.query(
+            Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
+        newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
+            Book.BookID.desc()).limit(10).all()
+
+        return render_template('home.html', items=items, value_search=value_search_adv, title='Searching', genre_items=genre_items, newly_items=newly_items, task_name='Search Result For: ' + value_search)
+
     return render_template('home.html', items=items, title='Searching')
+
 
 @main.route("/chart")
 def chart():

@@ -101,6 +101,7 @@ class Orders(db.Model):
     # 2. Packaging
     # 3. Delivering
     # 4. Delivered
+    # 5. Rejected
     PaymentMethod = db.Column(db.SmallInteger)
     # 1. Credit Card
     # 2. Cash
