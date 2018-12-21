@@ -15,7 +15,7 @@
                         <th>Ordered Date Time</th>
                         <th>Address</th>
                         <th>Phone</th>
-                        <th>Total Price ($)</th>
+                        <th>Total Price</th>
                         <th>Paid</th>
                         <th>Payment Method</th>
                         <th>Status</th>
@@ -29,7 +29,7 @@
                         <td>{{ item.Date }}</td>
                         <td>{{ item.Address }}</td>
                         <td>{{ item.Phone }}</td>
-                        <td>{{ item.TotalPrice }}</td>
+                        <td>${{ item.TotalPrice }}</td>
                         <td>{{ item.NamePaid }}</td>
                         <td>{{ item.NamePayment }}</td>
                         <td>{{ item.NameStatus }}</td>
@@ -79,9 +79,9 @@
                         <tr>
                             <th class="text-center" style="width:15%">Items</th>
                             <th class="text-center" style="width:40%">Title</th>
-                            <th class="text-center" style="width:15%">Price ($)</th>
+                            <th class="text-center" style="width:15%">Price</th>
                             <th class="text-center" style="width:15%">Quantity</th>
-                            <th class="text-center" style="width:15%" class="text-center">Subtotal ($)</th>
+                            <th class="text-center" style="width:15%" class="text-center">Subtotal</th>
                         </tr>
                     </thead>
                     <!--List product-->

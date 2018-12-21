@@ -285,7 +285,7 @@ function displayCart() {
 		var price = cart[i].price;
 		var count_price = cart[i].count_price;
 
-		output += "<tr data-bookid=" + bookid + "><td data-th='Product'><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + image + "' alt='...' class='img-responsive' /></div><div class='col-sm-10'><h4 class='nomargin'>" + title + "</h4></div></div></td><td class='price-for-an-item' data-th='Price'>" + price + "</td><td data-th='Quantity'><input type='number' min='1' class='form-control text-center input-count' value='" + count + "'></td><td data-th='Subtotal' class='text-center price-for-items'>" + count_price + "</td><td class='actions' data-th=''><button class='btn btn-danger btn-sm remove-item'><i class='fas fa-trash-alt'></i></button></td></tr>"
+		output += "<tr data-bookid=" + bookid + "><td data-th='Product'><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + image + "' alt='...' class='img-responsive' /></div><div class='col-sm-10'><h4 class='nomargin'>" + title + "</h4></div></div></td><td class='price-for-an-item' data-th='Price'>$" + price + "</td><td data-th='Quantity'><input type='number' min='1' class='form-control text-center input-count' value='" + count + "'></td><td data-th='Subtotal' class='text-center price-for-items'>$" + count_price + "</td><td class='actions' data-th=''><button class='btn btn-danger btn-sm remove-item'><i class='fas fa-trash-alt'></i></button></td></tr>"
 	}
 	$('#cart-data').html(output);
 
@@ -351,11 +351,11 @@ function cart_blink() {
 $(document).ready(function loading_checkout() {
 	var output = '';
 	for (var i in cart) {
-		output += "<tr><td>" + String(cart[i].title) + "</td><td>" + cart[i].count + "</td><td>" + cart[i].count_price + "</td></tr>"
+		output += "<tr><td>" + String(cart[i].title) + "</td><td>" + cart[i].count + "</td><td>$" + cart[i].count_price + "</td></tr>"
 	}
 
 	$('#tb-checkout').html(output);
-	$('#total-checkout').text('$ ' + totalCart());
+	$('#total-checkout').text('$' + totalCart());
 	$maxMar = $('.col-50').height() - $('.bill').height() - 35;
 });
 
@@ -558,7 +558,7 @@ $(document).ready(function more_ordered_detail () {
 				html_output = '';
 				for (var i = 0; i < items.length; i++) {
 					var sub_total = (Number(items[i].Quantity) * Number(items[i].Price)).toFixed(2);
-					html_output += "<tr><td><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + items[i].ImgUrl + "' class='img-responsive'></div></div></td><td class='text-center'>" + items[i].Title + "</td><td class='text-center'>" + items[i].Price + "</td><td class='text-center'>" + items[i].Quantity + "</td><td class='text-center'>" + sub_total + "</td></tr>";
+					html_output += "<tr><td><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + items[i].ImgUrl + "' class='img-responsive'></div></div></td><td class='text-center'>" + items[i].Title + "</td><td class='text-center'>$" + items[i].Price + "</td><td class='text-center'>" + items[i].Quantity + "</td><td class='text-center'>$" + sub_total + "</td></tr>";
 				};
 
 				$('#tb-body-ordered-detail').html(html_output);
