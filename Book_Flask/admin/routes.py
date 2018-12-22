@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request, jsonify
 from Book_Flask import db
 from Book_Flask.models import User, OrderDetails, Orders , Ispaid, Status, Paymentmethod, Book
-
+from Book_Flask.user.forms import AddBookForm
 
 
 admin = Blueprint('admin', __name__)
@@ -72,3 +72,9 @@ def sales5days():
         print(type(k))
     db.session.close()
     return jsonify(di)
+
+@admin.route("/admin_dashboard/book_management")
+def book_management():
+    form = AddBookForm()
+
+    return render_template('admin/book_management.html', title='Book Management', form=form)

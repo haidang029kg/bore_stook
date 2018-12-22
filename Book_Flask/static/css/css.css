@@ -1006,4 +1006,23 @@ span.price {
 	transform: scale3d(1);
 }
 
-/* ------------------------------------------ */
+/* ------------------------------------------ Book management */
+.box {
+    width: 700px;
+    position: absolute;
+    display: none;
+    padding: 0px;
+}
+ul li {
+   display:inline;
+   padding-right:10px;
+   list-style:none;    
+}
+button.open.btn.btn-primary {
+	margin: 30px 60px 30px 60px;
+}
+
+.btn-container {
+	margin: auto;
+	width: fit-content;
+}
