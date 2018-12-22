@@ -18,9 +18,8 @@ def order_management():
     page = request.args.get('page',1 , type=int)
     per_page = 10
 
-    items = db.session.query(Orders.OrderID, Orders.Date, User.UserID, User.FirstName, User.LastName, Orders.Address, Orders.Phone, Orders.TotalPrice, Ispaid.NamePaid, Paymentmethod.NamePayment, Status.NameStatus).filter(Orders.IsPaid == Ispaid.IsPaidID).filter(Orders.PaymentMethod == Paymentmethod.PaymentMethodID).filter(Orders.Status == Status.StatusID).order_by(Orders.Date.desc()).paginate(page = page, per_page = per_page)
-
-    db.session.close()
+    items = db.session.query(Orders.OrderID, Orders.Date, Orders.UserID, User.FirstName, User.LastName, Orders.Address, Orders.Phone, Orders.TotalPrice, Ispaid.NamePaid, Paymentmethod.NamePayment, Status.NameStatus).join(Ispaid).join(Status).join(Paymentmethod).join(User).order_by(Orders.Date.desc()).paginate(page = page, per_page = per_page)
+    
     return render_template('admin/order_management.html', items = items)
 
 
@@ -31,7 +30,6 @@ def ordered_detail():
     items = db.session.query(Book.ImgUrl, Book.Title, Book.Price, OrderDetails.Quantity).filter(OrderDetails.OrderID == ordered_id).filter(OrderDetails.OrderID == Orders.OrderID).filter(OrderDetails.BookID == Book.BookID).all()
     total_price = db.session.query(Orders.TotalPrice).filter(Orders.OrderID == ordered_id).first()[0]
 
-    db.session.close()
 
     return jsonify({
         'ordered_id' : ordered_id,
@@ -49,7 +47,7 @@ def change_order_status():
         
         db.session.query(Orders).filter(Orders.OrderID == order_id).update({Orders.Status : status_id, Orders.IsPaid : paid_id})
         db.session.commit()
-        db.session.close()
+        
 
         return jsonify({'status' : 'done'})
     return jsonify({'status' : 'error'})
@@ -61,7 +59,7 @@ def top_genre():
     di = dict()
     for k,v in items.fetchall():
         di[k] = v
-    db.session.close()
+    
     return jsonify(di)
 
 @admin.route("/sales5days")
@@ -71,7 +69,7 @@ def sales5days():
     for k,v in items.fetchall():
         di[str(k)] = v
         print(type(k))
-    db.session.close()
+    
     return jsonify(di)
 
 @admin.route("/admin_dashboard/book_management")

@@ -20,7 +20,7 @@ def home():
     newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
         Book.BookID.desc()).limit(10).all()
 
-    db.session.close()
+    
 
     return render_template('home.html', title='Home page', items=items, genre_items=genre_items, newly_items=newly_items)
 
@@ -41,7 +41,7 @@ def home_author(authorid):
     newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
         Book.BookID.desc()).limit(10).all()
 
-    db.session.close()
+    
 
     flash(str(count_result) + ' results for ' + author_name, 'info')
 
@@ -66,7 +66,7 @@ def home_genre(genreid):
     newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
         Book.BookID.desc()).limit(10).all()
 
-    db.session.close()
+    
 
     flash(str(count_result) + ' results for ' + genre_name, 'info')
 
@@ -85,7 +85,7 @@ def book_detail():
         str(book_temp.GenreID)
     genre_name = db.session.execute(string_temp).first()[0]
 
-    db.session.close()
+    
 
     if book_temp:
         return jsonify({'BookID': book_temp.BookID,
@@ -136,7 +136,7 @@ def list_authors():
         string_temp = 'select Name from author where AuthorID = ' + str(i)
         lis_names.append(db.session.execute(string_temp).first()[0])
 
-    db.session.close()
+    
 
     dict_authors = dict(zip(lis_ids, lis_names))
 
@@ -231,7 +231,7 @@ def searching():
         newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
             Book.BookID.desc()).limit(10).all()
 
-        db.session.close()
+        
         flash(str(counters) + ' results for ' + value_search_adv, 'info')
         return render_template('home.html', items=items, value_search=value_search_adv, genreid=genreid, title='Searching', genre_items=genre_items, newly_items=newly_items, task_name='Search Result For ' + task_name)
 

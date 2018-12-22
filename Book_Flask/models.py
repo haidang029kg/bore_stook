@@ -93,16 +93,16 @@ class Orders(db.Model):
     Address = db.Column(db.Text(convert_unicode = True), nullable = False)
     Phone = db.Column(db.String(15), nullable = False)
     TotalPrice = db.Column(db.Float ,nullable = False)
-    IsPaid = db.Column(db.SmallInteger)
+    IsPaid = db.Column(db.SmallInteger, db.ForeignKey('ispaid.IsPaidID'))
     # 1. No
     # 2. Yes
-    Status = db.Column(db.SmallInteger)
+    Status = db.Column(db.SmallInteger, db.ForeignKey('status.StatusID'))
     # 1. Waiting
     # 2. Packaging
     # 3. Delivering
     # 4. Delivered
     # 5. Rejected
-    PaymentMethod = db.Column(db.SmallInteger)
+    PaymentMethod = db.Column(db.SmallInteger, db.ForeignKey('paymentmethod.PaymentMethodID'))
     # 1. Credit Card
     # 2. Cash
     # 3. Bank Transfer
