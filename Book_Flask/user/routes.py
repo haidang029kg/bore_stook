@@ -237,9 +237,11 @@ def create_order():
             for i in data_order_details:
                 db.session.add(i)
 
-        db.session.commit()
+            db.session.commit()
         
-        flash('Ordered successfully!!!', 'info')
+            flash('Ordered successfully!!!', 'info')
+
+        flash('Your cart is empty!!!', 'danger')
 
     return jsonify({'success': 'done!'})
 

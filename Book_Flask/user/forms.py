@@ -87,15 +87,3 @@ class AccountForm(FlaskForm):
     def validate_phone(self, phone):
         if (type(int(phone.data)) != type(123)):
             raise ValidationError('Phone number is incorrect!')
-
-class AddBookForm(FlaskForm):
-    title = StringField('Book title:', validators=[DataRequired(), Length(min=1, max=30)])
-    ISBN = StringField('ISBN:', validators=[DataRequired(), Length(min=10, max=13)])
-    author = StringField('Author:', validators=[DataRequired(), Length(min=1, max=300)])
-    publicationYear = StringField('Publication year:', validators=[DataRequired(), Length(min=1, max=4)])
-    imgUrl = StringField('Image URL:', validators=[DataRequired(), Length(min=1, max=30)])
-    price = StringField('Price:', validators=[DataRequired(), Length(min=1, max=30)])
-    avgRating = StringField('Rating:', validators=[DataRequired(), Length(min=1, max=1)])
-    quantity = StringField('Quantity:', validators=[DataRequired(), Length(min=1, max=4)])
-    genre = StringField('Genre:', validators=[DataRequired(), Length(min=1, max=50)])
-    submit = SubmitField('Add book')

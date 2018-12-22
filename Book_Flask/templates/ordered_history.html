@@ -11,14 +11,14 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Order ID</th>
-                        <th>Ordered Date Time</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Total Price</th>
-                        <th>Paid</th>
-                        <th>Payment Method</th>
-                        <th>Status</th>
+                        <th class="text-center">Order ID</th>
+                        <th class="text-center">Ordered Date Time</th>
+                        <th class="text-center">Address</th>
+                        <th class="text-center">Phone</th>
+                        <th class="text-center">Total Price</th>
+                        <th class="text-center">Paid</th>
+                        <th class="text-center">Payment Method</th>
+                        <th class="text-center">Status</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -26,13 +26,13 @@
                     {% for item in items.items %}
                     <tr data-order-id="{{ item.OrderID }}">
                         <td>{{ item.OrderID }}</td>
-                        <td>{{ item.Date }}</td>
+                        <td class="text-center">{{ item.Date }}</td>
                         <td>{{ item.Address }}</td>
-                        <td>{{ item.Phone }}</td>
-                        <td>${{ item.TotalPrice }}</td>
-                        <td>{{ item.NamePaid }}</td>
-                        <td>{{ item.NamePayment }}</td>
-                        <td>{{ item.NameStatus }}</td>
+                        <td class="text-center">{{ item.Phone }}</td>
+                        <td class="text-center">${{ item.TotalPrice }}</td>
+                        <td class="text-center">{{ item.NamePaid }}</td>
+                        <td class="text-center">{{ item.NamePayment }}</td>
+                        <td class="text-center">{{ item.NameStatus }}</td>
                         <td><button type="button" class="btn-more-ordered-detail btn btn-info btn-lg" data-toggle="modal"
                                 data-target="#modal-more-ordered-detail">more</button></td>
                     </tr>
