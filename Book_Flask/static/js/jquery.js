@@ -596,6 +596,42 @@ $(document).ready(function more_ordered_detail() {
 	});
 });
 
+// ----------------------------------------------- more ordered detail in order admin dashboard
+$(document).ready(function more_ordered_detail() {
+	$('.btn-admin-ordered-detail').on('click', function (e) {
+		e.preventDefault();
+
+		click_id = $(this).parents('tr').attr('data-order-id');
+
+		$.ajax({
+			data: {
+				ordered_id: click_id
+			},
+			type: 'GET',
+			dataType: 'json',
+			url: '/admin_ordered_detail',
+			success: function (result) {
+
+				$('#modal-content-more-ordered-detail h4').text('Ordered ID: ' + String(result.ordered_id));
+				$('#modal-content-more-ordered-detail #total-price').text('Total $' + String(result.total_price));
+				$('#modal-content-more-ordered-detail #num-items').text('Number of items: ' + String(result.items.length));
+
+				var items = result.items;
+				html_output = '';
+				for (var i = 0; i < items.length; i++) {
+					var sub_total = (Number(items[i].Quantity) * Number(items[i].Price)).toFixed(2);
+					html_output += "<tr><td><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + items[i].ImgUrl + "' class='img-responsive'></div></div></td><td class='text-center'>" + items[i].Title + "</td><td class='text-center'>$" + items[i].Price + "</td><td class='text-center'>" + items[i].Quantity + "</td><td class='text-center'>$" + sub_total + "</td></tr>";
+				};
+
+				$('#tb-body-ordered-detail').html(html_output);
+			},
+			error: function () {
+				$('#tb-body-ordered-detail').html('Oops! Something went wrong!!!');
+			}
+		});
+	});
+});
+
 
 //set background color
 $(document).ready(function () {
@@ -661,10 +697,4 @@ window.onload = function () {
 	});
 	salesChart.render();
 
-}
-
-$(document).ready(function () {
-	$('.ddd').on('click', function () {
-		console.log('click');
-	});
-});
+};

@@ -886,7 +886,7 @@ span.price {
 }
 
 .admin-container {
-	position: relative;
+	position: static;
 	z-index: 1;
 	float: right;
 	width: calc(100% - 260px);
@@ -959,4 +959,46 @@ span.price {
 
 .admin-container .row {
 	margin: 0;
+}
+
+
+
+/* ------------------------------------ custom radio button */
+.customeRadio input[type="radio"] {
+	position: absolute;
+	left: -9999px;
+}
+
+.customeRadio input[type="radio"] + label {
+	position: relative;
+	padding: 3px 0 0 40px;
+	cursor: pointer;
+}
+
+.customeRadio input[type="radio"] + label:before{
+	content: '';
+	background: #fff;
+	border: 2px solid #1cbe9d;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.customeRadio input[type="radio"] + label:after {
+	content: '';
+	background: #1cbe9d;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	opacity: 0;
+}
+
+.customeRadio input[type="radio"]:checked + label:after {
+	opacity: 1;
 }

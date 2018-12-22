@@ -13,11 +13,6 @@ from flask_login import login_user, logout_user, current_user, login_required
 user = Blueprint('user', __name__)
 
 
-@user.route("/home")
-def home():
-    return render_template('home.html', title='Home')
-
-
 @user.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -38,6 +33,7 @@ def register():
 
         db.session.add(user)
         db.session.commit()
+        db.session.close()
 
         send_token_register(user=user)
 
@@ -162,8 +158,9 @@ def change_password():
         user.Password = hashed_password
 
         db.session.commit()
+        db.session.close()
 
-        flash('Change password completely!', 'info')
+        flash('Changed password completely!', 'info')
 
         login_form = LoginForm()
         return redirect(url_for('user.login', form=login_form, title='Login'))

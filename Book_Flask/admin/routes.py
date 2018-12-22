@@ -1,7 +1,7 @@
 
 from flask import Blueprint, render_template, request, jsonify
 from Book_Flask import db
-from Book_Flask.models import User, OrderDetails, Orders , Ispaid, Status, Paymentmethod
+from Book_Flask.models import User, OrderDetails, Orders , Ispaid, Status, Paymentmethod, Book
 
 
 
@@ -24,6 +24,24 @@ def order_management():
 
     db.session.close()
     return render_template('admin/order_management.html', items = items)
+
+
+@admin.route("/admin_ordered_detail", methods = ['GET'])
+def ordered_detail():
+    ordered_id = request.args.get('ordered_id')
+
+    items = db.session.query(Book.ImgUrl, Book.Title, Book.Price, OrderDetails.Quantity).filter(OrderDetails.OrderID == ordered_id).filter(OrderDetails.OrderID == Orders.OrderID).filter(OrderDetails.BookID == Book.BookID).all()
+    total_price = db.session.query(Orders.TotalPrice).filter(Orders.OrderID == ordered_id).first()[0]
+
+    db.session.close()
+
+    return jsonify({
+        'ordered_id' : ordered_id,
+        'total_price' : total_price,
+        'items' : items
+    })
+
+
 
 @admin.route("/top_genre")
 def top_genre():
