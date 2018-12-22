@@ -163,7 +163,7 @@ def searching():
     value_search_adv = request.form.get('input-search-adv')
     type_search_adv = request.form.get('input-type-search-adv')
 
-    if not value_search_adv:  # input is none
+    if (not value_search_adv) and (not value_search):  # input is none
         return redirect(url_for('main.home'))
 
     counters = None
