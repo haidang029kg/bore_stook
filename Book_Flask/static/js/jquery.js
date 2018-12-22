@@ -632,6 +632,39 @@ $(document).ready(function more_ordered_detail() {
 	});
 });
 
+// ------------------------------------------ btn process in order management
+$(document).ready(function () {
+	$('.btn-admin-ordered-process').on('click', function (e) {
+		e.preventDefault();
+
+		click_id = $(this).parents('tr').attr('data-order-id');
+
+		$('.btn-change-order-status').on('click', function (e2) {
+			e2.preventDefault();
+
+			var radio_value = $("input[name=order_status]:checked").val()
+
+			$.ajax({
+				data : {
+					radio_value : radio_value,
+					order_id : click_id
+				},
+				type : 'GET',
+				dataType : 'json',
+				url : '/admin_change_order_status',
+				success : function (result) {
+					if (result.status === 'done') {
+						alert(result.status);
+					}
+				},
+				error : function (result) {
+					alert(result.status);
+				}
+			})
+		})
+	})
+})
+
 
 //set background color
 $(document).ready(function () {

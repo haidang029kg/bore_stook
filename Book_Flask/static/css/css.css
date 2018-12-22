@@ -971,7 +971,7 @@ span.price {
 
 .customeRadio input[type="radio"] + label {
 	position: relative;
-	padding: 3px 0 0 40px;
+	padding: 3px 0 0 75px;
 	cursor: pointer;
 }
 
@@ -983,8 +983,8 @@ span.price {
 	height: 25px;
 	border-radius: 50%;
 	position: absolute;
-	left: 0;
-	top: 0;
+	left: 5px;
+	top: 5px;
 }
 
 .customeRadio input[type="radio"] + label:after {
@@ -994,11 +994,16 @@ span.price {
 	height: 15px;
 	border-radius: 50%;
 	position: absolute;
-	left: 5px;
-	top: 5px;
+	left: 10px;
+	top: 10px;
 	opacity: 0;
+	transform: scale3d(3);
+	transition: transform 0.5s linear, opacity 0.5s linear;
 }
 
 .customeRadio input[type="radio"]:checked + label:after {
 	opacity: 1;
+	transform: scale3d(1);
 }
+
+/* ------------------------------------------ */
