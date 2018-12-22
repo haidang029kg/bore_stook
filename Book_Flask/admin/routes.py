@@ -12,8 +12,6 @@ admin = Blueprint('admin', __name__)
 def dashboard():
     return  render_template('admin/chart.html')
 
-
-
 @admin.route("/admin_dashboard/order_management")
 def order_management():
 
@@ -49,4 +47,15 @@ def top_genre():
     di = dict()
     for k,v in items.fetchall():
         di[k] = v
+    db.session.close()
+    return jsonify(di)
+
+@admin.route("/sales5days")
+def sales5days():
+    items = db.session.execute('select DATE(Date), sum(TotalPrice) from orders group by DATE(Date) order by DATE(Date) desc limit 5;')
+    di = dict()
+    for k,v in items.fetchall():
+        di[str(k)] = v
+        print(type(k))
+    db.session.close()
     return jsonify(di)

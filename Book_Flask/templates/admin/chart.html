@@ -51,12 +51,6 @@
     <div class="chart-container">
         <canvas id="salesChart"></canvas>
     </div>
-    <div class="chart-container">
-        <canvas id="top10weekChart"></canvas>
-    </div>
-    <div class="chart-container">
-        <canvas id="top10monthChart"></canvas>
-    </div>
 
 </div>
 <script>
@@ -72,8 +66,10 @@
         });
     });
 
-    var labels = [];
-    var data = [];
+    var genreLabels = [];
+    var genreData = [];
+    var salesLabels = [];
+    var salesData = [];
 
     $.ajax({
         data: {},
@@ -82,17 +78,63 @@
         url: '/top_genre',
         success: function (result) {
             $.each(result, function (key, value) {
-                labels.push(key);
-                data.push(value);
+                genreLabels.push(key);
+                genreData.push(value);
             })
-            drawChart(labels, data);
+            drawGenreChart(genreLabels, genreData);
         },
         error: {}
     });
 
-    function drawChart(labels, data) {
-        var ctx = document.getElementById("genreChart");
-        var myChart = new Chart(ctx, {
+    $.ajax({
+        data: {},
+        type: 'GET',
+        dataType: 'json',
+        url: '/sales5days',
+        success: function (result) {
+            $.each(result, function (key, value) {
+                salesLabels.push(key);
+                salesData.push(value);
+            })
+            drawSalesChart(salesLabels, salesData);
+        },
+        error: {}
+    });
+
+    function drawSalesChart(labels, data) {
+        var salesChartLoc = document.getElementById("salesChart");
+        var salesChart = new Chart(salesChartLoc, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Sales in 5 days',
+                    data: data,
+                    borderColor: 'rgba(255, 206, 86, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    beginAtZero: true,
+                },
+                title: {
+                    display: true,
+                    text: 'Sales in 5 days',
+                    fontSize: 30,
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        fontSize: 16,
+                    }
+                },
+            }
+        });
+    }
+
+    function drawGenreChart(labels, data) {
+        var genreChartLoc = document.getElementById("genreChart");
+        var genreChart = new Chart(genreChartLoc, {
             type: 'doughnut',
             data: {
                 labels: labels,
@@ -123,10 +165,13 @@
                 title: {
                     display: true,
                     text: 'Top 5 Genres',
-                    fontSize: 18
+                    fontSize: 30,
                 },
                 legend: {
                     position: 'bottom',
+                    labels: {
+                        fontSize: 16,
+                    }
                 }
             }
         });
