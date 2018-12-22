@@ -401,10 +401,7 @@ function bill_form_check() {
 		}
 	});
 
-	if (temp_check) {
-		return true;
-	}
-	return false;
+	return temp_check;
 };
 
 function credit_card_check() {
@@ -520,6 +517,8 @@ function payment_method_check() {
 $(document).ready(function finish_checkout() {
 	$('#finish-checkout').on('click', function (e) {
 		e.preventDefault();
+
+		$('#finish-checkout').unbind();
 
 		if (bill_form_check()) {
 			payment_method_check();
@@ -642,11 +641,13 @@ $(document).ready(function () {
 		$('.btn-change-order-status').on('click', function (e2) {
 			e2.preventDefault();
 
-			var radio_value = $("input[name=order_status]:checked").val()
+			var radio_value_status = $("input[name=order_status]:checked").val();
+			var radio_value_paid = $("input[name=is_paid]:checked").val();
 
 			$.ajax({
 				data : {
-					radio_value : radio_value,
+					radio_value_status : radio_value_status,
+					radio_value_paid : radio_value_paid,
 					order_id : click_id
 				},
 				type : 'GET',
@@ -654,11 +655,11 @@ $(document).ready(function () {
 				url : '/admin_change_order_status',
 				success : function (result) {
 					if (result.status === 'done') {
-						alert(result.status);
+						location.reload();
 					}
 				},
 				error : function (result) {
-					alert(result.status);
+					alert('Oops! Something went wrong!!!');
 				}
 			})
 		})

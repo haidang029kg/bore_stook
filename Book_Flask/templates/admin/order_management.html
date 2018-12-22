@@ -104,46 +104,63 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-
     </div>
 </div>
 <!-- Modal for orderd process-->
 <div class="modal fade" id="modal-admin-ordered-process" role="dialog">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-md">
 
         <!-- Modal content-->
         <div class="modal-content" id="modal-content-more-ordered-detail">
             <div class="modal-header">
-                <h2 class="modal-title">Change Order's Status</h2>
+                <h2 class="modal-title text-center">------- processing order ------</h2>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body">
-                <form action="#" class="customeRadio">
-                    <div class="row bg-warning rounded">
-                        <input type="radio" name="order_status" id="waitting" checked value="1">
-                        <label for="waitting">Waitting</label>
-                    </div>
-                    <hr>
-                    <div class="row bg-primary rounded">
-                        <input type="radio" name="order_status" id="packaging" value="2">
-                        <label for="packaging">Packaging</label>
-                    </div>
-                    <hr>
-                    <div class="row bg-info rounded">
-                        <input type="radio" name="order_status" id="delivering" value="3">
-                        <label for="delivering">Delivering</label>
-                    </div>
-                    <hr>
-                    <div class="row bg-success rounded">
-                        <input type="radio" name="order_status" id="delivered" value="4">
-                        <label for="delivered">Delivered</label>
-                    </div>
-                    <hr>
-                    <div class="row bg-danger rounded">
-                        <input type="radio" name="order_status" id="rejected" value="5">
-                        <label for="rejected" class="">Rejected</label>
-                    </div>
-                </form>
+            <div class="modal-body row">
+                <div class="div-order-status">
+                    <h3 class="text-center">Order's Status</h3>
+                    <form action="#" class="customeRadio">
+                        <div class="row bg-warning rounded">
+                            <input type="radio" name="order_status" id="waitting" checked value="1">
+                            <label for="waitting">Waitting</label>
+                        </div>
+                        <hr>
+                        <div class="row bg-primary rounded">
+                            <input type="radio" name="order_status" id="packaging" value="2">
+                            <label for="packaging">Packaging</label>
+                        </div>
+                        <hr>
+                        <div class="row bg-info rounded">
+                            <input type="radio" name="order_status" id="delivering" value="3">
+                            <label for="delivering">Delivering</label>
+                        </div>
+                        <hr>
+                        <div class="row bg-success rounded">
+                            <input type="radio" name="order_status" id="delivered" value="4">
+                            <label for="delivered">Delivered</label>
+                        </div>
+                        <hr>
+                        <div class="row bg-danger rounded">
+                            <input type="radio" name="order_status" id="rejected" value="5">
+                            <label for="rejected" class="">Rejected</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="div-temp"></div>
+                <div class="div-paid">
+                    <h3 class="text-center">Is Paid</h3>
+                    <form action="#" class="customeRadio">
+                        <div class="row bg-warning rounded">
+                            <input type="radio" name="is_paid" id="no" checked value="1">
+                            <label for="no">No</label>
+                        </div>
+                        <hr>
+                        <div class="row bg-primary rounded">
+                            <input type="radio" name="is_paid" id="yes" value="2">
+                            <label for="yes">Yes</label>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-change-order-status btn btn-primary" data-dismiss="modal">Change</button>

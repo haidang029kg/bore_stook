@@ -43,12 +43,13 @@ def ordered_detail():
 
 @admin.route("/admin_change_order_status", methods = ['GET'])
 def change_order_status():
-    status_id = request.args.get('radio_value')
+    status_id = request.args.get('radio_value_status')
+    paid_id = request.args.get('radio_value_paid')
     order_id = request.args.get('order_id')
 
-    if (order_id) and (status_id):
+    if (order_id) and (status_id) and(paid_id):
         
-        db.session.query(Orders).filter(Orders.OrderID == order_id).update({Orders.Status : status_id})
+        db.session.query(Orders).filter(Orders.OrderID == order_id).update({Orders.Status : status_id, Orders.IsPaid : paid_id})
         db.session.commit()
         db.session.close()
 
