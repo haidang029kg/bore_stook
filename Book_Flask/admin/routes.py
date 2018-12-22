@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request, jsonify
 from Book_Flask import db
 from Book_Flask.models import User, OrderDetails, Orders , Ispaid, Status, Paymentmethod, Book
-
+from Book_Flask.user.forms import AddBookForm
 
 
 admin = Blueprint('admin', __name__)
@@ -11,8 +11,6 @@ admin = Blueprint('admin', __name__)
 @admin.route("/admin_dashboard/chart")
 def dashboard():
     return  render_template('admin/chart.html')
-
-
 
 @admin.route("/admin_dashboard/order_management")
 def order_management():
@@ -63,4 +61,21 @@ def top_genre():
     di = dict()
     for k,v in items.fetchall():
         di[k] = v
+    db.session.close()
     return jsonify(di)
+
+@admin.route("/sales5days")
+def sales5days():
+    items = db.session.execute('select DATE(Date), sum(TotalPrice) from orders group by DATE(Date) order by DATE(Date) desc limit 5;')
+    di = dict()
+    for k,v in items.fetchall():
+        di[str(k)] = v
+        print(type(k))
+    db.session.close()
+    return jsonify(di)
+
+@admin.route("/admin_dashboard/book_management")
+def book_management():
+    form = AddBookForm()
+
+    return render_template('admin/book_management.html', title='Book Management', form=form)

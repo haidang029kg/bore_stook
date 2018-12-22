@@ -216,8 +216,8 @@ def create_order():
                         UserID=user_id,
                         Address=order.get('Address'),
                         Phone=order.get('Phone'),
-                        TotalPrice=order.get('TotalPrice'),
                         Date=datetime.datetime.now(),
+                        TotalPrice=order.get('TotalPrice'),
                         IsPaid=order.get('IsPaid'),
                         Status=order.get('Status'),
                         PaymentMethod=order.get('PaymentMethod'))
