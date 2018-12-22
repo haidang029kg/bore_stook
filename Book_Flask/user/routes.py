@@ -5,7 +5,7 @@ from Book_Flask.models import Book, Author, Genre, Orders, OrderDetails, generat
 from Book_Flask.user.utilities import *
 from Book_Flask.user.forms import *
 
-import json
+import json, datetime
 
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -217,6 +217,7 @@ def create_order():
                         Address=order.get('Address'),
                         Phone=order.get('Phone'),
                         TotalPrice=order.get('TotalPrice'),
+                        Date=datetime.datetime.now(),
                         IsPaid=order.get('IsPaid'),
                         Status=order.get('Status'),
                         PaymentMethod=order.get('PaymentMethod'))

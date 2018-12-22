@@ -34,7 +34,7 @@
                         <td class="text-center">{{ item.NamePaid }}</td>
                         <td class="text-center">{{ item.NamePayment }}</td>
                         <td class="text-center">{{ item.NameStatus }}</td>
-                        <td><button type="button" class="btn-more-ordered-detail btn btn-info btn-sm" data-toggle="modal"
+                        <td><button type="button" class="btn-admin-ordered-process btn btn-info btn-sm" data-toggle="modal"
                                 data-target="#modal-admin-ordered-process">process</button></td>
                         <td><button type="button" class="btn-admin-ordered-detail btn btn-info btn-sm" data-toggle="modal"
                                 data-target="#modal-admin-ordered-detail">detail</button></td>
@@ -109,7 +109,7 @@
 </div>
 <!-- Modal for orderd process-->
 <div class="modal fade" id="modal-admin-ordered-process" role="dialog">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-sm">
 
         <!-- Modal content-->
         <div class="modal-content" id="modal-content-more-ordered-detail">
@@ -119,35 +119,37 @@
             </div>
             <div class="modal-body">
                 <form action="#" class="customeRadio">
-                    <div class="row">
-                        <div class="row">
-                            <input type="radio" name="waitting" id="waitting" checked>
-                            <label for="">Waitting</label>
-                        </div>
-                        <div class="row">
-                            <input type="radio" name="packaging" id="packaging">
-                            <label for="">Packaging</label>
-                        </div>
-                        <div class="row">
-                            <input type="radio" name="delivering" id="delivering">
-                            <label for="">Delivering</label>
-                        </div>
-                        <div class="row">
-                            <input type="radio" name="delivered" id="delivered">
-                            <label for="">Delivered</label>
-                        </div>
-                        <div class="row">
-                            <input type="radio" name="rejected" id="rejected">
-                            <label for="">Rejected</label>
-                        </div>
+                    <div class="row bg-warning rounded">
+                        <input type="radio" name="order_status" id="waitting" checked value="1">
+                        <label for="waitting">Waitting</label>
+                    </div>
+                    <hr>
+                    <div class="row bg-primary rounded">
+                        <input type="radio" name="order_status" id="packaging" value="2">
+                        <label for="packaging">Packaging</label>
+                    </div>
+                    <hr>
+                    <div class="row bg-info rounded">
+                        <input type="radio" name="order_status" id="delivering" value="3">
+                        <label for="delivering">Delivering</label>
+                    </div>
+                    <hr>
+                    <div class="row bg-success rounded">
+                        <input type="radio" name="order_status" id="delivered" value="4">
+                        <label for="delivered">Delivered</label>
+                    </div>
+                    <hr>
+                    <div class="row bg-danger rounded">
+                        <input type="radio" name="order_status" id="rejected" value="5">
+                        <label for="rejected" class="">Rejected</label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn-change-order-status btn btn-primary" data-dismiss="modal">Change</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-
     </div>
 </div>
 {% endblock %}

@@ -20,7 +20,7 @@ def order_management():
     page = request.args.get('page',1 , type=int)
     per_page = 10
 
-    items = db.session.query(Orders.OrderID, Orders.Date, User.UserID, User.FirstName, User.LastName, Orders.Address, Orders.Phone, Orders.TotalPrice, Ispaid.NamePaid, Paymentmethod.NamePayment, Status.NameStatus).filter(User.UserID == Orders.UserID).filter(Orders.IsPaid == Ispaid.IsPaidID).filter(Orders.PaymentMethod == Paymentmethod.PaymentMethodID).filter(Orders.Status == Status.StatusID).order_by(Orders.Date.desc()).paginate(page = page, per_page = per_page)
+    items = db.session.query(Orders.OrderID, Orders.Date, User.UserID, User.FirstName, User.LastName, Orders.Address, Orders.Phone, Orders.TotalPrice, Ispaid.NamePaid, Paymentmethod.NamePayment, Status.NameStatus).filter(Orders.IsPaid == Ispaid.IsPaidID).filter(Orders.PaymentMethod == Paymentmethod.PaymentMethodID).filter(Orders.Status == Status.StatusID).order_by(Orders.Date.desc()).paginate(page = page, per_page = per_page)
 
     db.session.close()
     return render_template('admin/order_management.html', items = items)
@@ -41,6 +41,19 @@ def ordered_detail():
         'items' : items
     })
 
+@admin.route("/admin_change_order_status", methods = ['GET'])
+def change_order_status():
+    status_id = request.args.get('radio_value')
+    order_id = request.args.get('order_id')
+
+    if (order_id) and (status_id):
+        
+        db.session.query(Orders).filter(Orders.OrderID == order_id).update({Orders.Status : status_id})
+        db.session.commit()
+        db.session.close()
+
+        return jsonify({'status' : 'done'})
+    return jsonify({'status' : 'error'})
 
 
 @admin.route("/top_genre")
