@@ -69,7 +69,6 @@ def sales5days():
     di = dict()
     for k,v in items.fetchall():
         di[str(k)] = v
-        print(type(k))
     db.session.close()
     return jsonify(di)
 
