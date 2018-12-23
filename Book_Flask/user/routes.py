@@ -33,7 +33,6 @@ def register():
 
         db.session.add(user)
         db.session.commit()
-        
 
         send_token_register(user=user)
 

@@ -30,9 +30,29 @@
                         <td>{{ item.Address }}</td>
                         <td class="text-center">{{ item.Phone }}</td>
                         <td class="text-center">${{ item.TotalPrice }}</td>
-                        <td class="text-center">{{ item.NamePaid }}</td>
+                        {% if item.NamePaid == "Yes" %}
+                        <td class="text-center">
+                            <h4 style="background-color : #FF4500; border-radius : 10px">{{ item.NamePaid }}</h4>
+                        </td>
+                        {% else %}
+                        <td class="text-center">
+                            <h4 style="background-color : #EE82EE; border-radius : 10px">{{ item.NamePaid }}</h4>
+                        </td>
+                        {% endif %}
                         <td class="text-center">{{ item.NamePayment }}</td>
+                        {% if item.NameStatus == "Waiting" %}
+                        <td class="text-center">
+                            <h4 style="background-color : yellow; border-radius : 10px">{{ item.NameStatus }}</h4>
+                        </td>
+                        {% else %}
+                        {% if item.NameStatus == "Delivered" %}
+                        <td class="text-center">
+                            <h4 style="background-color : #00FFFF; border-radius : 10px">{{ item.NameStatus }}</h4>
+                        </td>
+                        {% else %}
                         <td class="text-center">{{ item.NameStatus }}</td>
+                        {% endif %}
+                        {% endif %}
                         <td><button type="button" class="btn-more-ordered-detail btn btn-info btn-lg" data-toggle="modal"
                                 data-target="#modal-more-ordered-detail">more</button></td>
                     </tr>
