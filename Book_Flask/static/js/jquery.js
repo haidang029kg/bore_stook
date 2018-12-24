@@ -666,6 +666,31 @@ $(document).ready(function () {
 	})
 })
 
+// ----------------------------------------------------------btn admin reset default password for user
+$(document).ready(function set_default_pass() {
+	$('.btn-set-password').on('click', function (){
+		click_id = $(this).parents('tr').attr('data-user-id');
+
+		$.ajax({
+			data : {
+				user_id : click_id
+			},
+			type : 'GET',
+			dataType : 'json',
+			url : '/admin_dashboard_reset_user',
+			success : function (result) {
+				if (result.status === 'done') {
+					alert("Reset customer's password successfully!!!");
+					location.reload();
+				}
+			},
+			error : function (result) {
+				alert('Oops! Something went wrong!!!');
+			}
+		})
+	})
+})
+
 
 //set background color
 $(document).ready(function () {

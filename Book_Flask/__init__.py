@@ -25,6 +25,7 @@ bcrypt = Bcrypt(app)
 mail = Mail(app)
 
 login_user_manager = LoginManager(app)
+login_user_manager.session_protection = "strong"
 login_user_manager.login_view = 'user.login' # route of login
 login_user_manager.login_message_category = 'info' # bootstrap name for messgage
 

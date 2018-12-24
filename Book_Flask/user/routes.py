@@ -5,7 +5,8 @@ from Book_Flask.models import Book, Author, Genre, Orders, OrderDetails, generat
 from Book_Flask.user.utilities import *
 from Book_Flask.user.forms import *
 
-import json, datetime
+import json
+import datetime
 
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -87,7 +88,9 @@ def login():
 
 @user.route("/logout")
 def logout():
+    print(current_user.is_authenticated)
     logout_user()
+    print(current_user.is_authenticated)
     return redirect(url_for('main.home'))
 
 
@@ -157,7 +160,6 @@ def change_password():
         user.Password = hashed_password
 
         db.session.commit()
-        
 
         flash('Changed password completely!', 'info')
 
@@ -237,7 +239,7 @@ def create_order():
                 db.session.add(i)
 
             db.session.commit()
-        
+
             flash('Ordered successfully!!!', 'info')
 
         flash('Your cart is empty!!!', 'danger')
@@ -255,25 +257,23 @@ def ordered_history():
     id_user = current_user.get_id()
 
     items = db.session.query(Orders.OrderID, Orders.Date, Orders.Address, Orders.Phone, Orders.TotalPrice, Ispaid.NamePaid, Paymentmethod.NamePayment, Status.NameStatus).filter(Orders.UserID == id_user).filter(
-        Orders.IsPaid == Ispaid.IsPaidID).filter(Orders.PaymentMethod == Paymentmethod.PaymentMethodID).filter(Orders.Status == Status.StatusID).order_by(Orders.Date.desc()).paginate(page = page, per_page = per_page)
-
-    
+        Orders.IsPaid == Ispaid.IsPaidID).filter(Orders.PaymentMethod == Paymentmethod.PaymentMethodID).filter(Orders.Status == Status.StatusID).order_by(Orders.Date.desc()).paginate(page=page, per_page=per_page)
 
     return render_template('ordered_history.html', title='Ordered History', items=items)
 
 
-@user.route("/ordered_detail", methods = ['GET'])
+@user.route("/ordered_detail", methods=['GET'])
 @login_required
 def ordered_detail():
     ordered_id = request.args.get('ordered_id')
 
-    items = db.session.query(Book.ImgUrl, Book.Title, Book.Price, OrderDetails.Quantity).filter(OrderDetails.OrderID == ordered_id).filter(OrderDetails.OrderID == Orders.OrderID).filter(OrderDetails.BookID == Book.BookID).all()
-    total_price = db.session.query(Orders.TotalPrice).filter(Orders.OrderID == ordered_id).first()[0]
-
-    
+    items = db.session.query(Book.ImgUrl, Book.Title, Book.Price, OrderDetails.Quantity).filter(
+        OrderDetails.OrderID == ordered_id).filter(OrderDetails.OrderID == Orders.OrderID).filter(OrderDetails.BookID == Book.BookID).all()
+    total_price = db.session.query(Orders.TotalPrice).filter(
+        Orders.OrderID == ordered_id).first()[0]
 
     return jsonify({
-        'ordered_id' : ordered_id,
-        'total_price' : total_price,
-        'items' : items
+        'ordered_id': ordered_id,
+        'total_price': total_price,
+        'items': items
     })
