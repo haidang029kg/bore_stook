@@ -961,6 +961,25 @@ span.price {
 	margin: 0;
 }
 
+/* ------------------------------process order */
+#modal-content-more-ordered-detail .div-order-status {
+	width: 40%;
+	height: 350px;
+}
+
+#modal-content-more-ordered-detail .div-temp {
+	width: 25%;
+	height: 350px;
+}
+
+#modal-content-more-ordered-detail .div-paid {
+	width: 30%;
+	height: 350px;
+    display: flex;
+    justify-content:center;
+    align-content:center;
+    flex-direction:column;
+}
 
 
 /* ------------------------------------ custom radio button */
@@ -1025,4 +1044,10 @@ button.open.btn.btn-primary {
 .btn-container {
 	margin: auto;
 	width: fit-content;
+}
+
+#book-search {
+	width: 80%;
+	padding-left: 35px;
+	margin: auto;
 }

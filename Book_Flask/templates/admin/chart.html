@@ -8,17 +8,17 @@
     <div class="row text-muted">
         <div class="col-sm-4 no-padding border-right">
             <i class="fas fa-shopping-cart"></i>
-            <h2 class="count">100</h2>
+            <h2 class="count">{{todayOrders}}</h2>
             <p>Orders</p>
         </div>
         <div class="col-sm-4 no-padding">
             <i class="fas fa-book"></i>
-            <h2 class="count">100</h2>
+            <h2 class="count">{{todayBooks}}</h2>
             <p>Books</p>
         </div>
         <div class="col-sm-4 no-padding border-left">
             <i class="fas fa-money-bill"></i>
-            <h2 class="count">100</h2>
+            <h2 class="count">{{todaySales}}</h2>
             <p>Sales</p>
         </div>
     </div>
@@ -28,17 +28,17 @@
     <div class="row text-muted">
         <div class="col-sm-4 no-padding border-right">
             <i class="fas fa-shopping-cart"></i>
-            <h2 class="count">100</h2>
+            <h2 class="count">{{yesterdayOrders}}</h2>
             <p>Orders</p>
         </div>
         <div class="col-sm-4 no-padding">
             <i class="fas fa-book"></i>
-            <h2 class="count">100</h2>
+            <h2 class="count">{{yesterdayBooks}}</h2>
             <p>Books</p>
         </div>
         <div class="col-sm-4 no-padding border-left">
             <i class="fas fa-money-bill"></i>
-            <h2 class="count">100</h2>
+            <h2 class="count">{{yesterdaySales}}</h2>
             <p>Sales</p>
         </div>
     </div>
@@ -135,7 +135,7 @@
     function drawGenreChart(labels, data) {
         var genreChartLoc = document.getElementById("genreChart");
         var genreChart = new Chart(genreChartLoc, {
-            type: 'doughnut',
+            type: 'bar',
             data: {
                 labels: labels,
                 datasets: [{
@@ -160,7 +160,11 @@
             },
             options: {
                 scales: {
-                    beginAtZero: true,
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 },
                 title: {
                     display: true,

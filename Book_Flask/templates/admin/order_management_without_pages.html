@@ -27,7 +27,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in items.items %}
+                {% for item in items %}
                 <tr data-order-id="{{ item.OrderID }}">
                     <td>{{ item.OrderID }}</td>
                     <td class="text-center">{{ item.Date }}</td>
@@ -67,13 +67,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
-    <div class="container">
-        {% if value_search %}
-        {% include 'admin/_page_num_for_order_searching.html' %}
-        {% else %}
-        {% include 'admin/_page_num_for_order_management.html' %}
-        {% endif %}
     </div>
 </div>
 </div>

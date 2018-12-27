@@ -33,7 +33,6 @@ def register():
 
         db.session.add(user)
         db.session.commit()
-        db.session.close()
 
         send_token_register(user=user)
 
@@ -158,7 +157,7 @@ def change_password():
         user.Password = hashed_password
 
         db.session.commit()
-        db.session.close()
+        
 
         flash('Changed password completely!', 'info')
 
@@ -237,9 +236,11 @@ def create_order():
             for i in data_order_details:
                 db.session.add(i)
 
-        db.session.commit()
-        db.session.close()
-        flash('Ordered successfully!!!', 'info')
+            db.session.commit()
+        
+            flash('Ordered successfully!!!', 'info')
+
+        flash('Your cart is empty!!!', 'danger')
 
     return jsonify({'success': 'done!'})
 
@@ -256,7 +257,7 @@ def ordered_history():
     items = db.session.query(Orders.OrderID, Orders.Date, Orders.Address, Orders.Phone, Orders.TotalPrice, Ispaid.NamePaid, Paymentmethod.NamePayment, Status.NameStatus).filter(Orders.UserID == id_user).filter(
         Orders.IsPaid == Ispaid.IsPaidID).filter(Orders.PaymentMethod == Paymentmethod.PaymentMethodID).filter(Orders.Status == Status.StatusID).order_by(Orders.Date.desc()).paginate(page = page, per_page = per_page)
 
-    db.session.close()
+    
 
     return render_template('ordered_history.html', title='Ordered History', items=items)
 
@@ -269,7 +270,7 @@ def ordered_detail():
     items = db.session.query(Book.ImgUrl, Book.Title, Book.Price, OrderDetails.Quantity).filter(OrderDetails.OrderID == ordered_id).filter(OrderDetails.OrderID == Orders.OrderID).filter(OrderDetails.BookID == Book.BookID).all()
     total_price = db.session.query(Orders.TotalPrice).filter(Orders.OrderID == ordered_id).first()[0]
 
-    db.session.close()
+    
 
     return jsonify({
         'ordered_id' : ordered_id,

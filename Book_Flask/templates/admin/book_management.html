@@ -1,14 +1,21 @@
 {% extends 'admin/layout.html' %}
+
 {% block body %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
+
 <div class="btn-container">
     <ul>
         <li id="edit">
             <button href="#" class="open btn btn-primary">Edit book</button>
             <div class="box">
                 <div style="position: relative;">
-                    <i class="fas fa-search" style="position: absolute;left: 10px;top: 15px;"></i>
-                    <input type="text" id="search" placeholder="Please enter book name..." title="Type in a name" style="padding-left: 30px;">
+                    <form class="form-inline my-2 my-lg-0" action="" method="POST">
+                        <i class="fas fa-search" style="position: absolute;left: 45px;top: 15px;"></i>
+                        <input type="text" id="book-search" placeholder="Please enter book name..." title="Type in a name">
+                        <button class="btn btn-success my-2 my-sm-0 " type="submit">Search</button>
+                    </form>
                 </div>
             </div>
         </li>
@@ -50,14 +57,14 @@
                         <div class="form-group">
                             {{ form.author.label(class="form-control-label") }}
                             {% if form.author.errors %}
-                            {{ form.author(class="form-control form-control-lg is-invalid") }}
+                            {{ form.author(class="form-control multiple form-control-lg is-invalid") }}
                             <div class="invalid-feedback">
                                 {% for error in form.author.errors %}
                                 <span>{{ error }}</span>
                                 {% endfor%}
                             </div>
                             {% else %}
-                            {{ form.author(class="form-control form-control-lg") }}
+                            {{ form.author(class="form-control multiple form-control-lg") }}
                             {% endif %}
 
                         </div>
@@ -133,7 +140,7 @@
                         <div class="form-group">
                             {{ form.genre.label(class="form-control-label") }}
                             {% if form.genre.errors %}
-                            {{ form.genre(class="form-control form-control-lg is-invalid") }}
+                            {{ form.genre(class="form-control form-control-lg is-invalid ") }}
                             <div class="invalid-feedback">
                                 {% for error in form.genre.errors %}
                                 <span>{{ error }}</span>
@@ -154,8 +161,11 @@
             <button href="#" class="open btn btn-primary">Delete book</button>
             <div class="box">
                 <div style="position: relative;">
-                    <i class="fas fa-search" style="position: absolute;left: 10px;top: 15px;"></i>
-                    <input type="text" id="search" placeholder="Please enter book name..." title="Type in a name" style="padding-left: 30px;">
+                    <form class="form-inline my-2 my-lg-0" action="" method="POST">
+                        <i class="fas fa-search" style="position: absolute;left: 45px;top: 15px;"></i>
+                        <input type="text" id="book-search" placeholder="Please enter book name..." title="Type in a name">
+                        <button class="btn btn-success my-2 my-sm-0 " type="submit">Search</button>
+                    </form>
                 </div>
             </div>
         </li>
@@ -164,6 +174,17 @@
 </div>
 
 <script>
+    $('.multiple').select2({
+        width: '100%',
+        tags: true,
+        tokenSeparators: [','],
+        createTag: function (params) {
+            return {
+                id: params.term,
+                text: params.term
+            }
+        }
+    });
     var open = $('.open')
     var a = $('ul').find('button');
     open.click(function (e) {
@@ -174,7 +195,7 @@
             $this.removeClass('active').next('.box').slideUp(speed, resizeContainer);
         } else if (a.hasClass('active') === false) {
             $this.addClass('active').next('.box').slideDown(speed, resizeContainer);
-            
+
         } else {
             a.removeClass('active').next('.box').slideUp(speed);
             $this.addClass('active').next('.box').delay(speed).slideDown(speed, resizeContainer);
@@ -182,7 +203,8 @@
     });
 
     function resizeContainer() {
-        $('.admin-container').css('height',$('.active').next('.box').height() + $('ul').height());
+        $('.admin-container').css('height', $('.active').next('.box').height() + $('ul').height());
+        //Get value of last <option> in <select>
     }
 </script>
 
