@@ -1045,3 +1045,9 @@ button.open.btn.btn-primary {
 	margin: auto;
 	width: fit-content;
 }
+
+#book-search {
+	width: 80%;
+	padding-left: 35px;
+	margin: auto;
+}

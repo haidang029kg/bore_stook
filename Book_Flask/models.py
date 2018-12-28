@@ -107,6 +107,10 @@ class Author(db.Model):
     AuthorID = db.Column(db.Integer, primary_key=True)
     Name = db.Column(db.String(length=250, convert_unicode=True))
 
+    def getAuthorID(self):
+        return self.AuthorID
+
+
 
 class Orders(db.Model):
     OrderID = db.Column(

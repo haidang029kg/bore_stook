@@ -34,39 +34,69 @@
         </div>
         <div class="menu-content">
             <div class="menu-list">
-                <div class="menu-item active">
+                <div class="menu-item" id="chart">
                     <a href="/admin_dashboard/chart">
                         <i class="fas fa-chart-pie"></i>
                         Chart
                     </a>
                 </div>
-                <div class="menu-item">
-                    <a href="/admin_dashboard/user_management">
-                        <i class="far fa-user-circle"></i>
-                        User Management
-                    </a>
-                </div>
-                <div class="menu-item">
+                <div class="menu-item" id="order">
                     <a href="/admin_dashboard/order_management">
                         <i class="fas fa-clipboard-list"></i>
                         Order Management
                     </a>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" id="user">
+                    <a href="/admin_dashboard/user_management">
+                        <i class="far fa-user-circle"></i>
+                        User Management
+                    </a>
+                </div>
+                <div class="menu-item" id="addbook">
+                    <a href="/admin_dashboard/addbook">
+                        <i class="fas fa-plus"></i>
+                        Add Book
+                    </a>
+                </div>
+                <div class="menu-item" id=book>
                     <a href="/admin_dashboard/book_management">
                         <i class="fas fa-book-open"></i>
                         Book Management
                     </a>
                 </div>
-                
-
+                <div class="menu-item">
+                    <a href="/logout">
+                        <i class="fas fa-power-off"></i>
+                        Logout
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-
     <div class="admin-container">
+        <div class="div-center mt-4" style="z-index: 10;">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
         {% block body %} {% endblock %}
     </div>
+    <script>
+        if (window.location.href.indexOf("/chart") > -1)
+            $('#chart').addClass('active');
+        if (window.location.href.indexOf("/order_management") > -1)
+            $('#order').addClass('active');
+        if (window.location.href.indexOf("/user_management") > -1)
+            $('#user').addClass('active');
+        if (window.location.href.indexOf("/book_management") > -1)
+            $('#book').addClass('active');
+    </script>
 </body>
 
 </html>

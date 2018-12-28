@@ -690,6 +690,30 @@ $(document).ready(function set_default_pass() {
 		})
 	})
 })
+//------------------------------------------------------------btn admin delete book
+$(document).ready(function delete_book() {
+	$('.btn-admin-book-delete').on('click', function (){
+		bookid = $(this).parents('tr').attr('data-book-id');
+		
+		$('.yes-delete-book').on('click', function () {
+			$.ajax({
+				data : {
+					book_id : bookid
+				},
+				type : 'GET',
+				dataType : 'json',
+				url : '/admin_dashboard/delete_book',
+				success : function (result) {
+					alert(result.status);
+					location.reload();
+				},
+				error : function () {
+					alert("Oops! Something went wrong!!!");
+				}
+			})
+		})
+	})
+})
 
 
 //set background color
