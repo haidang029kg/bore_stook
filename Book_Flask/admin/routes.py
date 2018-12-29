@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, flash
+from flask import Blueprint, render_template, request, jsonify, json, redirect, url_for, flash
 from Book_Flask import db, bcrypt
-from Book_Flask.models import User, OrderDetails, Orders, Ispaid, Status, Paymentmethod, Book, Author, admin_login_required
-from Book_Flask.admin.forms import AddBookForm, AdminLoginForm
+from Book_Flask.models import User, OrderDetails, Orders, Ispaid, Status, Paymentmethod, Book, Author, admin_login_required, Genre
+from Book_Flask.admin.forms import AddBookForm, AdminLoginForm, EditBookForm, AddAuthorForm, AddGenreForm
 from flask_login import login_user, logout_user, current_user, login_required
 
 
@@ -206,7 +206,7 @@ def book_searching():
             if items is None:
                 items = []
 
-                return render_template('admin/book_management_without_pages.html', items=items, value_search = value_search)
+                return render_template('admin/book_management_without_pages.html', items=items, value_search=value_search)
 
             else:
                 items = db.session.query(Book.BookID, Book.ImgUrl, Book.Title, Book.ISBN, Book.Price).filter(
@@ -221,21 +221,23 @@ def book_searching():
         flash('input search is empty!!!', 'info')
         return redirect(url_for('admin.book_management'))
 
-@admin.route("/admin_dashboard/delete_book", methods = ['GET'])
+
+@admin.route("/admin_dashboard/delete_book", methods=['GET'])
 @admin_login_required
 def delete_book():
     book_id = request.args.get('book_id')
 
-    book = Book.query.filter_by(BookID = book_id).first()
+    book = Book.query.filter_by(BookID=book_id).first()
 
     if book:
         db.session.delete(book)
         db.session.commit()
-        
+
         flash('book is deleted', 'info')
 
-        return jsonify({'status':'done'})
-    return jsonify({'status':'error'})
+        return jsonify({'status': 'done'})
+    return jsonify({'status': 'error'})
+
 
 @admin.route("/admin_dashboard/user_management", methods=['GET'])
 @admin_login_required
@@ -339,7 +341,6 @@ def addbook():
                 db.session.add(author)
                 db.session.commit()
                 authorList = authorList + str(author.getAuthorID()) + ','
-        print(authorList[:-1])
         book = Book(Title=form.title.data,
                     ISBN=form.ISBN.data,
                     AuthorsID=authorList[:-1],
@@ -355,3 +356,194 @@ def addbook():
         return redirect(url_for('admin.dashboard'))
 
     return render_template('admin/addbook.html', form=form)
+
+
+@admin.route("/admin_dashboard/get_author_name", methods=['POST'])
+@admin_login_required
+def get_author_name():
+    list_author_id = request.form.get('list_author_id')
+    list_author_id = json.loads(list_author_id)
+    list_author_name = []
+
+    for i in list_author_id:
+        list_author_name.append(db.session.query(
+            Author.Name).filter(Author.AuthorID == i).first()[0])
+
+    if len(list_author_name) > 0:
+        return jsonify({'author_names': list_author_name})
+
+    return json({'status': 'error'})
+
+
+@admin.route("/admin_dashboard/edit_book/<int:book_id>", methods=['GET', 'POST'])
+@admin_login_required
+def edit_book(book_id):
+
+    book = Book.query.filter_by(BookID=book_id).first()
+
+    form = EditBookForm()
+
+    if form.validate_on_submit():
+        book.Title = form.title.data
+        book.ISBN = form.ISBN.data
+
+        authorList = ''
+        for author in form.author.data:
+            authorID = db.session.query(Author.AuthorID).filter(
+                Author.Name == author).all()
+
+            if authorID:
+                authorList = authorList + str(authorID[0][0]) + ','
+            else:
+                # Add new author
+                author = Author(Name=author)
+                db.session.add(author)
+                db.session.commit()
+                authorList = authorList + str(author.getAuthorID()) + ','
+
+        book.GenreID = form.genre.data
+        book.PublicationYear = form.publicationYear.data
+        book.Price = form.price.data
+        book.AvgRating = form.avgRating.data
+        book.Quantity = form.quantity.data
+        book.ImgUrl = form.imgUrl.data
+        book.AuthorsID = authorList[:-1]
+
+        db.session.commit()
+        flash('Book is edited!!!', 'info')
+        return redirect(url_for('admin.book_management'))
+
+    elif request.method == 'GET':
+        form.title.data = book.Title
+        form.ISBN.data = book.ISBN
+        form.author.data = book.AuthorsID
+        form.genre.data = book.GenreID
+        form.publicationYear.data = book.PublicationYear
+        form.imgUrl.data = book.ImgUrl
+        form.price.data = book.Price
+        form.avgRating.data = book.AvgRating
+        form.quantity.data = book.Quantity
+
+    img_url = book.ImgUrl
+
+    return render_template('admin/edit_book.html', form=form, ImgUrl=img_url, selected_author=book.AuthorsID)
+
+
+@admin.route("/admin_dashboard/addnewauthor", methods=['GET', 'POST'])
+@admin_login_required
+def add_author():
+
+    form = AddAuthorForm()
+
+    if form.validate_on_submit():
+        author = Author(Name=form.author_name.data)
+
+        if author:
+            db.session.add(author)
+            db.session.commit()
+            flash('New author is added!!!', 'info')
+
+            return redirect(url_for('admin.book_management'))
+
+    return render_template('admin/addauthor.html', form=form)
+
+
+@admin.route("/admin_dashboard/addnewgenre", methods=['GET', 'POST'])
+@admin_login_required
+def add_genre():
+
+    form = AddGenreForm()
+
+    if form.validate_on_submit():
+        genre = Genre(Name=form.genre_name.data)
+
+        if genre:
+            db.session.add(genre)
+            db.session.commit()
+            flash('New genre is added!!!', 'info')
+
+            return redirect(url_for('admin.book_management'))
+
+    return render_template('admin/addgenre.html', form=form)
+
+
+@admin.route("/admin_dashboard/genre_list", methods=['GET'])
+@admin_login_required
+def genre_list():
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+
+    items = db.session.query(Genre.GenreID, Genre.Name).paginate(
+        page=page, per_page=per_page)
+
+    return render_template('admin/genre_list.html', items=items)
+
+
+@admin.route("/admin_dashboard/genre_searching", methods=['GET', 'POST'])
+@admin_login_required
+def genre_searching():
+    value_search = request.form.get('input-search-genre')
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 5
+
+    if not value_search:
+        value_search = request.args.get('value_search')
+
+    if value_search:
+        items = db.session.query(Genre.GenreID).filter(
+            Genre.Name.contains(value_search)).first()
+
+        if items is None:
+            items = []
+            return render_template('admin/genre_list_without_pages.html', items=items, value_search=value_search)
+        else:
+            items = db.session.query(Genre.GenreID, Genre.Name).filter(
+                Genre.Name.contains(value_search)).paginate(page=page, per_page=per_page)
+            return render_template('admin/genre_list.html', items=items, value_search=value_search)
+
+    else:
+        flash('Input search is empty!', 'danger')
+        return redirect(url_for('admin.genre_list'))
+
+
+@admin.route("/admin_dashboard/author_list", methods=['GET'])
+@admin_login_required
+def author_list():
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+
+    items = db.session.query(Author.AuthorID, Author.Name).paginate(
+        page=page, per_page=per_page)
+
+    return render_template('admin/author_list.html', items=items)
+
+
+@admin.route("/admin_dashboard/author_searching", methods=['GET', 'POST'])
+@admin_login_required
+def author_searching():
+    value_search = request.form.get('input-search-author')
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 5
+
+    if not value_search:
+        value_search = request.args.get('value_search')
+
+    if value_search:
+        items = db.session.query(Author.AuthorID).filter(
+            Author.Name.contains(value_search)).first()
+
+        if items is None:
+            items = []
+            return render_template('admin/author_list_without_pages.html', items=items, value_search=value_search)
+        else:
+            items = db.session.query(Author.AuthorID, Author.Name).filter(
+                Author.Name.contains(value_search)).paginate(page=page, per_page=per_page)
+            return render_template('admin/author_list.html', items=items, value_search=value_search)
+
+    else:
+        flash('Input search is empty!', 'danger')
+        return redirect(url_for('admin.author_list'))

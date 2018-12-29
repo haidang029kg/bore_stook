@@ -470,23 +470,46 @@ function ajax_sending_order(payment_index) {
 
 	temp_order_detail = JSON.stringify(temp_order_detail);
 
-	temp_order['Detail'] = temp_order_detail;
 
-	$.ajax({
+	$.ajax({ // check quantity
 		data: {
-			order: JSON.stringify(temp_order)
+			order_detail: temp_order_detail
 		},
 		type: 'POST',
 		dataType: 'json',
-		url: '/create_order',
-		success: function (result) {
-			clearCart();
-			window.location.href = "/home";
+		url: '/check_quantity',
+		success: function (res) {
+
+			if (res.status === 'done') {
+
+				temp_order['Detail'] = temp_order_detail;
+
+				$.ajax({ // create order
+					data: {
+						order: JSON.stringify(temp_order)
+					},
+					type: 'POST',
+					dataType: 'json',
+					url: '/create_order',
+					success: function (result) {
+						clearCart();
+						window.location.href = "/home";
+					},
+					error: function () {
+						alert('error');
+					}
+				});
+			}
+			else {
+				alert('het hang roi');
+			}
 		},
 		error: function () {
 			alert('error');
 		}
-	});
+	})
+
+
 };
 
 function payment_method_check() {
@@ -645,20 +668,20 @@ $(document).ready(function () {
 			var radio_value_paid = $("input[name=is_paid]:checked").val();
 
 			$.ajax({
-				data : {
-					radio_value_status : radio_value_status,
-					radio_value_paid : radio_value_paid,
-					order_id : click_id
+				data: {
+					radio_value_status: radio_value_status,
+					radio_value_paid: radio_value_paid,
+					order_id: click_id
 				},
-				type : 'GET',
-				dataType : 'json',
-				url : '/admin_change_order_status',
-				success : function (result) {
+				type: 'GET',
+				dataType: 'json',
+				url: '/admin_change_order_status',
+				success: function (result) {
 					if (result.status === 'done') {
 						location.reload();
 					}
 				},
-				error : function (result) {
+				error: function (result) {
 					alert('Oops! Something went wrong!!!');
 				}
 			})
@@ -668,23 +691,23 @@ $(document).ready(function () {
 
 // ----------------------------------------------------------btn admin reset default password for user
 $(document).ready(function set_default_pass() {
-	$('.btn-set-password').on('click', function (){
+	$('.btn-set-password').on('click', function () {
 		click_id = $(this).parents('tr').attr('data-user-id');
 
 		$.ajax({
-			data : {
-				user_id : click_id
+			data: {
+				user_id: click_id
 			},
-			type : 'GET',
-			dataType : 'json',
-			url : '/admin_dashboard_reset_user',
-			success : function (result) {
+			type: 'GET',
+			dataType: 'json',
+			url: '/admin_dashboard_reset_user',
+			success: function (result) {
 				if (result.status === 'done') {
 					alert("Reset customer's password successfully!!!");
 					location.reload();
 				}
 			},
-			error : function (result) {
+			error: function (result) {
 				alert('Oops! Something went wrong!!!');
 			}
 		})
@@ -692,22 +715,22 @@ $(document).ready(function set_default_pass() {
 })
 //------------------------------------------------------------btn admin delete book
 $(document).ready(function delete_book() {
-	$('.btn-admin-book-delete').on('click', function (){
+	$('.btn-admin-book-delete').on('click', function () {
 		bookid = $(this).parents('tr').attr('data-book-id');
-		
+
 		$('.yes-delete-book').on('click', function () {
 			$.ajax({
-				data : {
-					book_id : bookid
+				data: {
+					book_id: bookid
 				},
-				type : 'GET',
-				dataType : 'json',
-				url : '/admin_dashboard/delete_book',
-				success : function (result) {
+				type: 'GET',
+				dataType: 'json',
+				url: '/admin_dashboard/delete_book',
+				success: function (result) {
 					alert(result.status);
 					location.reload();
 				},
-				error : function () {
+				error: function () {
 					alert("Oops! Something went wrong!!!");
 				}
 			})

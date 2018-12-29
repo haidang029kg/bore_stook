@@ -64,6 +64,18 @@
                         Book Management
                     </a>
                 </div>
+                <div class="menu-item" id="addauthor">
+                    <a href="/admin_dashboard/addnewauthor">
+                        <i class="fas fa-user-edit"></i>
+                        Add Author
+                    </a>
+                </div>
+                <div class="menu-item" id="addgenre">
+                    <a href="/admin_dashboard/addnewgenre">
+                        <i class="fas fa-layer-group"></i>
+                        Add Genre
+                    </a>
+                </div>
                 <div class="menu-item">
                     <a href="/logout">
                         <i class="fas fa-power-off"></i>
@@ -96,6 +108,12 @@
             $('#user').addClass('active');
         if (window.location.href.indexOf("/book_management") > -1)
             $('#book').addClass('active');
+        if (window.location.href.indexOf("/addbook") > -1)
+            $('#addbook').addClass('active');
+        if (window.location.href.indexOf("/addnewauthor") > -1)
+            $('#addauthor').addClass('active');
+        if (window.location.href.indexOf("/addnewgenre") > -1)
+            $('#addgenre').addClass('active');
     </script>
 </body>
 

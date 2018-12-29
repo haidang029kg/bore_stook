@@ -200,6 +200,20 @@ def account():
     return render_template('account.html', form=form, title='Account', image_file=image_file)
 
 
+@user.route("/check_quantity", methods = ['POST'])
+def check_quantity():
+    ordered_detail = request.form.get('order_detail')
+
+    ordered_detail = json.loads(ordered_detail)
+
+    print(ordered_detail)
+
+    for i in ordered_detail:
+        print(i)
+
+    return jsonify({'status' : 'error'})
+
+
 @user.route("/create_order", methods=['POST'])
 @login_required
 def create_order():
@@ -242,6 +256,7 @@ def create_order():
 
             flash('Ordered successfully!!!', 'info')
 
+    else:
         flash('Your cart is empty!!!', 'danger')
 
     return jsonify({'success': 'done!'})

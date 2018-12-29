@@ -1,0 +1,37 @@
+{% extends 'admin/layout.html' %}
+{% block body %}
+<div class="row" style="margin-top : 50px;">
+    <div class="col-sm-4">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <h3 class="mb-4 title">Add New Genre</h3>
+                <hr>
+                <div class="form-group">
+                    {{ form.genre_name.label(class="form-control-label") }}
+                    {% if form.genre_name.errors %}
+                    {{ form.genre_name(class="form-control form-control-lg is-invalid ") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.genre_name.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor%}
+                    </div>
+                    {% else %}
+                    {{ form.genre_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class ="btn btn-outline-info") }}
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="col-sm-3">
+            <button type="button" class="btn btn-outline-info">
+                <a href="/admin_dashboard/genre_list">
+                        <i class="fas fa-layer-group"></i>
+                    Genre List
+                </a></button>
+        </div>
+</div>
+{% endblock %}
