@@ -471,45 +471,30 @@ function ajax_sending_order(payment_index) {
 	temp_order_detail = JSON.stringify(temp_order_detail);
 
 
-	$.ajax({ // check quantity
+	temp_order['Detail'] = temp_order_detail;
+
+	$.ajax({ // create order
 		data: {
-			order_detail: temp_order_detail
+			order: JSON.stringify(temp_order)
 		},
 		type: 'POST',
 		dataType: 'json',
-		url: '/check_quantity',
-		success: function (res) {
-
-			if (res.status === 'done') {
-
-				temp_order['Detail'] = temp_order_detail;
-
-				$.ajax({ // create order
-					data: {
-						order: JSON.stringify(temp_order)
-					},
-					type: 'POST',
-					dataType: 'json',
-					url: '/create_order',
-					success: function (result) {
-						clearCart();
-						window.location.href = "/home";
-					},
-					error: function () {
-						alert('error');
-					}
-				});
+		url: '/create_order',
+		success: function (result) {
+			if (result.status == 'out_quantity') {
+				var notification_string = 'We are so sorry!!! The quantities of items in STOCK(' + result.detail + ') be not enough for your order.'
+				window.location.href = "/cart";
+				window.alert(notification_string);
 			}
 			else {
-				alert('het hang roi');
+				clearCart();
+				window.location.href = "/home";
 			}
 		},
 		error: function () {
 			alert('error');
 		}
-	})
-
-
+	});
 };
 
 function payment_method_check() {

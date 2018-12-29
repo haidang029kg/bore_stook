@@ -88,9 +88,7 @@ def login():
 
 @user.route("/logout")
 def logout():
-    print(current_user.is_authenticated)
     logout_user()
-    print(current_user.is_authenticated)
     return redirect(url_for('main.home'))
 
 
@@ -200,19 +198,6 @@ def account():
     return render_template('account.html', form=form, title='Account', image_file=image_file)
 
 
-@user.route("/check_quantity", methods = ['POST'])
-def check_quantity():
-    ordered_detail = request.form.get('order_detail')
-
-    ordered_detail = json.loads(ordered_detail)
-
-    print(ordered_detail)
-
-    for i in ordered_detail:
-        print(i)
-
-    return jsonify({'status' : 'error'})
-
 
 @user.route("/create_order", methods=['POST'])
 @login_required
@@ -223,6 +208,25 @@ def create_order():
     order_detail = order['Detail']
 
     order_detail = json.loads(order_detail)
+
+    #check book quantity
+    book_out_quantity = []
+    for i in order_detail:
+        book_id = i['BookID']
+        book_quantity_order = i['Quantity']
+
+        book = db.session.query(Book.Quantity, Book.Title).filter(Book.BookID == book_id).first()
+        book_title = book[1]
+        book_quantity_max = book[0]
+
+        if int(book_quantity_order) > int(book_quantity_max):
+            book_out_quantity.append(book_title)
+
+    if len(book_out_quantity) > 0:
+        return jsonify({'status':'out_quantity',
+                        'detail' : book_out_quantity})
+
+
 
     order_id = generate_id('order')
     user_id = current_user.get_id()
