@@ -1,7 +1,8 @@
 from flask import render_template, request, Blueprint, jsonify, json, flash, redirect, url_for
-from Book_Flask.models import Book, Author, Genre, Orders, OrderDetails, generate_id
+from Book_Flask.models import Book, Author, Genre, Orders, OrderDetails, generate_id, Rules
 from Book_Flask import db
 from flask_login import login_required
+from Book_Flask.main.utilities import *
 
 main = Blueprint('main', __name__)
 
@@ -18,8 +19,6 @@ def home():
         Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
     newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
         Book.BookID.desc()).limit(10).all()
-
-    
 
     return render_template('home.html', title='Home page', items=items, genre_items=genre_items, newly_items=newly_items)
 
@@ -39,8 +38,6 @@ def home_author(authorid):
         Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
     newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
         Book.BookID.desc()).limit(10).all()
-
-    
 
     flash(str(count_result) + ' results for ' + author_name, 'info')
 
@@ -65,8 +62,6 @@ def home_genre(genreid):
     newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
         Book.BookID.desc()).limit(10).all()
 
-    
-
     flash(str(count_result) + ' results for ' + genre_name, 'info')
 
     return render_template('home.html', title='Filter by genre', items=items, genreid=genreid, genre_items=genre_items, newly_items=newly_items, task_name='Search Result For Genre: ' + genre_name)
@@ -84,8 +79,6 @@ def book_detail():
         str(book_temp.GenreID)
     genre_name = db.session.execute(string_temp).first()[0]
 
-    
-
     if book_temp:
         return jsonify({'BookID': book_temp.BookID,
                         'Title': book_temp.Title,
@@ -102,7 +95,7 @@ def book_detail():
     return jsonify({'error': 'error!'})
 
 
-@main.route("/random_book_by_genre", methods=['GET'])
+@main.route("/related_book_by_genre", methods=['GET'])
 def random_book_by_genre():
 
     genre_id = request.args.get('genre_id')
@@ -114,12 +107,39 @@ def random_book_by_genre():
         items = db.session.execute(string_sql).fetchall()
 
         items = json.dumps([dict(i) for i in items])
-        return jsonify({ 
-            'items' : items
+        return jsonify({
+            'items': items
         })
     return jsonify({
-        'error' : 'error'
+        'error': 'error'
     })
+
+
+@main.route("/books_also_be_bought", methods=['GET'])
+def books_also_be_bouth():
+
+    book_id = request.args.get('book_id')
+
+    items = db.session.query(Rules.Consequents).filter(
+        Rules.Antecendents == book_id).limit(6).all()
+
+    books_id_also_be_bought = []
+
+    for i in items:
+        books_id_also_be_bought.append(i[0])
+
+    items = []
+    for i in books_id_also_be_bought:
+        item = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(
+            Book.BookID == i).first()
+        items.append(item)
+
+    if len(items) > 0:
+        items = json.dumps(items)
+        return jsonify({'items': items})
+
+    else:
+        return jsonify({'status': 'not_available'})
 
 
 @main.route("/list_authors", methods=['POST'])
@@ -135,8 +155,6 @@ def list_authors():
         string_temp = 'select Name from author where AuthorID = ' + str(i)
         lis_names.append(db.session.execute(string_temp).first()[0])
 
-    
-
     dict_authors = dict(zip(lis_ids, lis_names))
 
     if dict_authors:
@@ -148,6 +166,66 @@ def list_authors():
 @main.route("/cart")
 def cart():
     return render_template('cart.html')
+
+
+@main.route("/loading_recommendation", methods=['POST'])
+def loading_recommendation():
+    cart = request.form.get('cart_data')
+    cart = json.loads(cart)
+
+    book_ids_cart = []
+    [book_ids_cart.append(x['bookid']) for x in cart]
+
+    book_ids_rule = []
+    items_rule = db.session.query(Rules.Antecendents).all()
+
+    for i in items_rule:
+        ids = i[0].split(',')
+        ids = set(ids)
+        book_ids_rule.append(ids)
+
+    book_ids_cart_combination = making_combination(book_ids_cart)
+
+    result = making_recommendation(book_ids_cart_combination, book_ids_rule)
+
+    if len(result) > 0:
+
+        book_ids_for_recommendation = []
+        book_ids_for_recommendation_less_priority = []
+        print('recommend:----------------------------------')
+        for i in result:
+            temp = db.session.query(Rules.Consequents).filter(
+                Rules.Antecendents == i).first()
+            if temp:
+                if temp[0] not in book_ids_for_recommendation:
+                    book_ids_for_recommendation.append(temp[0])
+            else:
+                string_sql = 'select Consequents from rules where FIND_IN_SET(' + str(
+                    i) + ', Antecendents);'
+                items_less_priority = db.session.execute(string_sql).fetchall()
+                if items_less_priority:
+                    for i in items_less_priority:
+                        if i[0] not in book_ids_for_recommendation_less_priority:
+                            book_ids_for_recommendation_less_priority.append(
+                                i[0])
+
+        for i in book_ids_for_recommendation_less_priority:
+            if i not in book_ids_for_recommendation:
+                book_ids_for_recommendation.append(i)
+
+        final_result_items = []
+        for i in book_ids_for_recommendation:
+            item = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(
+                Book.BookID == i).first()
+            if item:
+                final_result_items.append(item)
+
+        final_result_items = json.dumps(final_result_items)
+        print(final_result_items)
+        return jsonify({'items': final_result_items})
+
+    else:
+        return jsonify({'status': 'not_available'})
 
 
 @main.route("/checkout")
@@ -230,7 +308,6 @@ def searching():
         newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
             Book.BookID.desc()).limit(10).all()
 
-        
         flash(str(counters) + ' results for ' + value_search_adv, 'info')
         return render_template('home.html', items=items, value_search=value_search_adv, genreid=genreid, title='Searching', genre_items=genre_items, newly_items=newly_items, task_name='Search Result For ' + task_name)
 

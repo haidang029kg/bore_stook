@@ -248,7 +248,7 @@ def user_management():
     items = db.session.query(User.UserID, User.Email, User.FirstName,
                              User.LastName, User.Phone).filter(User.RoleAdmin == False).paginate(page=page, per_page=per_page)
 
-    count = db.session.query(User.UserID).count()
+    count = db.session.query(User.UserID).filter(User.RoleAdmin == False).count()
 
     return render_template('admin/user_management.html', items=items, count=count)
 

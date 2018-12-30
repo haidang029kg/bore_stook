@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% block body %}
+<button id="sticky-cart" class="btn" onclick="window.location.href='/cart'"><img style="width: 120px;height: 70px;" src="/static/image/logo/cart.png"></button>
 <div class="cart-container div-center">
     <table id="cart" class="table table-hover table-condensed">
         <!--header of table-->
@@ -31,4 +32,10 @@
         </tfoot>
     </table>
 </div>
+<div class="carousel-container text-center" style="float : None;">
+    <hr>
+    <div class="also-buy-carousel-cart">
+    </div>
+</div>
+{% include 'includes/_ajax_book_detail.html' %}
 {% endblock %}

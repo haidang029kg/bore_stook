@@ -102,6 +102,7 @@ $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 				type: 'POST',
 				dataType: 'json',
 				url: '/list_authors',
+				async:false,
 				success: function (result_2) {
 					$('#tb-author ul').remove();
 					$('#tb-author').prepend('<ul></ul>');
@@ -124,7 +125,8 @@ $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 				},
 				type: 'GET',
 				dataType: 'json',
-				url: 'random_book_by_genre',
+				url: '/related_book_by_genre',
+				async:false,
 				success: function (result_3) {
 					var items = JSON.parse(result_3.items);
 					var slideIndex = items.length;
@@ -139,6 +141,36 @@ $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 				},
 				error: function () {
 					$('.related-carousel').html('Oops! Something went wrong!!!');
+				}
+			});
+			$.ajax({ // get books also be bought
+				data: {
+					book_id: clicked
+				},
+				type: 'GET',
+				dataType: 'json',
+				url: '/books_also_be_bought',
+				async:false,
+				success: function (result_3) {
+					if (result_3.status == 'not_available') {
+						$('.also-buy-carousel').html('Oops! Not available!!!');
+					}
+					else {
+						var items = JSON.parse(result_3.items);
+						var slideIndex = items.length;
+						//$(".also-buy-carousel").not('.slick-initialized').slick();
+						while (slideIndex !== 0) {
+							$('.also-buy-carousel').slick('slickRemove', slideIndex - 1);
+							slideIndex--;
+						}
+						for (var i = 0; i < items.length; i++) {
+							slideIndex++;
+							$('.also-buy-carousel').slick('slickAdd', "<div><div class='card' data-id=" + items[i].BookID + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i].ImgUrl + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i].Title + "</h5><h4 class='card-text'>" + items[i].Price + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
+						}
+					}
+				},
+				error: function () {
+					$('.also-buy-carousel').html('Oops! Something went wrong!!!');
 				}
 			});
 		},
@@ -256,25 +288,24 @@ function totalCart() {
 	return totalCost;
 };
 
-$(document).ready(function addingbookfromhome() {
-	$('.adding-cart').on('click', function (e) {
-		e.preventDefault();
+$(document).on('click', '.adding-cart', function addingbookfromhome(e) {
 
-		var bookid = $(this).parents('.card').attr('data-id');
-		var title = $(this).closest('.card').find('.card-title').text();
-		var count = 1;
-		var price = $(this).closest('.card').find('.card-text').text();
-		var image = $(this).closest('.card').find('img').attr('src');
+	e.preventDefault();
 
-		price = Number(price.substr(0, price.length - 2));
+	var bookid = $(this).parents('.card').attr('data-id');
+	var title = $(this).closest('.card').find('.card-title').text();
+	var count = 1;
+	var price = $(this).closest('.card').find('.card-text').text();
+	var image = $(this).closest('.card').find('img').attr('src');
 
-		addItemToCart(bookid, title, count, price, image);
+	price = Number(price.substr(0, price.length - 2));
 
-		$(this).text('Added');
-		$(this).css('background-color', 'yellow');
+	addItemToCart(bookid, title, count, price, image);
 
-		cart_blink();
-	});
+	$(this).text('Added');
+	$(this).css('background-color', 'yellow');
+
+	cart_blink();
 });
 
 $(document).ready(function addboookfromajax() {
@@ -381,6 +412,40 @@ $(document).ready(function loading_checkout() {
 	$maxMar = $('.col-50').height() - $('.bill').height() - 35;
 });
 
+//--------------------------------------------------- recommendation in cart
+$('.also-buy-carousel-cart').ready(function loading_recommendation() {
+	$.ajax({
+		data: {
+			cart_data: JSON.stringify(cart)
+		},
+		type: 'POST',
+		dataType: 'json',
+		url: '/loading_recommendation',
+		async : false,
+		success: function (result_3) {
+			if (result_3.status == 'not_available') {
+				$('.also-buy-carousel-cart').html('Oops! Not available!!!');
+			}
+			else {
+				var items = JSON.parse(result_3.items);
+				console.log(items)
+				var slideIndex = items.length;
+				//$(".also-buy-carousel").not('.slick-initialized').slick();
+				while (slideIndex !== 0) {
+					$('.also-buy-carousel-cart').slick('slickRemove', slideIndex - 1);
+					slideIndex--;
+				}
+				for (var i = 0; i < items.length; i++) {
+					slideIndex++;
+					$('.also-buy-carousel-cart').slick('slickAdd', "<div><div class='card' data-id=" + items[i].BookID + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i].ImgUrl + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i].Title + "</h5><h4 class='card-text'>" + items[i].Price + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
+				}
+			}
+		},
+		error: function () {
+			$('.also-buy-carousel-cart').html('Oops! Something went wrong!!!');
+		}
+	})
+})
 
 
 
@@ -523,10 +588,8 @@ function payment_method_check() {
 };
 
 $(document).ready(function finish_checkout() {
-	$('#finish-checkout').on('click', function (e) {
+	$('#finish-checkout').one('click', function (e) {
 		e.preventDefault();
-
-		$('#finish-checkout').unbind();
 
 		if (bill_form_check()) {
 			payment_method_check();
@@ -555,7 +618,16 @@ $(document).ready(function () {
 		lazyLoad: 'progressive',
 		autoplaySpeed: 3000,
 	});
-	$('#also-buy-carousel').slick({
+	$('.also-buy-carousel').slick({
+		slidesToShow: 3,
+		slidesToScroll: 2,
+		prevArrow: '<button type="button" class="slick-prev" style="left: -10px;">Previous</button>',
+		nextArrow: '<button type="button" class="slick-next" style="right: 0px;">Next</button>',
+		autoplay: true,
+		lazyLoad: 'progressive',
+		autoplaySpeed: 3000,
+	});
+	$('.also-buy-carousel-cart').slick({
 		slidesToShow: 3,
 		slidesToScroll: 2,
 		prevArrow: '<button type="button" class="slick-prev" style="left: -10px;">Previous</button>',
