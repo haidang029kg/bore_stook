@@ -49,13 +49,16 @@ def home_genre(genreid):
     page = request.args.get('page', 1, type=int)
     per_page = 20
 
-    items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter_by(
-        GenreID=genreid).order_by(Book.Title.asc()).paginate(page=page, per_page=per_page)
-
     genre_name = db.session.query(Genre.Name).filter_by(
         GenreID=genreid).first()[0]
     count_result = db.session.query(
         Book.BookID).filter_by(GenreID=genreid).count()
+
+    if count_result == 0:
+        items = []
+    else:
+        items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter_by(
+            GenreID=genreid).order_by(Book.Title.asc()).paginate(page=page, per_page=per_page)
 
     genre_items = db.session.query(
         Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
@@ -63,6 +66,9 @@ def home_genre(genreid):
         Book.BookID.desc()).limit(10).all()
 
     flash(str(count_result) + ' results for ' + genre_name, 'info')
+
+    if items is None:
+        items = []
 
     return render_template('home.html', title='Filter by genre', items=items, genreid=genreid, genre_items=genre_items, newly_items=newly_items, task_name='Search Result For Genre: ' + genre_name)
 
@@ -192,7 +198,6 @@ def loading_recommendation():
 
         book_ids_for_recommendation = []
         book_ids_for_recommendation_less_priority = []
-        print('recommend:----------------------------------')
         for i in result:
             temp = db.session.query(Rules.Consequents).filter(
                 Rules.Antecendents == i).first()
@@ -200,14 +205,16 @@ def loading_recommendation():
                 if temp[0] not in book_ids_for_recommendation:
                     book_ids_for_recommendation.append(temp[0])
             else:
-                string_sql = 'select Consequents from rules where FIND_IN_SET(' + str(
-                    i) + ', Antecendents);'
-                items_less_priority = db.session.execute(string_sql).fetchall()
-                if items_less_priority:
-                    for i in items_less_priority:
-                        if i[0] not in book_ids_for_recommendation_less_priority:
-                            book_ids_for_recommendation_less_priority.append(
-                                i[0])
+                if ',' not in str(i):
+                    string_sql = 'select Consequents from rules where FIND_IN_SET(' + str(
+                        i) + ', Antecendents);'
+                    items_less_priority = db.session.execute(
+                        string_sql).fetchall()
+                    if items_less_priority:
+                        for i in items_less_priority:
+                            if i[0] not in book_ids_for_recommendation_less_priority:
+                                book_ids_for_recommendation_less_priority.append(
+                                    i[0])
 
         for i in book_ids_for_recommendation_less_priority:
             if i not in book_ids_for_recommendation:
@@ -221,7 +228,6 @@ def loading_recommendation():
                 final_result_items.append(item)
 
         final_result_items = json.dumps(final_result_items)
-        print(final_result_items)
         return jsonify({'items': final_result_items})
 
     else:

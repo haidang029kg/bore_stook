@@ -436,7 +436,7 @@ def add_author():
     form = AddAuthorForm()
 
     if form.validate_on_submit():
-        author = Author(Name=form.author_name.data)
+        author = Author(Name=form.name.data)
 
         if author:
             db.session.add(author)
@@ -455,7 +455,7 @@ def add_genre():
     form = AddGenreForm()
 
     if form.validate_on_submit():
-        genre = Genre(Name=form.genre_name.data)
+        genre = Genre(Name=form.name.data)
 
         if genre:
             db.session.add(genre)

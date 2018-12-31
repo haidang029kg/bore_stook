@@ -24,17 +24,9 @@ def making_recommendation(cart, rule):
 
     res_2 = []  # remove the redundancy to fit the database
 
-    if len(res) < 10: # just get first 10 rules
+    if len(res) > 0:
         for i in res:
             ex = str(i)
-            ex = ex.strip('{/}')
-            ex = ex.replace(' ', '')
-            ex = ex.replace("'", '')
-            res_2.append(ex)
-    else:
-        res = res[:10]
-        for i in range(len(res)):
-            ex = str(res[i])
             ex = ex.strip('{/}')
             ex = ex.replace(' ', '')
             ex = ex.replace("'", '')

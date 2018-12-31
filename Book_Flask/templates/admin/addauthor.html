@@ -8,16 +8,16 @@
                 <h3 class="mb-4 title">Add New Author</h3>
                 <hr>
                 <div class="form-group">
-                    {{ form.author_name.label(class="form-control-label") }}
-                    {% if form.author_name.errors %}
-                    {{ form.author_name(class="form-control form-control-lg is-invalid ") }}
+                    {{ form.name.label(class="form-control-label") }}
+                    {% if form.name.errors %}
+                    {{ form.name(class="form-control form-control-lg is-invalid ") }}
                     <div class="invalid-feedback">
-                        {% for error in form.author_name.errors %}
+                        {% for error in form.name.errors %}
                         <span>{{ error }}</span>
                         {% endfor%}
                     </div>
                     {% else %}
-                    {{ form.author_name(class="form-control form-control-lg") }}
+                    {{ form.name(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
