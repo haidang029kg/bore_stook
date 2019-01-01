@@ -519,7 +519,7 @@ function payment_method_check() {
 };
 
 $(document).ready(function finish_checkout() {
-	$('#checkout').submit(function (e) {
+	$('#finish-checkout').on('click',function (e) {
 		e.preventDefault();
 
 		if (bill_form_check()) {
