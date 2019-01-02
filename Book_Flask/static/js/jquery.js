@@ -70,10 +70,13 @@ $('.card-title').ready(function resitrct_title_length() {
 });
 
 //----------------------------------------------- modal extra book infor
+$(document).ready(function () {
+	slideInSlick = 0;
+});
 $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 	e.preventDefault();
 	var clicked = $(this).parents('.card').attr('data-id');
-
+	
 	$.ajax({
 		data: {
 			id: clicked
@@ -153,18 +156,23 @@ $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 				async: false,
 				success: function (result_3) {
 					if (result_3.status == 'not_available') {
-						$('.also-buy-carousel').html('Oops! Not available!!!');
+						while (slideInSlick !== 0) {
+							$('.also-buy-carousel').slick('slickRemove', slideInSlick - 1);
+							slideInSlick--;
+						}
+						$('.test').remove();
+						$('.also-buy-carousel').append('<span class="test">Oops! Not available!!!</span>');
 					}
 					else {
+						$('.test').remove();
 						var items = JSON.parse(result_3.items);
-						var slideIndex = items.length;
 						//$(".also-buy-carousel").not('.slick-initialized').slick();
-						while (slideIndex !== 0) {
-							$('.also-buy-carousel').slick('slickRemove', slideIndex - 1);
-							slideIndex--;
+						while (slideInSlick !== 0) {
+							$('.also-buy-carousel').slick('slickRemove', slideInSlick - 1);
+							slideInSlick--;
 						}
 						for (var i = 0; i < items.length; i++) {
-							slideIndex++;
+							slideInSlick++;
 							$('.also-buy-carousel').slick('slickAdd', "<div><div class='card' data-id=" + items[i].BookID + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i].ImgUrl + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i].Title + "</h5><h4 class='card-text'>" + items[i].Price + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
 						}
 					}
@@ -184,7 +192,7 @@ $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 // ------------------------------------------------------ fade out alert ( flash message)
 
 $(document).ready(function () {
-	window.setTimeout("fadeAlert();", 2000); //call fade in 3 seconds
+	window.setTimeout("fadeAlert();", 2000); //call fade in 2 seconds
 });
 
 function fadeAlert() {
@@ -423,13 +431,18 @@ $('.also-buy-carousel-cart').ready(function loading_recommendation() {
 		url: '/loading_recommendation',
 		async: false,
 		success: function (result_3) {
-			if (result_3.status == 'not_available') {
+			if (result_3.status === 'not_available') {
 				$('.also-buy-carousel-cart').html('Oops! Not available!!!');
 			}
 			else {
 				var items = JSON.parse(result_3.items);
 				var slideIndex = items.length;
-				$(".also-buy-carousel-cart").not('.slick-initialized').slick({
+				for (var i = 0; i < items.length; i++) {
+					slideIndex++;
+					// $('.also-buy-carousel-cart').slick('slickAdd', "<div><div class='card' data-id=" + items[i].BookID + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i].ImgUrl + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i].Title + "</h5><h4 class='card-text'>" + items[i].Price + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
+					$('.also-buy-carousel-cart').append("<div><div class='card' data-id=" + items[i].BookID + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i].ImgUrl + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i].Title + "</h5><h4 class='card-text'>" + items[i].Price + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
+				}
+				$(".also-buy-carousel-cart").slick({
 					slidesToShow: 4,
 					slidesToScroll: 2,
 					prevArrow: '<button type="button" class="slick-prev" style="left: -10px;">Previous</button>',
@@ -438,10 +451,6 @@ $('.also-buy-carousel-cart').ready(function loading_recommendation() {
 					lazyLoad: 'progressive',
 					autoplaySpeed: 3000,
 				});
-				for (var i = 0; i < items.length; i++) {
-					slideIndex++;
-					$('.also-buy-carousel-cart').slick('slickAdd', "<div><div class='card' data-id=" + items[i].BookID + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i].ImgUrl + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i].Title + "</h5><h4 class='card-text'>" + items[i].Price + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
-				}
 			}
 		},
 		error: function () {

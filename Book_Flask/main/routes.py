@@ -127,17 +127,29 @@ def books_also_be_bouth():
     book_id = request.args.get('book_id')
 
     items = db.session.query(Rules.Consequents).filter(
-        Rules.Antecendents == book_id).limit(6).all()
+        Rules.Antecendents == book_id).all()
 
-    books_id_also_be_bought = []
+    books_id_also_be_bought = []   
 
     for i in items:
         books_id_also_be_bought.append(i[0])
 
-    items = []
+    items_id = []
     for i in books_id_also_be_bought:
-        item = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(
-            Book.BookID == i).first()
+        if ',' in i:
+            for i2 in i.split(','):
+                if i2 not in items_id:
+                    items_id.append(i2)
+        else:
+            if i not in items_id:
+                items_id.append(i)
+
+    if len(items_id) > 6:
+        items_id = items_id[:6]
+
+    items = []
+    for i in items_id:
+        item = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(Book.BookID == i).first()
         items.append(item)
 
     if len(items) > 0:
@@ -193,6 +205,7 @@ def loading_recommendation():
     book_ids_cart_combination = making_combination(book_ids_cart)
 
     result = making_recommendation(book_ids_cart_combination, book_ids_rule)
+    
 
     if len(result) > 0:
 
@@ -202,7 +215,9 @@ def loading_recommendation():
             temp = db.session.query(Rules.Consequents).filter(
                 Rules.Antecendents == i).first()
             if temp:
-                if temp[0] not in book_ids_for_recommendation:
+                if ',' in temp[0]:
+                    [book_ids_for_recommendation.append(x) for x in temp[0].split(',') if x not in book_ids_for_recommendation]
+                elif temp[0] not in book_ids_for_recommendation:
                     book_ids_for_recommendation.append(temp[0])
             else:
                 if ',' not in str(i):
@@ -212,13 +227,12 @@ def loading_recommendation():
                         string_sql).fetchall()
                     if items_less_priority:
                         for i in items_less_priority:
-                            if i[0] not in book_ids_for_recommendation_less_priority:
-                                book_ids_for_recommendation_less_priority.append(
-                                    i[0])
+                            if ',' in i:
+                                [items_less_priority.append(x) for x in i.split(',') if x not in items_less_priority]
+                            elif i[0] not in book_ids_for_recommendation_less_priority:
+                                book_ids_for_recommendation_less_priority.append(i[0])
 
-        for i in book_ids_for_recommendation_less_priority:
-            if i not in book_ids_for_recommendation:
-                book_ids_for_recommendation.append(i)
+        [book_ids_for_recommendation.append(x) for x in book_ids_for_recommendation_less_priority if x not in book_ids_for_recommendation]
 
         final_result_items = []
         for i in book_ids_for_recommendation:
