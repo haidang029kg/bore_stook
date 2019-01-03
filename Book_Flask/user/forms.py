@@ -75,7 +75,7 @@ class AccountForm(FlaskForm):
     picture = FileField('Profile Picture:',
                         validators=[FileAllowed(['jpg', 'png'])])
 
-    fname = StringField('First Name;',
+    fname = StringField('First Name:',
                         validators=[DataRequired(), Length(min=1, max=30)])
     lname = StringField('Last Name:',
                         validators=[DataRequired(), Length(min=1, max=30)])

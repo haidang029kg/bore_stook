@@ -2,3 +2,7 @@ env/
 *pycache*
 .vscode
 .ipynb_checkpoints
+<<<<<<< HEAD
+=======
+*.pyc
+>>>>>>> master

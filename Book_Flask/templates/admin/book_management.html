@@ -1,0 +1,68 @@
+{% extends 'admin/layout.html' %}
+{% block body %}
+<div class="row">
+    <div class="table-responsive" style="margin : 20px; width : 95%">
+        <h1>Book Management:</h1>
+        {% if value_search %}
+        <h2>searching for: {{ value_search }}</h2>
+        {% endif %}
+        <form class="form-inline my-2 my-lg-0" action="{{ url_for('admin.book_searching') }}" method="POST">
+            <input name="input-search-book" class="form-control mr-sm-2" type="search" placeholder="ISBN or Title..."
+                aria-label="Search">
+            <button class="btn btn-success my-2 my-sm-0 " type="submit">Search / Reload</button>
+        </form>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Cover</th>
+                    <th class="text-center">Book ID</th>
+                    <th class="text-center">ISBN</th>
+                    <th class="text-center">Title</th>
+                    <th class="text-center">Price</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items.items %}
+                <tr data-book-id="{{ item.BookID }}">
+                    <td><img src="{{ item.ImgUrl }}"></td>
+                    <td class="text-center">{{ item.BookID }}</td>
+                    <td class="text-center">{{ item.ISBN }}</td>
+                    <td class="text-center">{{ item.Title }}</td>
+                    <td class="text-center">{{ item.Price }}</td>
+                    <td><a href="/admin_dashboard/edit_book/{{ item.BookID }}" type="button" class="btn btn-warning btn-sm">edit</a></td>
+                    <td><button type="button" class="btn-admin-book-delete btn btn-danger btn-sm" data-toggle="modal"
+                            data-target="#modal-admin-book-delete">delete</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        {% if value_search %}
+        {% include 'admin/_page_num_for_book_searching.html' %}
+        {% else %}
+        {% include 'admin/_page_num_for_book_management.html' %}
+        {% endif %}
+    </div>
+</div>
+<!-- Modal for booik delete-->
+<div class="modal fade" id="modal-admin-book-delete" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">sure?</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning yes-delete-book" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

@@ -1,0 +1,20 @@
+<section id="page-num">
+    <div>
+        {% if value_search %}
+        {% for page_num in items.iter_pages(left_edge = 1, right_edge = 1, left_current = 3, right_current
+        = 3) %}
+        {% if page_num %}
+        {% if items.page == page_num %}
+        <a class="btn btn-info mb-2" href="{{ url_for('admin.ordered_searching', page = page_num, value_search = value_search) }}">{{
+            page_num }}</a>
+        {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('admin.ordered_searching', page = page_num, value_search = value_search) }}">{{
+            page_num }}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+</section>

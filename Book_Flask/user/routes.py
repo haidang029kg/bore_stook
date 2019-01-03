@@ -6,16 +6,12 @@ from Book_Flask.user.utilities import *
 from Book_Flask.user.forms import *
 
 import json
+import datetime
 
 from flask_login import login_user, logout_user, current_user, login_required
 
 
 user = Blueprint('user', __name__)
-
-
-@user.route("/home")
-def home():
-    return render_template('home.html', title='Home')
 
 
 @user.route("/register", methods=['GET', 'POST'])
@@ -142,7 +138,7 @@ def reset_passwd(token):
     return render_template('reset_password.html', title='Reset Password', form=form)
 
 
-@user.route("/change_password", methods=['GET', 'POST'])
+@user.route("/user/change_password", methods=['GET', 'POST'])
 @login_required
 def change_password():
     form = ChangePasswdForm()
@@ -163,7 +159,7 @@ def change_password():
 
         db.session.commit()
 
-        flash('Change password completely!', 'info')
+        flash('Changed password completely!', 'info')
 
         login_form = LoginForm()
         return redirect(url_for('user.login', form=login_form, title='Login'))
@@ -171,7 +167,7 @@ def change_password():
     return render_template('change_password.html', title='Change Password', form=form)
 
 
-@user.route("/account", methods=['GET', 'POST'])
+@user.route("/user/account", methods=['GET', 'POST'])
 @login_required
 def account():
     form = AccountForm()
@@ -201,6 +197,7 @@ def account():
     return render_template('account.html', form=form, title='Account', image_file=current_user.ImgUrl)
 
 
+
 @user.route("/create_order", methods=['POST'])
 @login_required
 def create_order():
@@ -211,6 +208,25 @@ def create_order():
 
     order_detail = json.loads(order_detail)
 
+    #check book quantity
+    book_out_quantity = []
+    for i in order_detail:
+        book_id = i['BookID']
+        book_quantity_order = i['Quantity']
+
+        book = db.session.query(Book.Quantity, Book.Title).filter(Book.BookID == book_id).first()
+        book_title = book[1]
+        book_quantity_max = book[0]
+
+        if int(book_quantity_order) > int(book_quantity_max):
+            book_out_quantity.append(book_title)
+
+    if len(book_out_quantity) > 0:
+        return jsonify({'status':'out_quantity',
+                        'detail' : book_out_quantity})
+
+
+
     order_id = generate_id('order')
     user_id = current_user.get_id()
 
@@ -218,6 +234,7 @@ def create_order():
                         UserID=user_id,
                         Address=order.get('Address'),
                         Phone=order.get('Phone'),
+                        Date=datetime.datetime.now(),
                         TotalPrice=order.get('TotalPrice'),
                         IsPaid=order.get('IsPaid'),
                         Status=order.get('Status'),
@@ -238,22 +255,42 @@ def create_order():
             for i in data_order_details:
                 db.session.add(i)
 
-        db.session.commit()
-        db.session.close()
-        flash('Ordered successfully!!!', 'info')
+            db.session.commit()
+
+            flash('Ordered successfully!!!', 'info')
+
+    else:
+        flash('Your cart is empty!!!', 'danger')
 
     return jsonify({'success': 'done!'})
 
 
-@user.route("/ordered_history")
+@user.route("/user/ordered_history")
 @login_required
 def ordered_history():
 
     page = request.args.get('page', 1, type=int)
     per_page = 5
 
-    items = db.session.query(Orders.OrderID, Orders.Date, Orders.Address, Orders.Phone, Orders.TotalPrice, Ispaid.NamePaid, Paymentmethod.NamePayment, Status.NameStatus).filter(
-        Orders.IsPaid == Ispaid.IsPaidID).filter(Orders.PaymentMethod == Paymentmethod.PaymentMethodID).filter(Orders.Status == Status.StatusID).order_by(Orders.Date.desc()).paginate(page = page, per_page = per_page)
+    id_user = current_user.get_id()
+
+    items = db.session.query(Orders.OrderID, Orders.Date, Orders.Address, Orders.Phone, Orders.TotalPrice, Ispaid.NamePaid, Paymentmethod.NamePayment, Status.NameStatus).filter(Orders.UserID == id_user).filter(
+        Orders.IsPaid == Ispaid.IsPaidID).filter(Orders.PaymentMethod == Paymentmethod.PaymentMethodID).filter(Orders.Status == Status.StatusID).order_by(Orders.Date.desc()).paginate(page=page, per_page=per_page)
 
     return render_template('ordered_history.html', title='Ordered History', items=items)
 
+@user.route("/ordered_detail", methods=['GET'])
+@login_required
+def ordered_detail():
+    ordered_id = request.args.get('ordered_id')
+
+    items = db.session.query(Book.ImgUrl, Book.Title, Book.Price, OrderDetails.Quantity).filter(
+        OrderDetails.OrderID == ordered_id).filter(OrderDetails.OrderID == Orders.OrderID).filter(OrderDetails.BookID == Book.BookID).all()
+    total_price = db.session.query(Orders.TotalPrice).filter(
+        Orders.OrderID == ordered_id).first()[0]
+
+    return jsonify({
+        'ordered_id': ordered_id,
+        'total_price': total_price,
+        'items': items
+    })

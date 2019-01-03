@@ -1,11 +1,14 @@
+<hr>
+{% if task_name %}
+<h1 style="text-align:center">{{ task_name }}</h1>
+{% else %}
+<h1 style="text-align:center">All books</h1>
+{% endif %}
+<hr>
 <div class="contianer">
     <div class="card-columns text-center">
         {% for item in items.items %}
         <div class="card" data-id="{{ item.BookID }}" style="width: 200px;height: 400px;">
-            <!-- <div class="imageWrapper">
-                <img class="card-img-top" src="{{ item.ImgUrl }}" style="height: 240px">
-                <a href="http://google.com" class="cornerLink">Click for more details</a>
-            </div> -->
             <div class="hvrbox">
                 <img src="{{ item.ImgUrl }}" style="height: 240px" class=" card-img-top hvrbox-layer_bottom">
                 <div class="hvrbox-layer_top">
@@ -20,37 +23,15 @@
         </div>
         {% endfor %}
     </div>
-    <section id="page-num">
-        <div>
-            {% if genreid %}
-            {% for page_num in items.iter_pages(left_edge = 1, right_edge = 1, left_current = 3, right_current = 3) %}
-            {% if page_num %}
-            {% if items.page == page_num %}
-            <a class="btn btn-info mb-2" href="{{ url_for('main.home_genre', genreid = genreid, page = page_num) }}">{{
-                page_num }}</a>
-            {% else %}
-            <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home_genre', genreid = genreid, page = page_num) }}">{{
-                page_num }}</a>
-            {% endif %}
-            {% else %}
-            ...
-            {% endif %}
-            {% endfor %}
-            {% else %}
-            {% for page_num in items.iter_pages(left_edge = 1, right_edge = 1, left_current = 3, right_current = 3) %}
-            {% if page_num %}
-            {% if items.page == page_num %}
-            <a class="btn btn-info mb-2" href="{{ url_for('main.home', page = page_num) }}">{{ page_num }}</a>
-            {% else %}
-            <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page = page_num) }}">{{ page_num }}</a>
-            {% endif %}
-            {% else %}
-            ...
-            {% endif %}
-            {% endfor %}
-            {% endif %}
-        </div>
-    </section>
+    {% if genreid %}
+    {% include 'includes/_page_number_for_genre.html' %}
+    {% else %}
+    {% if value_search %}
+    {% include 'includes/_page_number_for_searching.html' %}
+    {% else %}
+    {% include 'includes/_page_number_for_homepage.html' %}
+    {% endif %}
+    {% endif %}
 </div>
 
 {% include 'includes/_ajax_book_detail.html' %}

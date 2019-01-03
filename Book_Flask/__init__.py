@@ -30,10 +30,14 @@ bcrypt = Bcrypt(app)
 mail = Mail(app)
 
 login_user_manager = LoginManager(app)
+login_user_manager.session_protection = "strong"
 login_user_manager.login_view = 'user.login' # route of login
 login_user_manager.login_message_category = 'info' # bootstrap name for messgage
 
 from Book_Flask.main.routes import main
 from Book_Flask.user.routes import user
+from Book_Flask.admin.routes import admin
+
 app.register_blueprint(main)
 app.register_blueprint(user)
+app.register_blueprint(admin)
