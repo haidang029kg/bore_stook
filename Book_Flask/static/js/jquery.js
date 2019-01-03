@@ -122,6 +122,7 @@ $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 					$('#tb-author').text('Oops! Something went wrong!!!');
 				}
 			});
+			$('.recommendation').remove();
 			$.ajax({ // get related books data
 				data: {
 					genre_id: result.GenreID
@@ -132,15 +133,19 @@ $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 				async: false,
 				success: function (result_3) {
 					var items = JSON.parse(result_3.items);
-					var slideIndex = items.length;
-					while (slideIndex !== 0) {
-						$('.related-carousel').slick('slickRemove', slideIndex - 1);
-						slideIndex--;
-					}
+					$('.modal-content').find('.carousel-container').append('<hr class="recommendation"><h2 class="recommendation">Related Books</h2><hr class="recommendation"><div class="recommendation related-carousel"></div></div>');
 					for (var i = 0; i < items.length; i++) {
-						slideIndex++;
-						$('.related-carousel').slick('slickAdd', "<div><div class='card' data-id=" + items[i].BookID + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i].ImgUrl + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i].Title + "</h5><h4 class='card-text'>" + items[i].Price + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
+						$('.related-carousel').append("<div><div class='card' data-id=" + items[i].BookID + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i].ImgUrl + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i].Title + "</h5><h4 class='card-text'>" + items[i].Price + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
 					}
+					$('.related-carousel').slick({
+						slidesToShow: 3,
+						slidesToScroll: 2,
+						prevArrow: '<button type="button" class="slick-prev" style="left: -10px;">Previous</button>',
+						nextArrow: '<button type="button" class="slick-next" style="right: 0px;">Next</button>',
+						autoplay: true,
+						lazyLoad: 'progressive',
+						autoplaySpeed: 3000,
+					});
 				},
 				error: function () {
 					$('.related-carousel').html('Oops! Something went wrong!!!');
@@ -155,26 +160,23 @@ $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 				url: '/books_also_be_bought',
 				async: false,
 				success: function (result_3) {
-					if (result_3.status == 'not_available') {
-						while (slideInSlick !== 0) {
-							$('.also-buy-carousel').slick('slickRemove', slideInSlick - 1);
-							slideInSlick--;
-						}
-						$('.test').remove();
-						$('.also-buy-carousel').append('<span class="test">Oops! Not available!!!</span>');
-					}
-					else {
-						$('.test').remove();
+					
+					if (result_3.status != 'not_available') {
+						$('.modal-content').find('.carousel-container').append('<hr class="recommendation"><h2 class="recommendation">Others also buy</h2><hr class="recommendation"><div class="recommendation also-buy-carousel">');
+						
 						var items = JSON.parse(result_3.items);
-						//$(".also-buy-carousel").not('.slick-initialized').slick();
-						while (slideInSlick !== 0) {
-							$('.also-buy-carousel').slick('slickRemove', slideInSlick - 1);
-							slideInSlick--;
-						}
 						for (var i = 0; i < items.length; i++) {
-							slideInSlick++;
-							$('.also-buy-carousel').slick('slickAdd', "<div><div class='card' data-id=" + items[i].BookID + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i].ImgUrl + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i].Title + "</h5><h4 class='card-text'>" + items[i].Price + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
+							$('.also-buy-carousel').append("<div><div class='card' data-id=" + items[i].BookID + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i].ImgUrl + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i].Title + "</h5><h4 class='card-text'>" + items[i].Price + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
 						}
+						$('.also-buy-carousel').slick({
+							slidesToShow: 3,
+							slidesToScroll: 2,
+							prevArrow: '<button type="button" class="slick-prev" style="left: -10px;">Previous</button>',
+							nextArrow: '<button type="button" class="slick-next" style="right: 0px;">Next</button>',
+							autoplay: true,
+							lazyLoad: 'progressive',
+							autoplaySpeed: 3000,
+						});
 					}
 				},
 				error: function () {
@@ -432,9 +434,10 @@ $('.also-buy-carousel-cart').ready(function loading_recommendation() {
 		async: false,
 		success: function (result_3) {
 			if (result_3.status === 'not_available') {
-				$('.also-buy-carousel-cart').html('Oops! Not available!!!');
+
 			}
 			else {
+				$('.cart-carousel-container').append('<hr><h2>Other users also buy</h2><hr><div style="width:1100px; margin:auto;"><div class="also-buy-carousel-cart"></div></div>');
 				var items = JSON.parse(result_3.items);
 				var slideIndex = items.length;
 				for (var i = 0; i < items.length; i++) {
@@ -445,8 +448,6 @@ $('.also-buy-carousel-cart').ready(function loading_recommendation() {
 				$(".also-buy-carousel-cart").slick({
 					slidesToShow: 4,
 					slidesToScroll: 2,
-					prevArrow: '<button type="button" class="slick-prev" style="left: -10px;">Previous</button>',
-					nextArrow: '<button type="button" class="slick-next" style="right: 0px;">Next</button>',
 					autoplay: true,
 					lazyLoad: 'progressive',
 					autoplaySpeed: 3000,
@@ -630,15 +631,7 @@ $(document).ready(function () {
 		lazyLoad: 'progressive',
 		autoplaySpeed: 3000,
 	});
-	$('.also-buy-carousel').slick({
-		slidesToShow: 3,
-		slidesToScroll: 2,
-		prevArrow: '<button type="button" class="slick-prev" style="left: -10px;">Previous</button>',
-		nextArrow: '<button type="button" class="slick-next" style="right: 0px;">Next</button>',
-		autoplay: true,
-		lazyLoad: 'progressive',
-		autoplaySpeed: 3000,
-	});
+
 });
 
 
