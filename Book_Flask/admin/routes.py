@@ -60,7 +60,7 @@ def order_management():
     per_page = 10
 
     items = db.session.query(Orders.OrderID, Orders.Date, User.Email, User.FirstName, User.LastName, Orders.Address, Orders.Phone, Orders.TotalPrice, Ispaid.NamePaid,
-                             Paymentmethod.NamePayment, Status.NameStatus).join(Ispaid).join(Status).join(Paymentmethod).join(User).order_by(Orders.Date.desc()).paginate(page=page, per_page=per_page)
+                             Paymentmethod.NamePayment, Status.NameStatus).join(Ispaid).join(Status).join(Paymentmethod).join(User).order_by(Orders.Status, Orders.Date.desc()).paginate(page=page, per_page=per_page)
 
     return render_template('admin/order_management.html', items=items, task_name='management')
 

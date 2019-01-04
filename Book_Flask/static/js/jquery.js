@@ -652,8 +652,8 @@ $(document).ready(function more_ordered_detail() {
 				var items = result.items;
 				html_output = '';
 				for (var i = 0; i < items.length; i++) {
-					var sub_total = (Number(items[i].Quantity) * Number(items[i].Price)).toFixed(2);
-					html_output += "<tr><td><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + items[i].ImgUrl + "' class='img-responsive'></div></div></td><td class='text-center'>" + items[i].Title + "</td><td class='text-center'>$" + items[i].Price + "</td><td class='text-center'>" + items[i].Quantity + "</td><td class='text-center'>$" + sub_total + "</td></tr>";
+					var sub_total = (Number(items[i][3]) * Number(items[i][2])).toFixed(2);
+					html_output += "<tr><td><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + items[i][0] + "' class='img-responsive'></div></div></td><td class='text-center'>" + items[i][1] + "</td><td class='text-center'>$" + items[i][2] + "</td><td class='text-center'>" + items[i][3] + "</td><td class='text-center'>$" + sub_total + "</td></tr>";
 				};
 
 				$('#tb-body-ordered-detail').html(html_output);
@@ -688,8 +688,8 @@ $(document).ready(function more_ordered_detail() {
 				var items = result.items;
 				html_output = '';
 				for (var i = 0; i < items.length; i++) {
-					var sub_total = (Number(items[i].Quantity) * Number(items[i].Price)).toFixed(2);
-					html_output += "<tr><td><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + items[i].ImgUrl + "' class='img-responsive'></div></div></td><td class='text-center'>" + items[i].Title + "</td><td class='text-center'>$" + items[i].Price + "</td><td class='text-center'>" + items[i].Quantity + "</td><td class='text-center'>$" + sub_total + "</td></tr>";
+					var sub_total = (Number(items[i][3]) * Number(items[i][2])).toFixed(2);
+					html_output += "<tr><td><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + items[i][0] + "' class='img-responsive'></div></div></td><td class='text-center'>" + items[i][1] + "</td><td class='text-center'>$" + items[i][2] + "</td><td class='text-center'>" + items[i][3] + "</td><td class='text-center'>$" + sub_total + "</td></tr>";
 				};
 
 				$('#tb-body-ordered-detail').html(html_output);

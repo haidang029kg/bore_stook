@@ -5,8 +5,9 @@ from flask_login import LoginManager
 from flask_mail import Mail
 
 import os
-LOCAL_URI = 'mysql+pymysql://flask:Flask_123@127.0.0.1:3306/borestook'
-LIVE_URI = 'mysql+pymysql://flask:Flask_123@localhost/borestook?unix_socket=/cloudsql/final-thesis-100496:asia-east2:borestook'
+
+LOCAL_URI = 'mysql+pymysql://'+ os.environ.get('MYSQL_USER') + ':' + os.environ.get('MYSQL_PASSWORD') + '@' + '127.0.0.1:3306/' + os.environ.get('MYSQL_DB')
+LIVE_URI =  'mysql+pymysql://'+ os.environ.get('MYSQL_USER') + ':' + os.environ.get('MYSQL_PASSWORD') + '@' + os.environ.get('MYSQL_HOST') + '/' + os.environ.get('MYSQL_DB') + '?unix_socket=/cloudsql/' + os.environ.get('CLOUD_SQL_INSTANCES')
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
