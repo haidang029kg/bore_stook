@@ -138,7 +138,13 @@ def saveRules(rules):
         Rules_data.append(Rules(RID=i+1, Antecendents=temp,
                             Consequents=str(rules[i][0][1]).strip('(),'),
                             Confidence=rules[i][1]))
-                            
+
+    try:
+        num = db.session.query(Rules).delete()
+        db.session.commit()
+    except:
+        db.session.rollback()
+        
     db.session.add_all(Rules_data)
     db.session.commit()
     db.session.close()

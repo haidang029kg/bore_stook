@@ -1,0 +1,40 @@
+{% extends 'admin/layout.html' %}
+{% block body %}
+<div class="content-section div-center" style="background-color: rgba(186, 55, 204, 0.5);">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <h3 class="border-bottom mb-4 title">Generating rules</h3>
+            <div class="form-group">
+                {{ form.minsup.label(class="form-control-label") }}
+                {% if form.minsup.errors %}
+                {{ form.minsup(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.minsup.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.minsup(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.minconf.label(class="form-control-label") }}
+                {% if form.minconf.errors %}
+                {{ form.minconf(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.minconf.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.minconf(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-lg btn-outline-danger") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

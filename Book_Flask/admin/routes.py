@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, jsonify, json, redirect, url_for, flash
 from Book_Flask import db, bcrypt
 from Book_Flask.models import User, OrderDetails, Orders, Ispaid, Status, Paymentmethod, Book, Author, admin_login_required, Genre
-from Book_Flask.admin.forms import AddBookForm, AdminLoginForm, EditBookForm, AddAuthorForm, AddGenreForm
+from Book_Flask.admin.forms import AddBookForm, AdminLoginForm, EditBookForm, AddAuthorForm, AddGenreForm, RuleForm
 from flask_login import login_user, logout_user, current_user, login_required
+from Book_Flask.admin.rules import *
 
 
 admin = Blueprint('admin', __name__)
@@ -248,7 +249,8 @@ def user_management():
     items = db.session.query(User.UserID, User.Email, User.FirstName,
                              User.LastName, User.Phone).filter(User.RoleAdmin == False).paginate(page=page, per_page=per_page)
 
-    count = db.session.query(User.UserID).filter(User.RoleAdmin == False).count()
+    count = db.session.query(User.UserID).filter(
+        User.RoleAdmin == False).count()
 
     return render_template('admin/user_management.html', items=items, count=count)
 
@@ -547,3 +549,24 @@ def author_searching():
     else:
         flash('Input search is empty!', 'danger')
         return redirect(url_for('admin.author_list'))
+
+
+@admin.route("/admin_dashboard/generating_rules", methods=['GET', 'POST'])
+@admin_login_required
+def generating_rules():
+
+    form = RuleForm()
+
+    if form.validate_on_submit():
+
+        generating_dummy_data()
+        generating(minsup= form.minsup.data, minconf=form.minconf.data)
+
+        flash('rules are generated!!!', 'info')
+        return redirect(url_for('admin.dashboard'))
+
+    elif request.method == 'GET':
+        form.minsup.data = 0.5
+        form.minconf.data = 0.7
+
+    return render_template("admin/rules.html", form=form)
