@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
@@ -41,3 +41,7 @@ from Book_Flask.admin.routes import admin
 app.register_blueprint(main)
 app.register_blueprint(user)
 app.register_blueprint(admin)
+
+@app.errorhandler(404)
+def page_not_found(e):
+   return redirect(url_for('main.home'))

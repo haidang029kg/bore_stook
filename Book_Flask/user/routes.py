@@ -56,7 +56,7 @@ def register_token(token):
         return redirect(url_for('user.register'))
 
     else:
-        flash('Register completely!!! Now you can login', 'info')
+        flash('Registation completed!!! Now you can login', 'info')
         return redirect(url_for('user.login'))
 
     return redirect(url_for('user.register'))
@@ -76,12 +76,12 @@ def login():
             login_user(user, remember=form.remember.data)
 
             next_page = request.args.get('next')
-            flash('Login successful!', 'success')
+            flash('Login successfully!', 'success')
 
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
 
         else:
-            flash('Login unsucessful! please check username and password', 'danger')
+            flash('Please check username and password', 'danger')
 
     return render_template('login.html', title='Log In', form=form)
 
@@ -95,7 +95,7 @@ def logout():
 @user.route("/request_passwd", methods=['GET', 'POST'])
 def request_passwd():
     if current_user.is_authenticated:
-        flash('you have already logged in!!!', 'info')
+        flash('You have already logged in!!!', 'info')
         return redirect(url_for('main.home'))
 
     form = RequestPasswdForm()
@@ -159,7 +159,7 @@ def change_password():
 
         db.session.commit()
 
-        flash('Changed password completely!', 'info')
+        flash('Your password is changed', 'info')
 
         login_form = LoginForm()
         return redirect(url_for('user.login', form=login_form, title='Login'))

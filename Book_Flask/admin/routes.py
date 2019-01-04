@@ -144,7 +144,7 @@ def change_order_status():
             {Orders.Status: status_id, Orders.IsPaid: paid_id})
         db.session.commit()
 
-        flash("Changing Order's Status Is Done", 'info')
+        flash("Order's Status is changed", 'info')
 
         return jsonify({'status': 'done'})
     return jsonify({'status': 'error'})
@@ -218,7 +218,7 @@ def book_searching():
 
             return render_template('admin/book_management.html', items=items, value_search=value_search)
     else:
-        flash('input search is empty!!!', 'info')
+        flash('Search field is empty!!!', 'info')
         return redirect(url_for('admin.book_management'))
 
 
@@ -233,7 +233,7 @@ def delete_book():
         db.session.delete(book)
         db.session.commit()
 
-        flash('book is deleted', 'info')
+        flash('Book is deleted', 'info')
 
         return jsonify({'status': 'done'})
     return jsonify({'status': 'error'})
@@ -314,7 +314,7 @@ def login():
             login_user(admin, remember=True)
 
             next_page = request.args.get('next')
-            flash('Login successful!', 'success')
+            flash('Login successfully!', 'success')
 
             return redirect(next_page) if next_page else redirect(url_for('admin.dashboard'))
 
