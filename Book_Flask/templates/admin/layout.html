@@ -76,6 +76,12 @@
                         Add Genre
                     </a>
                 </div>
+                <div class="menu-item" id="rule">
+                    <a href="/admin_dashboard/generating_rules">
+                        <i class="fas fa-gem"></i>
+                        Rules
+                    </a>
+                </div>
                 <div class="menu-item">
                     <a href="/logout">
                         <i class="fas fa-power-off"></i>
@@ -114,6 +120,8 @@
             $('#addauthor').addClass('active');
         if (window.location.href.indexOf("/addnewgenre") > -1)
             $('#addgenre').addClass('active');
+        if (window.location.href.indexOf("/generating_rules") > -1)
+            $('#rule').addClass('active');
     </script>
 </body>
 

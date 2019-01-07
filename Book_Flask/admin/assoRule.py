@@ -116,10 +116,28 @@ def getItemSetTransactionList():
 def saveRules(rules):
     db.session.execute('DELETE FROM rules;')
     Rules_data = []
-    for i in range(0,len(rules)):
-        Rules_data.append(Rules(RID = i+1, Antecendents = str(rules[i][0][0]).strip('(),'), 
-    	                    Consequents = str(rules[i][0][1]).strip('(),'),
-    	                    Confidence = rules[i][1]))
+# <<<<<<< HEAD:assoRule.py
+#     for i in range(0,len(rules)):
+#         Rules_data.append(Rules(RID = i+1, Antecendents = str(rules[i][0][0]).strip('(),'), 
+#     	                    Consequents = str(rules[i][0][1]).strip('(),'),
+#     	                    Confidence = rules[i][1]))
+# =======
+    for i in range(0, len(rules)):
+        # modified to fit the database
+        temp = str(rules[i][0][0]).strip('(),')
+        temp = temp.replace(' ', '')
+        #######################################
+        Rules_data.append(Rules(RID=i+1, Antecendents=temp,
+                            Consequents=str(rules[i][0][1]).strip('(),'),
+                            Confidence=rules[i][1]))
+
+    try:
+        num = db.session.query(Rules).delete()
+        db.session.commit()
+    except:
+        db.session.rollback()
+        
+# >>>>>>> master:Book_Flask/admin/assoRule.py
     db.session.add_all(Rules_data)
     db.session.commit()
     db.session.close()

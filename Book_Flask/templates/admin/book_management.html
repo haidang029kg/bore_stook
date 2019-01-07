@@ -32,9 +32,9 @@
                     <td class="text-center">{{ item.ISBN }}</td>
                     <td class="text-center">{{ item.Title }}</td>
                     <td class="text-center">{{ item.Price }}</td>
-                    <td><a href="/admin_dashboard/edit_book/{{ item.BookID }}" type="button" class="btn btn-warning btn-sm">edit</a></td>
+                    <td><a href="/admin_dashboard/edit_book/{{ item.BookID }}" type="button" class="btn btn-warning btn-sm">Edit</a></td>
                     <td><button type="button" class="btn-admin-book-delete btn btn-danger btn-sm" data-toggle="modal"
-                            data-target="#modal-admin-book-delete">delete</button></td>
+                            data-target="#modal-admin-book-delete">Delete</button></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -55,7 +55,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">sure?</h4>
+                <h4 class="modal-title">Are you sure?</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-footer">

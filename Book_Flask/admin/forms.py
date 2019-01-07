@@ -1,9 +1,23 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, SelectMultipleField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, SelectMultipleField, FloatField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, Email
 from Book_Flask import db
 from Book_Flask.models import Author, Genre, Book
 
+
+class RuleForm(FlaskForm):
+    minsup = FloatField('Min Support',
+                        validators=[DataRequired()])
+    minconf = FloatField('Min Confidence',
+                        validators=[DataRequired()])
+    submit = SubmitField('Generate rules')
+
+    def validate_minsup(self, minsup):
+        if float(minsup.data) < 0.0 or float(minsup.data) > 1.00:
+            raise ValidationError('This field must be in [ 0 , 1 ]')
+    def validate_minconf(self, minconf):
+        if float(minconf.data) < 0.0 or float(minconf.data) > 1.00:
+            raise ValidationError('This field must be in [ 0 , 1 ]')
 
 class AdminLoginForm(FlaskForm):
     email = StringField('email:',

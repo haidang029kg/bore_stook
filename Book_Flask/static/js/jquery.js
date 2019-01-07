@@ -807,3 +807,22 @@ function genreFilter() {
 		}
 	};
 };
+
+// Change profile picture
+$(document).ready(function() {
+
+    var readURL = function(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.account-img').attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+	$(".form-control-file").on('change', function(){
+		readURL(this);
+	});
+});

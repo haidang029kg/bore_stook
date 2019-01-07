@@ -76,6 +76,7 @@
         type: 'GET',
         dataType: 'json',
         url: '/top_genre',
+        async: false,
         success: function (result) {
             $.each(result, function (key, value) {
                 genreLabels.push(key);
@@ -91,6 +92,7 @@
         type: 'GET',
         dataType: 'json',
         url: '/sales5days',
+        async: false,
         success: function (result) {
             $.each(result, function (key, value) {
                 salesLabels.push(key);
@@ -103,6 +105,7 @@
 
     function drawSalesChart(labels, data) {
         var salesChartLoc = document.getElementById("salesChart");
+        salesChartLoc.height = 300;
         var salesChart = new Chart(salesChartLoc, {
             type: 'line',
             data: {
@@ -134,6 +137,7 @@
 
     function drawGenreChart(labels, data) {
         var genreChartLoc = document.getElementById("genreChart");
+        genreChartLoc.height = 300;
         var genreChart = new Chart(genreChartLoc, {
             type: 'bar',
             data: {
