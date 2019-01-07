@@ -16,9 +16,12 @@
 
 
 3. convert data from csv to mysql
-   - replace parameters in file "convert data from csv to mysqql.py"
+    - replace parameters in file "convert data from csv to mysqql.py"
         parameters: + path of csv file (book.csv)
                     + path of "db" variable (instance for SQLAlchemy) in SOURCE CODE
+    - in file models.db in SOURCE CODE, switch rows to become comment rows where rows contain "db" variable
+    to avoid using variable error when it has not created yet
+
     - run "convert data from csv to mysql.py"
 
 
