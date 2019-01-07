@@ -129,7 +129,7 @@ def books_also_be_bouth():
     items = db.session.query(Rules.Consequents).filter(
         Rules.Antecendents == book_id).all()
 
-    books_id_also_be_bought = []   
+    books_id_also_be_bought = []
 
     for i in items:
         books_id_also_be_bought.append(i[0])
@@ -149,7 +149,8 @@ def books_also_be_bouth():
 
     items = []
     for i in items_id:
-        item = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(Book.BookID == i).first()
+        item = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).filter(
+            Book.BookID == i).first()
         items.append(item)
 
     if len(items) > 0:
@@ -205,7 +206,6 @@ def loading_recommendation():
     book_ids_cart_combination = making_combination(book_ids_cart)
 
     result = making_recommendation(book_ids_cart_combination, book_ids_rule)
-    
 
     if len(result) > 0:
 
@@ -216,23 +216,22 @@ def loading_recommendation():
                 Rules.Antecendents == i).first()
             if temp:
                 if ',' in temp[0]:
-                    [book_ids_for_recommendation.append(x) for x in temp[0].split(',') if x not in book_ids_for_recommendation]
+                    [book_ids_for_recommendation.append(x) for x in temp[0].split(
+                        ',') if x not in book_ids_for_recommendation]
                 elif temp[0] not in book_ids_for_recommendation:
                     book_ids_for_recommendation.append(temp[0])
-            else:
-                if ',' not in str(i):
-                    string_sql = 'select Consequents from rules where FIND_IN_SET(' + str(
-                        i) + ', Antecendents);'
-                    items_less_priority = db.session.execute(
-                        string_sql).fetchall()
-                    if items_less_priority:
-                        for i in items_less_priority:
-                            if ',' in i:
-                                [items_less_priority.append(x) for x in i.split(',') if x not in items_less_priority]
-                            elif i[0] not in book_ids_for_recommendation_less_priority:
-                                book_ids_for_recommendation_less_priority.append(i[0])
 
-        [book_ids_for_recommendation.append(x) for x in book_ids_for_recommendation_less_priority if x not in book_ids_for_recommendation]
+            if ',' not in i:
+                string_sql = 'select Consequents from rules where FIND_IN_SET(' + str(i) + ', Antecendents);'
+                items = db.session.execute(string_sql).fetchall()
+
+                for i2 in items:
+                    [book_ids_for_recommendation_less_priority.append(x) for x in i2[0].split(',') if x not in book_ids_for_recommendation_less_priority]
+
+
+
+        [book_ids_for_recommendation.append(
+            x) for x in book_ids_for_recommendation_less_priority if x not in book_ids_for_recommendation]
 
         final_result_items = []
         for i in book_ids_for_recommendation:

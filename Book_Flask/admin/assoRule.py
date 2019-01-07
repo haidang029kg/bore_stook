@@ -132,19 +132,21 @@ def saveRules(rules):
     Rules_data = []
     for i in range(0, len(rules)):
         # modified to fit the database
-        temp = str(rules[i][0][0]).strip('(),')
-        temp = temp.replace(' ', '')
+        temp_antecendents = str(rules[i][0][0]).strip('(),')
+        temp_antecendents = temp_antecendents.replace(' ', '')
+        temp_consequents = str(rules[i][0][1]).strip('(),')
+        temp_consequents = temp_consequents.replace(' ', '')
         #######################################
-        Rules_data.append(Rules(RID=i+1, Antecendents=temp,
-                            Consequents=str(rules[i][0][1]).strip('(),'),
-                            Confidence=rules[i][1]))
+        Rules_data.append(Rules(RID=i+1, Antecendents=temp_antecendents,
+                                Consequents=temp_consequents,
+                                Confidence=rules[i][1]))
 
     try:
         num = db.session.query(Rules).delete()
         db.session.commit()
     except:
         db.session.rollback()
-        
+
     db.session.add_all(Rules_data)
     db.session.commit()
     db.session.close()
