@@ -14,14 +14,10 @@ def home():
 
     items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
         Book.Title.asc()).paginate(page=page, per_page=per_page)
-    print(items.items)
     genre_items = db.session.query(
         Genre.GenreID, Genre.Name).order_by(Genre.Name).all()
-    print (genre_items)
     newly_items = db.session.query(Book.BookID, Book.Title, Book.ImgUrl, Book.Price).order_by(
         Book.BookID.desc()).limit(10).all()
-    print(newly_items)
-
     return render_template('home.html', title='Home page', items=items, genre_items=genre_items, newly_items=newly_items)
 
 
@@ -192,7 +188,6 @@ def cart():
 def loading_recommendation():
     cart = request.form.get('cart_data')
     cart = json.loads(cart)
-
     book_ids_cart = []
     [book_ids_cart.append(x['bookid']) for x in cart]
 
@@ -242,7 +237,6 @@ def loading_recommendation():
                 Book.BookID == i).first()
             if item:
                 final_result_items.append(item)
-
         final_result_items = json.dumps(final_result_items)
         return jsonify({'items': final_result_items})
 

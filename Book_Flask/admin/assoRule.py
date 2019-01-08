@@ -116,19 +116,14 @@ def getItemSetTransactionList():
 def saveRules(rules):
     db.session.execute('DELETE FROM rules;')
     Rules_data = []
-# <<<<<<< HEAD:assoRule.py
-#     for i in range(0,len(rules)):
-#         Rules_data.append(Rules(RID = i+1, Antecendents = str(rules[i][0][0]).strip('(),'), 
-#     	                    Consequents = str(rules[i][0][1]).strip('(),'),
-#     	                    Confidence = rules[i][1]))
-# =======
     for i in range(0, len(rules)):
         # modified to fit the database
-        temp = str(rules[i][0][0]).strip('(),')
-        temp = temp.replace(' ', '')
-        #######################################
-        Rules_data.append(Rules(RID=i+1, Antecendents=temp,
-                            Consequents=str(rules[i][0][1]).strip('(),'),
+        Antecendents = str(rules[i][0][0]).strip('(),')
+        Antecendents = Antecendents.replace(' ', '')
+        Consequents = str(rules[i][0][1]).strip('(),')
+        Consequents= Consequents.replace(' ', '')
+        Rules_data.append(Rules(RID=i+1, Antecendents=Antecendents,
+                            Consequents=Consequents,
                             Confidence=rules[i][1]))
 
     try:
@@ -136,8 +131,11 @@ def saveRules(rules):
         db.session.commit()
     except:
         db.session.rollback()
-        
-# >>>>>>> master:Book_Flask/admin/assoRule.py
+
     db.session.add_all(Rules_data)
     db.session.commit()
     db.session.close()
+
+def generating(minsup, minconf):
+    items, rules = runApriori(minsup, minconf)
+    saveRules(rules)

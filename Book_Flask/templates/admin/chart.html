@@ -118,7 +118,11 @@
             },
             options: {
                 scales: {
-                    beginAtZero: true,
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 },
                 title: {
                     display: true,
@@ -164,7 +168,13 @@
                 }],
             },
             options: {
-                
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
                 title: {
                     display: true,
                     text: 'Top 5 Genres',

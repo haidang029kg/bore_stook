@@ -3,8 +3,7 @@ from Book_Flask import db, bcrypt
 from Book_Flask.models import User, OrderDetails, Orders, Ispaid, Status, Paymentmethod, Book, Author, admin_login_required, Genre
 from Book_Flask.admin.forms import AddBookForm, AdminLoginForm, EditBookForm, AddAuthorForm, AddGenreForm, RuleForm
 from flask_login import login_user, logout_user, current_user, login_required
-from Book_Flask.admin.rules import *
-
+from Book_Flask.admin.assoRule import generating
 
 admin = Blueprint('admin', __name__)
 
@@ -15,7 +14,6 @@ def dashboard():
     try:
         yesterdaySales = int(db.session.execute(
             'select sum(TotalPrice) from orders where DATE(Date)=DATE(SUBDATE(NOW(),1));').fetchall()[0][0])
-        print(yesterdaySales)
     except:
         yesterdaySales = 0
 
@@ -559,10 +557,9 @@ def generating_rules():
 
     if form.validate_on_submit():
 
-        generating_dummy_data()
         generating(minsup= form.minsup.data, minconf=form.minconf.data)
 
-        flash('rules are generated!!!', 'info')
+        flash('Rules are generated!!!', 'info')
         return redirect(url_for('admin.dashboard'))
 
     elif request.method == 'GET':
