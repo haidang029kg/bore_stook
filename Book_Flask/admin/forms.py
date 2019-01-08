@@ -8,7 +8,7 @@ from Book_Flask.models import Author, Genre, Book
 class RuleForm(FlaskForm):
     minsup = FloatField('Min Support',
                         validators=[DataRequired()])
-    minconf = FloatField('Min Confident',
+    minconf = FloatField('Min Confidence',
                         validators=[DataRequired()])
     submit = SubmitField('Generate rules')
 

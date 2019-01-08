@@ -28,7 +28,7 @@ from Book_Flask.admin.assoRule import *
 
 
 # Transaction 1
-def generating_dummy_data():
+def generate_dummy_data():
     order_id = generate_id('order')
     data_order = Orders(OrderID=order_id,
                         UserID=1,
@@ -164,7 +164,4 @@ def generating_dummy_data():
             db.session.commit()
 
 
-def generating(minsup = 0.5, minconf = 0.75):
-    items, rules = runApriori(minsup, minconf)
-    printResults(items, rules)
-    saveRules(rules)
+generate_dummy_data()

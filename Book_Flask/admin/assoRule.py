@@ -6,38 +6,34 @@ from itertools import chain, combinations
 from collections import defaultdict
 from optparse import OptionParser
 
-# source https://github.com/asaini/Apriori
-
-
+#source https://github.com/asaini/Apriori
 def subsets(arr):
     """ Returns non empty subsets of arr"""
     return chain(*[combinations(arr, i + 1) for i, a in enumerate(arr)])
 
-
 def returnItemsWithMinSupport(itemSet, transactionList, minSupport, freqSet):
-    """calculates the support for items in the itemSet and returns a subset
-   of the itemSet each of whose elements satisfies the minimum support"""
-    _itemSet = set()
-    localSet = defaultdict(int)
+        """calculates the support for items in the itemSet and returns a subset
+       of the itemSet each of whose elements satisfies the minimum support"""
+        _itemSet = set()
+        localSet = defaultdict(int)
 
-    for item in itemSet:
-        for transaction in transactionList:
-            if item.issubset(transaction):
-                freqSet[item] += 1
-                localSet[item] += 1
+        for item in itemSet:
+                for transaction in transactionList:
+                        if item.issubset(transaction):
+                                freqSet[item] += 1
+                                localSet[item] += 1
 
-    for item, count in localSet.items():
-        support = float(count)/len(transactionList)
-        if support >= minSupport:
-            _itemSet.add(item)
+        for item, count in localSet.items():
+                support = float(count)/len(transactionList)
+                if support >= minSupport:
+                        _itemSet.add(item)
 
-    return _itemSet
+        return _itemSet
 
 
 def joinSet(itemSet, length):
-    """Join a set with itself and returns the n-element itemsets"""
-    return set([i.union(j) for i in itemSet for j in itemSet if len(i.union(j)) == length])
-
+        """Join a set with itself and returns the n-element itemsets"""
+        return set([i.union(j) for i in itemSet for j in itemSet if len(i.union(j)) == length])
 
 def runApriori(minSupport, minConfidence):
     """
@@ -47,18 +43,10 @@ def runApriori(minSupport, minConfidence):
      - rules ((pretuple, posttuple), confidence)
     """
     itemSet, transactionList = getItemSetTransactionList()
-
-    print(itemSet)
-    print(transactionList)
-
     freqSet = defaultdict(int)
     largeSet = dict()
     # Global dictionary which stores (key=n-itemSets,value=support)
     # which satisfy minSupport
-
-    assocRules = dict()
-    # Dictionary which stores Association Rules
-
     oneCSet = returnItemsWithMinSupport(itemSet,
                                         transactionList,
                                         minSupport,
@@ -77,8 +65,8 @@ def runApriori(minSupport, minConfidence):
         k = k + 1
 
     def getSupport(item):
-        """local function which Returns the support of an item"""
-        return float(freqSet[item])/len(transactionList)
+            """local function which Returns the support of an item"""
+            return float(freqSet[item])/len(transactionList)
 
     toRetItems = []
     for key, value in largeSet.items():
@@ -93,7 +81,7 @@ def runApriori(minSupport, minConfidence):
                 remain = item.difference(element)
                 if len(remain) > 0:
                     confidence = getSupport(item)/getSupport(element)
-                    if confidence >= minConfidence:
+                    if round(confidence,2) >= minConfidence:
                         toRetRules.append(((tuple(element), tuple(remain)),
                                            confidence))
     return toRetItems, toRetRules
@@ -102,16 +90,14 @@ def runApriori(minSupport, minConfidence):
 def printResults(items, rules):
     """prints the generated itemsets sorted by support and the confidence rules sorted by confidence"""
     for item, support in items:
-        print("item: %s ; %.3f" % (str(item), support))
-    print("\n------------------------ RULES:")
+        print ("item: %s ; %.3f" % (str(item), support))
+    print ("\n------------------------ RULES:")
     for rule, confidence in rules:
         pre, post = rule
-        print("Rule: %s ==> %s ; %.3f" % (str(pre), str(post), confidence))
-
+        print ("Rule: %s ==> %s ; %.3f" % (str(pre), str(post), confidence))
 
 def getItemSetTransactionList():
-    data = db.session.query(OrderDetails.OrderID, OrderDetails.BookID).order_by(
-        OrderDetails.OrderID.asc()).all()
+    data = db.session.query(OrderDetails.OrderID, OrderDetails.BookID).order_by(OrderDetails.OrderID.asc()).all()
     itemSet = set()
     tranList = list()
     tempArray = []
@@ -127,19 +113,18 @@ def getItemSetTransactionList():
     tranList.append(tempArray)
     return itemSet, tranList
 
-
 def saveRules(rules):
+    db.session.execute('DELETE FROM rules;')
     Rules_data = []
     for i in range(0, len(rules)):
         # modified to fit the database
-        temp_antecendents = str(rules[i][0][0]).strip('(),')
-        temp_antecendents = temp_antecendents.replace(' ', '')
-        temp_consequents = str(rules[i][0][1]).strip('(),')
-        temp_consequents = temp_consequents.replace(' ', '')
-        #######################################
-        Rules_data.append(Rules(RID=i+1, Antecendents=temp_antecendents,
-                                Consequents=temp_consequents,
-                                Confidence=rules[i][1]))
+        Antecendents = str(rules[i][0][0]).strip('(),')
+        Antecendents = Antecendents.replace(' ', '')
+        Consequents = str(rules[i][0][1]).strip('(),')
+        Consequents= Consequents.replace(' ', '')
+        Rules_data.append(Rules(RID=i+1, Antecendents=Antecendents,
+                            Consequents=Consequents,
+                            Confidence=rules[i][1]))
 
     try:
         num = db.session.query(Rules).delete()
@@ -150,3 +135,7 @@ def saveRules(rules):
     db.session.add_all(Rules_data)
     db.session.commit()
     db.session.close()
+
+def generating(minsup, minconf):
+    items, rules = runApriori(minsup, minconf)
+    saveRules(rules)

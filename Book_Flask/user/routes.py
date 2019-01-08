@@ -56,7 +56,7 @@ def register_token(token):
         return redirect(url_for('user.register'))
 
     else:
-        flash('Register completely!!! Now you can login', 'info')
+        flash('Registation completed!!! Now you can login', 'info')
         return redirect(url_for('user.login'))
 
     return redirect(url_for('user.register'))
@@ -76,12 +76,12 @@ def login():
             login_user(user, remember=form.remember.data)
 
             next_page = request.args.get('next')
-            flash('Login successful!', 'success')
+            flash('Login successfully!', 'success')
 
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
 
         else:
-            flash('Login unsucessful! please check username and password', 'danger')
+            flash('Please check username and password', 'danger')
 
     return render_template('login.html', title='Log In', form=form)
 
@@ -95,7 +95,7 @@ def logout():
 @user.route("/request_passwd", methods=['GET', 'POST'])
 def request_passwd():
     if current_user.is_authenticated:
-        flash('you have already logged in!!!', 'info')
+        flash('You have already logged in!!!', 'info')
         return redirect(url_for('main.home'))
 
     form = RequestPasswdForm()
@@ -159,7 +159,7 @@ def change_password():
 
         db.session.commit()
 
-        flash('Changed password completely!', 'info')
+        flash('Your password is changed', 'info')
 
         login_form = LoginForm()
         return redirect(url_for('user.login', form=login_form, title='Login'))
@@ -175,7 +175,9 @@ def account():
     if form.validate_on_submit():
 
         if form.picture.data:
-            picture_file = save_picture(form.picture.data)
+            if (current_user.ImgUrl != "default.jpg"):
+                picture_file = save_picture(form.picture.data, current_user.ImgUrl)
+            else: picture_file = save_picture(form.picture.data, '')
             current_user.ImgUrl = picture_file
 
         current_user.FirstName = form.fname.data
@@ -192,10 +194,7 @@ def account():
         form.lname.data = current_user.LastName
         form.phone.data = current_user.Phone
 
-    image_file = url_for(
-        'static', filename='image/profile_user_pic/' + str(current_user.ImgUrl))
-
-    return render_template('account.html', form=form, title='Account', image_file=image_file)
+    return render_template('account.html', form=form, title='Account', image_file=current_user.ImgUrl)
 
 
 
@@ -279,7 +278,6 @@ def ordered_history():
         Orders.IsPaid == Ispaid.IsPaidID).filter(Orders.PaymentMethod == Paymentmethod.PaymentMethodID).filter(Orders.Status == Status.StatusID).order_by(Orders.Date.desc()).paginate(page=page, per_page=per_page)
 
     return render_template('ordered_history.html', title='Ordered History', items=items)
-
 
 @user.route("/ordered_detail", methods=['GET'])
 @login_required

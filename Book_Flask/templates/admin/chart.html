@@ -76,6 +76,7 @@
         type: 'GET',
         dataType: 'json',
         url: '/top_genre',
+        async: false,
         success: function (result) {
             $.each(result, function (key, value) {
                 genreLabels.push(key);
@@ -91,6 +92,7 @@
         type: 'GET',
         dataType: 'json',
         url: '/sales5days',
+        async: false,
         success: function (result) {
             $.each(result, function (key, value) {
                 salesLabels.push(key);
@@ -103,6 +105,7 @@
 
     function drawSalesChart(labels, data) {
         var salesChartLoc = document.getElementById("salesChart");
+        salesChartLoc.height = 300;
         var salesChart = new Chart(salesChartLoc, {
             type: 'line',
             data: {
@@ -115,7 +118,11 @@
             },
             options: {
                 scales: {
-                    beginAtZero: true,
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 },
                 title: {
                     display: true,
@@ -134,29 +141,31 @@
 
     function drawGenreChart(labels, data) {
         var genreChartLoc = document.getElementById("genreChart");
+        genreChartLoc.height = 300;
         var genreChart = new Chart(genreChartLoc, {
             type: 'bar',
             data: {
-                labels: labels,
                 datasets: [{
-                    label: 'Top 5 Genres',
-                    data: data,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+                    label: labels[0],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    data: [data[0]],
+                }, {
+                    label: labels[1],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    data: [data[1]],
+                }, {
+                    label: labels[2],
+                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    data: [data[2]],
+                }, {
+                    label: labels[3],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    data: [data[3]],
+                },{
+                    label: labels[4],
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    data: [data[4]],
+                }],
             },
             options: {
                 scales: {

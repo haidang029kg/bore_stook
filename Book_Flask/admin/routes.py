@@ -3,8 +3,7 @@ from Book_Flask import db, bcrypt
 from Book_Flask.models import User, OrderDetails, Orders, Ispaid, Status, Paymentmethod, Book, Author, admin_login_required, Genre
 from Book_Flask.admin.forms import AddBookForm, AdminLoginForm, EditBookForm, AddAuthorForm, AddGenreForm, RuleForm
 from flask_login import login_user, logout_user, current_user, login_required
-from Book_Flask.admin.rules import *
-
+from Book_Flask.admin.assoRule import generating
 
 admin = Blueprint('admin', __name__)
 
@@ -15,7 +14,6 @@ def dashboard():
     try:
         yesterdaySales = int(db.session.execute(
             'select sum(TotalPrice) from orders where DATE(Date)=DATE(SUBDATE(NOW(),1));').fetchall()[0][0])
-        print(yesterdaySales)
     except:
         yesterdaySales = 0
 
@@ -61,7 +59,7 @@ def order_management():
     per_page = 10
 
     items = db.session.query(Orders.OrderID, Orders.Date, User.Email, User.FirstName, User.LastName, Orders.Address, Orders.Phone, Orders.TotalPrice, Ispaid.NamePaid,
-                             Paymentmethod.NamePayment, Status.NameStatus).join(Ispaid).join(Status).join(Paymentmethod).join(User).order_by(Orders.Date.desc()).paginate(page=page, per_page=per_page)
+                             Paymentmethod.NamePayment, Status.NameStatus).join(Ispaid).join(Status).join(Paymentmethod).join(User).order_by(Orders.Status, Orders.Date.desc()).paginate(page=page, per_page=per_page)
 
     return render_template('admin/order_management.html', items=items, task_name='management')
 
@@ -145,7 +143,7 @@ def change_order_status():
             {Orders.Status: status_id, Orders.IsPaid: paid_id})
         db.session.commit()
 
-        flash("Changing Order's Status Is Done", 'info')
+        flash("Order's Status is changed", 'info')
 
         return jsonify({'status': 'done'})
     return jsonify({'status': 'error'})
@@ -157,7 +155,7 @@ def top_genre():
     items = db.session.execute('select Name, order_count from (select GenreID, sum(order_details.Quantity) as order_count from order_details, book where book.BookID = order_details.BookID group by GenreID) as genre_count, genre where genre_count.GenreID = genre.GenreID order by order_count desc limit 5;')
     di = dict()
     for k, v in items.fetchall():
-        di[k] = v
+        di[k] = int(v)
 
     return jsonify(di)
 
@@ -169,7 +167,7 @@ def sales5days():
         'select DATE(Date), sum(TotalPrice) from orders group by DATE(Date) order by DATE(Date) desc limit 5;')
     di = dict()
     for k, v in items.fetchall():
-        di[str(k)] = v
+        di[str(k)] = round(v,2)
 
     return jsonify(di)
 
@@ -219,7 +217,7 @@ def book_searching():
 
             return render_template('admin/book_management.html', items=items, value_search=value_search)
     else:
-        flash('input search is empty!!!', 'info')
+        flash('Search field is empty!!!', 'info')
         return redirect(url_for('admin.book_management'))
 
 
@@ -234,7 +232,7 @@ def delete_book():
         db.session.delete(book)
         db.session.commit()
 
-        flash('book is deleted', 'info')
+        flash('Book is deleted', 'info')
 
         return jsonify({'status': 'done'})
     return jsonify({'status': 'error'})
@@ -316,7 +314,7 @@ def login():
             login_user(admin, remember=True)
 
             next_page = request.args.get('next')
-            flash('Login successful!', 'success')
+            flash('Login successfully!', 'success')
 
             return redirect(next_page) if next_page else redirect(url_for('admin.dashboard'))
 
@@ -559,14 +557,13 @@ def generating_rules():
 
     if form.validate_on_submit():
 
-        generating_dummy_data()
         generating(minsup= form.minsup.data, minconf=form.minconf.data)
 
-        flash('rules are generated!!!', 'info')
+        flash('Rules are generated!!!', 'info')
         return redirect(url_for('admin.dashboard'))
 
     elif request.method == 'GET':
         form.minsup.data = 0.5
-        form.minconf.data = 0.7
+        form.minconf.data = 0.75
 
     return render_template("admin/rules.html", form=form)
