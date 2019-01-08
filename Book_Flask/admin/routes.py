@@ -564,6 +564,6 @@ def generating_rules():
 
     elif request.method == 'GET':
         form.minsup.data = 0.5
-        form.minconf.data = 0.7
+        form.minconf.data = 0.75
 
     return render_template("admin/rules.html", form=form)

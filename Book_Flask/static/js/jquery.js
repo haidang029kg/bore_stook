@@ -164,7 +164,7 @@ $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 						$('.modal-content').find('.carousel-container').append('<hr class="recommendation"><h2 class="recommendation">Others also buy</h2><hr class="recommendation"><div class="recommendation also-buy-carousel">');
 						var items = JSON.parse(result_3.items);
 						for (var i = 0; i < items.length; i++) {
-							$('.also-buy-carousel').append("<div><div class='card' data-id=" + items[i][0] + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i][2] + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i][1] + "</h5><h4 class='card-text'>" + items[i][3] + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
+							$('.also-buy-carousel').append("<div><div class='card' data-id=" + items[i].BookID + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i].ImgUrl + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i].Title + "</h5><h4 class='card-text'>" + items[i].Price + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
 						}
 						$('.also-buy-carousel').slick({
 							slidesToShow: 3,
@@ -438,7 +438,7 @@ $('.also-buy-carousel-cart').ready(function loading_recommendation() {
 				$('.cart-carousel-container').append('<hr><h2>Other users also buy</h2><hr><div style="width:1100px; margin:auto;"><div class="also-buy-carousel-cart"></div></div>');
 				var items = JSON.parse(result_3.items);
 				for (var i = 0; i < items.length; i++) {
-					$('.also-buy-carousel-cart').append("<div><div class='card' data-id=" + items[i][0] + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i][2] + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i][1] + "</h5><h4 class='card-text'>" + items[i][3] + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
+					$('.also-buy-carousel-cart').append("<div><div class='card' data-id=" + items[i].BookID + " style='width: 200px;height: 400px;'><div class='hvrbox' style='margin-left:5px'><img src=" + items[i].ImgUrl + " style='height: 240px' class=' card-img-top hvrbox-layer_bottom'><div class='hvrbox-layer_top'><div class='hvrbox-text'>Click for more details</div></div></div><div class='card-body' style='height: 150px;'><h5 class='card-title' style='font-size: 16px'>" + items[i].Title + "</h5><h4 class='card-text'>" + items[i].Price + " $ </h4><button type='button' class='adding-cart btn btn-primary btn-card'>Add to cart</button></div></div></div>");
 				}
 				$(".also-buy-carousel-cart").slick({
 					slidesToShow: 4,
