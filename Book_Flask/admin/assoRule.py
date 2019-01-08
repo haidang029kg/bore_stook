@@ -125,7 +125,7 @@ def saveRules(rules):
         Rules_data.append(Rules(RID=i+1, Antecendents=Antecendents,
                             Consequents=Consequents,
                             Confidence=rules[i][1]))
-
+                            
     try:
         num = db.session.query(Rules).delete()
         db.session.commit()

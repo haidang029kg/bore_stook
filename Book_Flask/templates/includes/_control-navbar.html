@@ -55,9 +55,13 @@
                                             <a href="{{ url_for('user.change_password') }}" class="btn btn-primary btn-block btn-sm"
                                                 style="color: white">Change
                                                 password</a>
+                                            {%if current_user.is_admin%}
+                                            <a href="{{ url_for('admin.dashboard') }}" class="btn btn-primary btn-block btn-sm"
+                                                style="color: white">Admin Dashboard</a>
+                                            {%else%}
                                             <a href="{{ url_for('user.ordered_history') }}" class="btn btn-primary btn-block btn-sm"
                                                 style="color: white">Ordered History</a>
-
+                                            {%endif%}
                                             <a href="{{ url_for('user.logout') }}" class="btn btn-danger btn-block"
                                                 style="color: white;">log
                                                 out</a>
