@@ -8,11 +8,12 @@ import pandas as pd
 import sqlalchemy
 import os
 import random
+from Book_Flask import db
 
-URI = 'mysql+mysqlconnector://' + os.environ.get('MYSQL_USER') + ':' + os.environ.get('MYSQL_PASSWORD') + '@localhost/' + os.environ.get('MYSQL_DB')
+URI = 'mysql+pymysql://'+ os.environ.get('MYSQL_USER') + ':' + os.environ.get('MYSQL_PASSWORD') + '@' + '127.0.0.1:3306/' + os.environ.get('MYSQL_DB')
 connection = sqlalchemy.create_engine(URI)
 
-df = pd.read_csv('~/Downloads/goodbooks-10k/books.csv')
+df = pd.read_csv('books.csv')
 df = df[['book_id', 'original_title', 'isbn','authors', 'original_publication_year','image_url', 'average_rating', 'books_count']]
 df.sort_values(inplace=True, by = ['book_id'])
 
@@ -21,7 +22,6 @@ df.sort_values(inplace=True, by = ['book_id'])
 
 
 #Clean database
-from Book_Flask import db
 db.session.execute("SET FOREIGN_KEY_CHECKS = 0")
 db.drop_all()
 db.session.execute("SET FOREIGN_KEY_CHECKS = 1")

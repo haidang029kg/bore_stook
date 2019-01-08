@@ -11,7 +11,8 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <form class="form-inline my-2 my-lg-0" action="{{ url_for('main.searching') }}" method="POST">
-                    <input name="input-search" class="form-control mr-sm-2" type="search" placeholder="Title ........................................................." aria-label="Search">
+                    <input name="input-search" class="form-control mr-sm-2" type="search" placeholder="Looking for book..."
+                        aria-label="Search">
                     <button class="btn btn-success my-2 my-sm-0 " type="submit">Search</button>
                     <button class="btn btn-outline-success my-2 my-sm-0 " type="button" onclick="advance_search()">Advance
                         Search</button>
@@ -30,36 +31,35 @@
                             <span class="glyphicon glyphicon-chevron-down"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li>
-                            <div class="navbar-login">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p class="text-center">
-                                            <span class="glyphicon glyphicon-user icon-size"></span>
-                                        </p>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <p class="text-left"><strong>{{ current_user.FirstName }}
-                                                {{current_user.LastName}}</strong></p>
-                                        <p class="text-left small">{{current_user.Email}}</p>
-                                        <p class="text-left">
-                                            <a href="{{ url_for('user.account') }}" class="btn btn-primary btn-block btn-sm" style="color: white">account
-                                                details</a>
-                                            <a href="{{ url_for('user.change_password') }}" class="btn btn-primary btn-block btn-sm" style="color: white">Change
-                                                password</a>
-                                            <a href="{{ url_for('user.ordered_history') }}" class="btn btn-primary btn-block btn-sm" style="color: white">Ordered History</a>
-                                        </p>
-                                    </div>
+                        <div class="navbar-login">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <img class='small-ava' src="https://storage.googleapis.com/borestook/userava/{{current_user.ImgUrl}}">
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="text-left"><strong>{{ current_user.FirstName }}
+                                            {{current_user.LastName}}</strong></p>
+                                    <p class="text-left small">{{current_user.Email}}</p>
                                 </div>
                             </div>
-                        </li>
+                        </div>
                         <li class="divider"></li>
                         <li>
                             <div class="navbar-login navbar-login-session">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                            <a href="{{ url_for('user.logout') }}" class="btn btn-danger btn-block">log
+                                            <a href="{{ url_for('user.account') }}" class="btn btn-primary btn-block btn-sm"
+                                                style="color: white">account
+                                                details</a>
+                                            <a href="{{ url_for('user.change_password') }}" class="btn btn-primary btn-block btn-sm"
+                                                style="color: white">Change
+                                                password</a>
+                                            <a href="{{ url_for('user.ordered_history') }}" class="btn btn-primary btn-block btn-sm"
+                                                style="color: white">Ordered History</a>
+
+                                            <a href="{{ url_for('user.logout') }}" class="btn btn-danger btn-block"
+                                                style="color: white;">log
                                                 out</a>
                                         </p>
                                     </div>
