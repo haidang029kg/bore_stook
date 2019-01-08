@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+{% block body %}
+<button id="sticky-cart" class="btn" onclick="window.location.href='/cart'"><img style="width: 120px;height: 70px;" src="/static/image/logo/cart.png"></button>
+<div class="cart-container div-center">
+    <table id="cart" class="table table-hover table-condensed">
+        <!--header of table-->
+        <thead>
+            <tr>
+                <th style="width:55%">Items</th>
+                <th style="width:10%">Price</th>
+                <th style="width:8%">Quantity</th>
+                <th style="width:22%" class="text-center">Subtotal</th>
+                <th style="width:5%"></th>
+            </tr>
+        </thead>
+        <!--List product-->
+        <tbody id="cart-data">
+        </tbody>
+        <!--Footer of table-->
+        <tfoot>
+            <tr>
+                <td><a href="/home" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                <td colspan="2" class="hidden-xs"></td>
+                <td class="hidden-xs text-center"><strong id="total-price"></strong></td>
+                <td><a href="/checkout" class="btn btn-success"><i class="fa fa-angle-right"></i> Checkout</a></td>
+            </tr>
+            <tr>
+                <td><button id="clear-cart" class="btn btn-danger">Clear Cart</button></td>
+                <td colspan="2" class="hidden-xs"></td>
+                <td class="hidden-xs text-center"><strong id="num-items"></strong></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div class="carousel-container text-center" style="float : None; width: 1200px">
+    <hr>
+    <div class="also-buy-carousel-cart">
+    </div>  
+</div>
+{% include 'includes/_ajax_book_detail.html' %}
+{% endblock %}

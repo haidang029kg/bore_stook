@@ -1,0 +1,37 @@
+<hr>
+{% if task_name %}
+<h1 style="text-align:center">{{ task_name }}</h1>
+{% else %}
+<h1 style="text-align:center">All books</h1>
+{% endif %}
+<hr>
+<div class="contianer">
+    <div class="card-columns text-center">
+        {% for item in items.items %}
+        <div class="card" data-id="{{ item.BookID }}" style="width: 200px;height: 400px;">
+            <div class="hvrbox">
+                <img src="{{ item.ImgUrl }}" style="height: 240px" class=" card-img-top hvrbox-layer_bottom">
+                <div class="hvrbox-layer_top">
+                    <div class="hvrbox-text">Click for more details</div>
+                </div>
+            </div>
+            <div class="card-body" style="height: 150px;">
+                <h5 class="card-title" style="font-size: 16px">{{ item.Title }}</h5>
+                <h4 class="card-text"> {{ item.Price }} $ </h4>
+                <button type="button" class="adding-cart btn btn-primary btn-card">Add to cart</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% if genreid %}
+    {% include 'includes/_page_number_for_genre.html' %}
+    {% else %}
+    {% if value_search %}
+    {% include 'includes/_page_number_for_searching.html' %}
+    {% else %}
+    {% include 'includes/_page_number_for_homepage.html' %}
+    {% endif %}
+    {% endif %}
+</div>
+
+{% include 'includes/_ajax_book_detail.html' %}

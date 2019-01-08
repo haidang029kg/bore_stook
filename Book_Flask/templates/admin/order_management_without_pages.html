@@ -1,0 +1,176 @@
+{% extends 'admin/layout.html' %}
+{% block body %}
+<div class="row">
+    <div class="table-responsive" style="margin : 20px; width : 95%">
+        <h1>Order Management:</h1>
+        <form class="form-inline my-2 my-lg-0" action="{{ url_for('admin.ordered_searching') }}" method="POST">
+            <input name="input-search-ordered" class="form-control mr-sm-2" type="search" placeholder="OrderID or Customer's Mail"
+                aria-label="Search">
+            <button class="btn btn-success my-2 my-sm-0 " type="submit">Search / Reload</button>
+        </form>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Order ID</th>
+                    <th class="text-center">Date Time</th>
+                    <th class="text-center">Customer's Email</th>
+                    <th class="text-center">Customer's Name</th>
+                    <th>Address</th>
+                    <th class="text-center">Phone</th>
+                    <th>Total Price</th>
+                    <th>Paid</th>
+                    <th>Payment Method</th>
+                    <th>Status</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr data-order-id="{{ item.OrderID }}">
+                    <td>{{ item.OrderID }}</td>
+                    <td class="text-center">{{ item.Date }}</td>
+                    <td class="text-center">{{ item.Email }}</td>
+                    <td class="text-center">{{ item.FirstName }} {{ item.LastName }}</td>
+                    <td>{{ item.Address }}</td>
+                    <td class="text-center">{{ item.Phone }}</td>
+                    <td class="text-center">${{ item.TotalPrice }}</td>
+                    {% if item.NamePaid == "Yes" %}
+                    <td class="text-center">
+                        <h4 style="background-color : #FF4500; border-radius : 10px">{{ item.NamePaid }}</h4>
+                    </td>
+                    {% else %}
+                    <td class="text-center">
+                        <h4 style="background-color : #EE82EE; border-radius : 10px">{{ item.NamePaid }}</h4>
+                    </td>
+                    {% endif %}
+                    <td class="text-center">{{ item.NamePayment }}</td>
+                    {% if item.NameStatus == "Waiting" %}
+                    <td class="text-center">
+                        <h4 style="background-color : yellow; border-radius : 10px">{{ item.NameStatus }}</h4>
+                    </td>
+                    {% else %}
+                    {% if item.NameStatus == "Delivered" %}
+                    <td class="text-center">
+                        <h4 style="background-color : #00FFFF; border-radius : 10px">{{ item.NameStatus }}</h4>
+                    </td>
+                    {% else %}
+                    <td class="text-center">{{ item.NameStatus }}</td>
+                    {% endif %}
+                    {% endif %}
+                    <td><button type="button" class="btn-admin-ordered-process btn btn-success btn-sm" data-toggle="modal"
+                            data-target="#modal-admin-ordered-process">process</button></td>
+                    <td><button type="button" class="btn-admin-ordered-detail btn btn-info btn-sm" data-toggle="modal"
+                            data-target="#modal-admin-ordered-detail">detail</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<!-- Modal for orderd detail-->
+<div class="modal fade" id="modal-admin-ordered-detail" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content" id="modal-content-more-ordered-detail">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover table-condensed">
+                    <!--header of table-->
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width:15%">Items</th>
+                            <th class="text-center" style="width:40%">Title</th>
+                            <th class="text-center" style="width:15%">Price</th>
+                            <th class="text-center" style="width:15%">Quantity</th>
+                            <th class="text-center" style="width:15%" class="text-center">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <!--List product-->
+                    <tbody id="tb-body-ordered-detail">
+                    </tbody>
+                    <!--Footer of table-->
+                    <tfoot>
+                        <tr>
+                            <td class="hidden-xs text-center"><strong id="num-items"></strong></td>
+                            <td colspan="3" class="hidden-xs"></td>
+                            <td class="hidden-xs text-center"><strong id="total-price"></strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for orderd process-->
+<div class="modal fade" id="modal-admin-ordered-process" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content" id="modal-content-more-ordered-detail">
+            <div class="modal-header">
+                <h2 class="modal-title text-center">------- Order Process ------</h2>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body row" style="margin-left : 7px">
+                <div class="div-order-status">
+                    <h3 class="text-center">Order's Status</h3>
+                    <form action="#" class="customeRadio">
+                        <div class="row bg-warning rounded">
+                            <input type="radio" name="order_status" id="waitting" checked value="1">
+                            <label for="waitting">Waitting</label>
+                        </div>
+                        <hr>
+                        <div class="row bg-primary rounded">
+                            <input type="radio" name="order_status" id="packaging" value="2">
+                            <label for="packaging">Packaging</label>
+                        </div>
+                        <hr>
+                        <div class="row bg-info rounded">
+                            <input type="radio" name="order_status" id="delivering" value="3">
+                            <label for="delivering">Delivering</label>
+                        </div>
+                        <hr>
+                        <div class="row bg-success rounded">
+                            <input type="radio" name="order_status" id="delivered" value="4">
+                            <label for="delivered">Delivered</label>
+                        </div>
+                        <hr>
+                        <div class="row bg-danger rounded">
+                            <input type="radio" name="order_status" id="rejected" value="5">
+                            <label for="rejected" class="">Rejected</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="div-temp"></div>
+                <div class="div-paid">
+                    <h3 class="text-center">Is Paid</h3>
+                    <form action="#" class="customeRadio">
+                        <div class="row bg-warning rounded">
+                            <input type="radio" name="is_paid" id="no" checked value="1">
+                            <label for="no">No</label>
+                        </div>
+                        <hr>
+                        <div class="row bg-primary rounded">
+                            <input type="radio" name="is_paid" id="yes" value="2">
+                            <label for="yes">Yes</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-change-order-status btn btn-primary" data-dismiss="modal">Change</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
