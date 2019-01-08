@@ -176,8 +176,8 @@ def account():
 
         if form.picture.data:
             if (current_user.ImgUrl != "default.jpg"):
-                picture_file = save_picture(form.picture.data, current_user.ImgUrl)
-            else: picture_file = save_picture(form.picture.data, '')
+                picture_file = save_picture(form.picture.data)
+            else: picture_file = save_picture(form.picture.data)
             current_user.ImgUrl = picture_file
 
         current_user.FirstName = form.fname.data
