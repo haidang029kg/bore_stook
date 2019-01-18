@@ -1,5 +1,5 @@
 from flask import render_template, request, Blueprint, jsonify, json, flash, redirect, url_for
-from Book_Flask.models import Book, Author, Genre, Orders, OrderDetails, generate_id, Rules
+from Book_Flask.models import Book, Author, Genre, Orders, OrderDetails, generate_id, Rules, BookDescription
 from Book_Flask import db
 from flask_login import login_required
 from Book_Flask.main.utilities import *
@@ -79,6 +79,8 @@ def book_detail():
 
     book_temp = Book.query.get(book_id)
 
+    book_description = db.session.query(BookDescription.Description).filter(BookDescription.BookID == book_id).first()
+
     string_temp = 'select Name from genre where GenreID = ' + \
         str(book_temp.GenreID)
     genre_name = db.session.execute(string_temp).first()[0]
@@ -94,7 +96,8 @@ def book_detail():
                         'PublicationYear': book_temp.PublicationYear,
                         'AuthorsID': book_temp.AuthorsID,
                         'GenreID': book_temp.GenreID,
-                        'GenreName': genre_name})
+                        'GenreName': genre_name,
+                        'Description' : book_description.Description})
 
     return jsonify({'error': 'error!'})
 

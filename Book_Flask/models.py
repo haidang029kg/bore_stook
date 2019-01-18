@@ -97,6 +97,11 @@ class Book(db.Model):
         'genre.GenreID'), nullable=False)
 
 
+class BookDescription(db.Model):
+    BookID = db.Column(db.Integer, primary_key=True)
+    Description = db.Column(db.Text(convert_unicode=True), nullable=False)
+
+
 class Genre(db.Model):
     GenreID = db.Column(db.Integer, primary_key=True)
     Name = db.Column(

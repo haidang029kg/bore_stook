@@ -98,6 +98,7 @@ $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 			$('#tb-genre a').text(result.GenreName);
 			var temp_link = '/home/genre/' + String(result.GenreID);
 			$('#tb-genre a').attr("href", temp_link);
+			$('#description').text(result.Description);
 			$.ajax({ // get author data
 				data: {
 					list_id: result.AuthorsID

@@ -308,3 +308,24 @@ string = "insert into user (FirstName, LastName, Phone, Email, ImgUrl, Password,
 db.session.execute(string)
 db.session.commit()
 
+
+#adding book description crawled
+from Book_Flask.models import Book
+#comparison to books in db
+temp = db.session.query(Book.BookID).all()
+
+books_in_db = []
+[books_in_db.append(i[0]) for i in temp]
+# getting from csv
+desBook = pd.read_csv('result_crawl_description.csv')
+
+des = desBook.loc[desBook['book_id'].isin(books_in_db)]
+
+des.loc[des['description'] == 'error', 'description'] = 'None'
+
+des = des[['book_id', 'description']]
+
+des.rename(columns = {'book_id' : 'BookID', 'description' : 'Description'}, inplace = True)
+
+des.set_index('BookID', inplace = True)
+des.to_sql(con = connection, name = 'book_description', if_exists='append')
