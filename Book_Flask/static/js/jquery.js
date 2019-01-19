@@ -76,7 +76,7 @@ $(document).ready(function () {
 $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 	e.preventDefault();
 	var clicked = $(this).parents('.card').attr('data-id');
-	
+
 	$.ajax({
 		data: {
 			id: clicked
@@ -98,7 +98,35 @@ $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 			$('#tb-genre a').text(result.GenreName);
 			var temp_link = '/home/genre/' + String(result.GenreID);
 			$('#tb-genre a').attr("href", temp_link);
-			$('#description').text(result.Description);
+			
+			//Start description
+            $('#description').html("");
+            var description = result.Description;
+            var i = 180;
+            while (description[i] != ' '){
+                i++;
+            }
+            description = [description.slice(0,i), "<a class='show-more hide' href='#'> Read More <i class='fas fa-angle-down'></i></a> <span class='read-more-content'>",
+                description.slice(i),"<a class='show-less hide' href='#'> Show Less <i class='fas fa-angle-up'></i> </a></span></p>"].join('');
+            description = "<p>" + description + "</p>";
+            $('#description').html(description);
+
+            $('.read-more-content').addClass('hide')
+            $('.show-more, .show-less').removeClass('hide')
+            $('.show-more').on('click', function(e) {
+                $(this).next('.read-more-content').fadeIn();
+                $(this).addClass('hide');
+                e.preventDefault();
+            });
+            $('.show-less').on('click', function(e) {
+            var p = $(this).parent('.read-more-content');
+            p.fadeOut(400,function(){
+                p.prev('.show-more').removeClass('hide');
+                e.preventDefault();
+                });
+            });
+            // End
+
 			$.ajax({ // get author data
 				data: {
 					list_id: result.AuthorsID
@@ -189,6 +217,8 @@ $(document).on('click', '.card .hvrbox-layer_top', function ajax_bookdetail(e) {
 		}
 	});
 });
+
+
 
 // ------------------------------------------------------ fade out alert ( flash message)
 
@@ -387,14 +417,14 @@ $(document).on('change', '.input-count', function changes_on_count_number(e) {
 	var bookid = $(this).closest('tr').attr('data-bookid');
 	var count = $(this).val();
 	updateItemCount(bookid, count);
-	var price = Number($(this).closest('tr').find('.price-for-an-item').text());
+	var price = Number($(this).closest('tr').find('.price-for-an-item').text().slice(1));
 	var count_price = Number(price * count).toFixed(2);
 
 	cart.splice(0, cart.length);
 	loadCart();
 
 	$(this).closest('tr').find('.price-for-items').fadeOut(1, function () {
-		$(this).text(count_price);
+		$(this).text('$' + count_price);
 		$(this).fadeIn(300);
 	});
 
@@ -405,7 +435,6 @@ $(document).on('change', '.input-count', function changes_on_count_number(e) {
 	});
 
 });
-
 function cart_blink() {
 	$('#sticky-cart').effect('shake');
 };
@@ -810,20 +839,20 @@ function genreFilter() {
 };
 
 // Change profile picture
-$(document).ready(function() {
+$(document).ready(function () {
 
-    var readURL = function(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+	var readURL = function (input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
 
-            reader.onload = function (e) {
-                $('.account-img').attr('src', e.target.result);
-            }
-    
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-	$(".form-control-file").on('change', function(){
+			reader.onload = function (e) {
+				$('.account-img').attr('src', e.target.result);
+			}
+
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	$(".form-control-file").on('change', function () {
 		readURL(this);
 	});
 });

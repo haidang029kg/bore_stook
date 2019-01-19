@@ -1058,3 +1058,8 @@ button.open.btn.btn-primary {
 	padding-left: 35px;
 	margin: auto;
 }
+
+
+.hide {
+	display: none;
+  }

@@ -13,7 +13,7 @@
 			+ path of csv file (result_crawl_description.csv) 
 				takes approximately 5 hours for crawling or can use the exist csv file (result_crawl_description) crawled in advance
 			+ path of "db" variable (instance for SQLAlchemy) in SOURCE CODE
-    - in file models.db in SOURCE CODE, switch rows to become comment rows where rows contain "db" variable
+    - in file admin.forms in SOURCE CODE, switch rows to become rows commented where rows contain "db" variable
     to avoid using variable error when it has not created yet
 
     - run "csvToSql.py"
