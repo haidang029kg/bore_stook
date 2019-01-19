@@ -11,7 +11,7 @@ handlers:
   expiration: '10s'
   
 env_variables:
-    MYSQL_HOST: localhost
+    MYSQL_HOST: z
     MYSQL_USER: flask
     MYSQL_PASSWORD: Flask_123
     MYSQL_DB: borestook

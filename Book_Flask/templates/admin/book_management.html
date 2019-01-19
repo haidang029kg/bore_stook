@@ -4,7 +4,7 @@
     <div class="table-responsive" style="margin : 20px; width : 95%">
         <h1>Book Management:</h1>
         {% if value_search %}
-        <h2>searching for: {{ value_search }}</h2>
+        <h2>Results for: {{ value_search }}</h2>
         {% endif %}
         <form class="form-inline my-2 my-lg-0" action="{{ url_for('admin.book_searching') }}" method="POST">
             <input name="input-search-book" class="form-control mr-sm-2" type="search" placeholder="ISBN or Title..."
@@ -27,7 +27,7 @@
             <tbody>
                 {% for item in items.items %}
                 <tr data-book-id="{{ item.BookID }}">
-                    <td><img src="{{ item.ImgUrl }}"></td>
+                    <td><img src="{{ item.ImgUrl }}" style="width: 100px;height: 150px;"></td>
                     <td class="text-center">{{ item.BookID }}</td>
                     <td class="text-center">{{ item.ISBN }}</td>
                     <td class="text-center">{{ item.Title }}</td>

@@ -20,9 +20,9 @@ class RuleForm(FlaskForm):
             raise ValidationError('This field must be in [ 0 , 1 ]')
 
 class AdminLoginForm(FlaskForm):
-    email = StringField('email:',
+    email = StringField('Email:',
                         validators=[DataRequired(), Email()])
-    password = PasswordField('password:',
+    password = PasswordField('Password:',
                              validators=[DataRequired()])
     submit = SubmitField('Log in')
 

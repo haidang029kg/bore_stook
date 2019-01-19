@@ -346,7 +346,7 @@ function displayCart() {
 		var price = cart[i].price;
 		var count_price = cart[i].count_price;
 
-		output += "<tr data-bookid=" + bookid + "><td data-th='Product'><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + image + "' alt='...' class='img-responsive' /></div><div class='col-sm-10'><h4 class='nomargin'>" + title + "</h4></div></div></td><td class='price-for-an-item' data-th='Price'>$" + price + "</td><td data-th='Quantity'><input type='number' min='1' class='form-control text-center input-count' value='" + count + "'></td><td data-th='Subtotal' class='text-center price-for-items'>$" + count_price + "</td><td class='actions' data-th=''><button class='btn btn-danger btn-sm remove-item'><i class='fas fa-trash-alt'></i></button></td></tr>"
+		output += "<tr data-bookid=" + bookid + "><td data-th='Product'><div class='row'><div class='col-sm-2 hidden-xs'><img src='" + image + "' alt='book-cover' class='img-responsive' style='width: 100px;height: 150px' /></div><div class='col-sm-10'><h4 class='nomargin'>" + title + "</h4></div></div></td><td class='price-for-an-item' data-th='Price'>$" + price + "</td><td data-th='Quantity'><input type='number' min='1' class='form-control text-center input-count' value='" + count + "'></td><td data-th='Subtotal' class='text-center price-for-items'>$" + count_price + "</td><td class='actions' data-th=''><button class='btn btn-danger btn-sm remove-item'><i class='fas fa-trash-alt'></i></button></td></tr>"
 	}
 	$('#cart-data').html(output);
 
@@ -595,7 +595,7 @@ function payment_method_check() {
 };
 
 $(document).ready(function finish_checkout() {
-	$('#finish-checkout').one('click', function (e) {
+	$('#finish-checkout').on('click', function (e) {
 		e.preventDefault();
 
 		if (bill_form_check()) {

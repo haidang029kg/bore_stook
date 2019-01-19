@@ -4,7 +4,7 @@
     <div class="table-responsive" style="margin : 20px; width : 95%">
         <h1>Order Management:</h1>
         {% if value_search %}
-        <h1>searching {{ value_search }} </h1>
+        <h1>Results for {{ value_search }} </h1>
         {% endif %}
         <form class="form-inline my-2 my-lg-0" action="{{ url_for('admin.ordered_searching') }}" method="POST">
             <input name="input-search-ordered" class="form-control mr-sm-2" type="search" placeholder="OrderID or Customer's Mail"

@@ -4,10 +4,10 @@
     <div class="table-responsive" style="margin : 20px; width : 95%">
         <h1>Author List:</h1>
         {% if value_search %}
-        <h1>searching {{ value_search }} </h1>
+        <h1>Results for {{ value_search }} </h1>
         {% endif %}
         <form class="form-inline my-2 my-lg-0" action="{{ url_for('admin.author_searching') }}" method="POST">
-            <input name="input-search-author" class="form-control mr-sm-2" type="search" placeholder="Name ......."
+            <input name="input-search-author" class="form-control mr-sm-2" type="search" placeholder="Name"
                 aria-label="Search">
             <button class="btn btn-success my-2 my-sm-0 " type="submit">Search / Reload</button>
         </form>

@@ -3,9 +3,9 @@
 <div class="row">
     <div class="table-responsive" style="margin : 20px; width : 95%">
         {% if count %}
-        <h1>Customer Management: including {{ count }} customers</h1>
+        <h1>Customer Management:</h1>
         {% else %}
-        <h1>Customer Management: searching {{ value_search }} </h1>
+        <h1>Customer Management: Results for {{ value_search }} </h1>
         {% endif %}
         <form class="form-inline my-2 my-lg-0" action="{{ url_for('admin.user_searching') }}" method="POST">
             <input name="input-search-user" class="form-control mr-sm-2" type="search" placeholder="Customer's Mail"
